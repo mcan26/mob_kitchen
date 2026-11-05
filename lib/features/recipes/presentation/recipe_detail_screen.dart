@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -387,6 +389,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
 
   Widget _buildSliverAppBar(BuildContext context, Recipe recipe) {
     final visual = RecipeVisuals.forRecipe(recipe);
+    final isTest = Platform.environment.containsKey('FLUTTER_TEST');
 
     return SliverAppBar(
       expandedHeight: 210,
@@ -394,10 +397,11 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
       backgroundColor: MobColors.background,
       leading: IconButton(
         icon: Container(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.5),
+            color: Colors.black.withValues(alpha: 0.6),
             shape: BoxShape.circle,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
         ),
@@ -406,10 +410,11 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
       actions: [
         IconButton(
           icon: Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.5),
+              color: Colors.black.withValues(alpha: 0.6),
               shape: BoxShape.circle,
+              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
             ),
             child: Icon(
               recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -426,44 +431,51 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            // Küratörlü renk paleti / gradient
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: visual.gradientColors,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-            ),
-            Positioned(
-              right: -10,
-              top: 20,
-              child: Icon(
-                visual.icon,
-                size: 150,
-                color: visual.accentColor.withValues(alpha: 0.12),
-              ),
-            ),
-            Center(
-              child: Container(
-                width: 68,
-                height: 68,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.35),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: visual.accentColor.withValues(alpha: 0.45),
-                    width: 1.5,
+            // 1. High-resolution culinary photography with graceful fallback
+            if (!isTest && visual.imageUrl != null && visual.imageUrl!.isNotEmpty)
+              Image.network(
+                visual.imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: visual.gradientColors,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   ),
                 ),
-                child: Text(
-                  visual.dishEmoji,
-                  style: const TextStyle(fontSize: 34),
+              )
+            else
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: visual.gradientColors,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
+
+            // 2. Editorial Double Vignette (Top for controls, Bottom blending into background)
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.7),
+                    Colors.transparent,
+                    Colors.transparent,
+                    MobColors.background.withValues(alpha: 0.95),
+                    MobColors.background,
+                  ],
+                  stops: const [0.0, 0.25, 0.55, 0.9, 1.0],
                 ),
               ),
             ),
+
+            // 3. Bottom Editorial Badges
             Positioned(
               left: 20,
               bottom: 16,
@@ -482,6 +494,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
+                        letterSpacing: 0.4,
                       ),
                     ),
                   ),
@@ -489,17 +502,60 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: MobColors.surface.withValues(alpha: 0.8),
+                      color: Colors.black.withValues(alpha: 0.65),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: MobColors.border),
-                    ),
-                    child: Text(
-                      '${recipe.totalTimeMinutes} min  ·  ${recipe.difficulty.label}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: MobColors.textPrimary,
+                      border: Border.all(
+                        color: visual.accentColor.withValues(alpha: 0.4),
                       ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: visual.accentColor,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          visual.culinaryBadge,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: visual.accentColor,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.65),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.timer_outlined, size: 13, color: MobColors.gold),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${recipe.totalTimeMinutes} min',
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: MobColors.gold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

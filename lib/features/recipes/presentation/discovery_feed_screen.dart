@@ -120,19 +120,31 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      width: 42,
-                                      height: 42,
+                                      width: 44,
+                                      height: 44,
                                       decoration: BoxDecoration(
-                                        color: MobColors.primary.withValues(alpha: 0.15),
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: MobColors.primaryLight.withValues(alpha: 0.3),
+                                        gradient: const LinearGradient(
+                                          colors: [MobColors.primary, Color(0xFFC0391B)],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
                                         ),
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: MobColors.primary.withValues(alpha: 0.35),
+                                            blurRadius: 10,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
                                       alignment: Alignment.center,
-                                      child: const Text('👨‍🍳', style: TextStyle(fontSize: 20)),
+                                      child: const Icon(
+                                        Icons.local_fire_department_rounded,
+                                        color: Colors.white,
+                                        size: 22,
+                                      ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 12),
                                     const Flexible(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,21 +152,22 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                           Text(
                                             'SIMMERLINK',
                                             style: TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 11,
                                               fontWeight: FontWeight.w900,
-                                              color: MobColors.primary,
-                                              letterSpacing: 1.2,
+                                              color: MobColors.primaryLight,
+                                              letterSpacing: 2.0,
                                             ),
                                           ),
+                                          SizedBox(height: 2),
                                           Text(
-                                            'Smart Culinary Guide',
+                                            'Editorial Kitchen & Hub',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 16.5,
                                               fontWeight: FontWeight.w800,
                                               color: MobColors.textPrimary,
-                                              letterSpacing: -0.3,
+                                              letterSpacing: -0.4,
                                             ),
                                           ),
                                         ],
@@ -173,14 +186,14 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                   tooltip: 'Bluetooth (BLE) & Wi-Fi Smart Kitchen Hub',
                                   onPressed: () => context.push(AppRoutes.wirelessHub),
                                   icon: Container(
-                                    padding: const EdgeInsets.all(7),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: MobColors.greenSurface,
+                                      color: MobColors.surface,
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: MobColors.greenBorder),
+                                      border: Border.all(color: MobColors.green.withValues(alpha: 0.4)),
                                     ),
                                     child: const Icon(
-                                      Icons.bluetooth_connected,
+                                      Icons.bluetooth_connected_rounded,
                                       color: MobColors.green,
                                       size: 18,
                                     ),
@@ -192,11 +205,11 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                   tooltip: 'Import Recipe from Reels / TikTok',
                                   onPressed: () => context.push('${AppRoutes.pantryGenerator}?mode=social'),
                                   icon: Container(
-                                    padding: const EdgeInsets.all(7),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: MobColors.goldSurface,
+                                      color: MobColors.surface,
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: MobColors.goldBorder),
+                                      border: Border.all(color: MobColors.gold.withValues(alpha: 0.4)),
                                     ),
                                     child: const Icon(
                                       Icons.bolt_rounded,
@@ -211,7 +224,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                   tooltip: 'Supermarket Mode',
                                   onPressed: () => context.push(AppRoutes.supermarket),
                                   icon: Container(
-                                    padding: const EdgeInsets.all(7),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: MobColors.surface,
                                       shape: BoxShape.circle,
@@ -230,7 +243,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                   tooltip: 'Taste Profile & Settings',
                                   onPressed: () => context.push(AppRoutes.profile),
                                   icon: Container(
-                                    padding: const EdgeInsets.all(7),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: MobColors.surface,
                                       shape: BoxShape.circle,
@@ -254,18 +267,25 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             color: MobColors.surface,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(color: MobColors.border),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.25),
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
                           child: TextField(
                             controller: _searchController,
                             style: const TextStyle(color: MobColors.textPrimary, fontSize: 14),
                             onChanged: (val) => setState(() => _searchQuery = val),
                             decoration: InputDecoration(
-                              hintText: 'Search recipe or ingredient (e.g. Pasta, Chicken)...',
+                              hintText: 'Search recipes, ingredients or tags...',
                               hintStyle: const TextStyle(color: MobColors.textMuted, fontSize: 13),
                               prefixIcon: const Icon(
-                                Icons.search,
+                                Icons.search_rounded,
                                 color: MobColors.textSecondary,
-                                size: 20,
+                                size: 21,
                               ),
                               suffixIcon: _searchQuery.isNotEmpty
                                   ? IconButton(

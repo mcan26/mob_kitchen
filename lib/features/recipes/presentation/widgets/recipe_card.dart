@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/mob_colors.dart';
@@ -5,7 +7,9 @@ import '../../../../core/theme/recipe_visuals.dart';
 import '../../domain/entities/recipe.dart';
 import 'macro_badge_row.dart';
 
-/// Mob Kitchen estetiğinde zengin tarif kartı.
+bool get _isTestEnvironment => Platform.environment.containsKey('FLUTTER_TEST');
+
+/// Editorial culinary recipe card with photography and high-contrast typography.
 class RecipeCard extends StatelessWidget {
   const RecipeCard({
     super.key,
@@ -23,47 +27,48 @@ class RecipeCard extends StatelessWidget {
     final isAi = !recipe.isBuiltIn;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
         color: MobColors.card,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isAi ? MobColors.primaryLight.withValues(alpha: 0.3) : MobColors.border,
+          color: isAi ? MobColors.primaryLight.withValues(alpha: 0.35) : MobColors.border,
+          width: isAi ? 1.5 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Üst Görsel / Banner Alanı
+              // Hero Food Photography / Header
               _CardHeader(
                 recipe: recipe,
                 isAi: isAi,
                 onFavoriteToggle: onFavoriteToggle,
               ),
 
-              // İçerik Alanı
+              // Content Section
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Kategori & Süre Satırı
+                    // Category, Time & Servings Meta Row
                     Row(
                       children: [
                         _MetaChip(
-                          icon: Icons.category_outlined,
+                          icon: Icons.restaurant_menu_rounded,
                           label: recipe.category.label,
                           color: MobColors.primaryLight,
                         ),
@@ -85,39 +90,40 @@ class RecipeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
 
-                    // Başlık
+                    // Recipe Title
                     Text(
                       recipe.title,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.5,
                         fontWeight: FontWeight.w800,
                         color: MobColors.textPrimary,
                         letterSpacing: -0.3,
+                        height: 1.25,
                       ),
                     ),
                     const SizedBox(height: 6),
 
-                    // Alt başlık / Açıklama
+                    // Subtitle / Editorial Hook
                     Text(
                       recipe.subtitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 13,
-                        height: 1.4,
+                        height: 1.45,
                         fontWeight: FontWeight.w400,
                         color: MobColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 12),
 
-                    // Makro Özet Rozetleri
+                    // Macro Badges
                     MacroBadgeRow(
                       macros: recipe.macros,
                       compact: true,
                     ),
 
-                    // Etiketler (Tags)
+                    // Tags
                     if (recipe.tags.isNotEmpty) ...[
                       const SizedBox(height: 10),
                       Wrap(
@@ -125,7 +131,7 @@ class RecipeCard extends StatelessWidget {
                         runSpacing: 6,
                         children: recipe.tags.take(3).map((tag) {
                           return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
                             decoration: BoxDecoration(
                               color: MobColors.surface,
                               borderRadius: BorderRadius.circular(6),
@@ -169,137 +175,178 @@ class _CardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final visual = RecipeVisuals.forRecipe(recipe);
 
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      child: SizedBox(
+        height: 140,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // 1. Food Photography with graceful fallback
+            if (!_isTestEnvironment && visual.imageUrl != null && visual.imageUrl!.isNotEmpty)
+              Image.network(
+                visual.imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => _FallbackHeaderGradient(visual: visual),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return _FallbackHeaderGradient(visual: visual);
+                },
+              )
+            else
+              _FallbackHeaderGradient(visual: visual),
+
+            // 2. Editorial Vignette Overlay
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.55),
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.25),
+                    const Color(0xF21A1A1E),
+                  ],
+                  stops: const [0.0, 0.35, 0.65, 1.0],
+                ),
+              ),
+            ),
+
+            // 3. Top-left: AI / SimmerLink badge
+            Positioned(
+              left: 14,
+              top: 14,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: isAi
+                      ? const Color(0xFF8E24AA).withValues(alpha: 0.9)
+                      : Colors.black.withValues(alpha: 0.65),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isAi
+                        ? Colors.purpleAccent.withValues(alpha: 0.4)
+                        : Colors.white.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isAi ? Icons.auto_awesome : Icons.local_fire_department,
+                      size: 13,
+                      color: isAi ? Colors.white : MobColors.primaryLight,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      isAi ? 'AI REMIX' : 'SIMMERLINK',
+                      style: const TextStyle(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // 4. Top-right: Favorite button
+            Positioned(
+              right: 12,
+              top: 12,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: onFavoriteToggle,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.55),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Icon(
+                      recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      size: 20,
+                      color: recipe.isFavorite ? MobColors.primary : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // 5. Bottom-left: Culinary craft badge pill
+            Positioned(
+              left: 14,
+              bottom: 12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4.5),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.7),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: visual.accentColor.withValues(alpha: 0.35),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: visual.accentColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      visual.culinaryBadge,
+                      style: TextStyle(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w800,
+                        color: visual.accentColor,
+                        letterSpacing: 0.7,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FallbackHeaderGradient extends StatelessWidget {
+  const _FallbackHeaderGradient({required this.visual});
+  final RecipeVisualSpec visual;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 122,
-      width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         gradient: LinearGradient(
           colors: visual.gradientColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
-      child: Stack(
-        children: [
-          // Arka plan dokusu ve mutfak ikonu
-          Positioned(
-            right: -6,
-            bottom: -14,
-            child: Icon(
-              visual.icon,
-              size: 100,
-              color: visual.accentColor.withValues(alpha: 0.12),
-            ),
-          ),
-
-          // Sağ alt: İştah açıcı tabak emojisi & imza rozeti
-          Positioned(
-            left: 14,
-            bottom: 12,
-            right: 14,
-            child: Row(
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.35),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: visual.accentColor.withValues(alpha: 0.4),
-                    ),
-                  ),
-                  child: Text(
-                    visual.dishEmoji,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.4),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: visual.accentColor.withValues(alpha: 0.35),
-                    ),
-                  ),
-                  child: Text(
-                    visual.culinaryBadge,
-                    style: TextStyle(
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.w800,
-                      color: visual.accentColor,
-                      letterSpacing: 0.6,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Sol üst: AI / Mob rozeti
-          Positioned(
-            left: 14,
-            top: 14,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: isAi
-                    ? Colors.purple.withValues(alpha: 0.85)
-                    : MobColors.primary.withValues(alpha: 0.9),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    isAi ? Icons.auto_awesome : Icons.local_fire_department,
-                    size: 13,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    isAi ? 'AI REMIX' : 'SIMMERLINK CLASSIC',
-                    style: const TextStyle(
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Sağ üst: Favori butonu
-          Positioned(
-            right: 12,
-            top: 12,
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: onFavoriteToggle,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.35),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
-                    size: 20,
-                    color: recipe.isFavorite ? MobColors.primary : MobColors.textPrimary,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+      child: Center(
+        child: Icon(
+          visual.icon,
+          size: 48,
+          color: visual.accentColor.withValues(alpha: 0.3),
+        ),
       ),
     );
   }
@@ -356,6 +403,7 @@ class _DifficultyChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: MobColors.surface,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: MobColors.border),
       ),
       child: Text(
         difficulty,
