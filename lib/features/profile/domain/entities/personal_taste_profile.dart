@@ -2,20 +2,20 @@ import 'package:equatable/equatable.dart';
 
 /// Mutfaktaki ekipmanlar. Gemini'ye "fırın yok" gibi kısıtları iletmek için kullanılır.
 enum KitchenEquipment {
-  pan('pan', 'Tava'),
-  pot('pot', 'Tencere'),
+  pan('pan', 'Frying pan'),
+  pot('pot', 'Pot'),
   airfryer('airfryer', 'Airfryer'),
-  oven('oven', 'Fırın'),
-  microwave('microwave', 'Mikrodalga'),
+  oven('oven', 'Oven'),
+  microwave('microwave', 'Microwave'),
   blender('blender', 'Blender'),
-  riceCooker('rice_cooker', 'Pirinç pişirici');
+  riceCooker('rice_cooker', 'Rice cooker');
 
   const KitchenEquipment(this.jsonValue, this.label);
   final String jsonValue;
   final String label;
 
   static KitchenEquipment fromJson(String v) =>
-      values.firstWhere((e) => e.jsonValue == v, orElse: () => throw FormatException('Bilinmeyen ekipman: $v'));
+      values.firstWhere((e) => e.jsonValue == v, orElse: () => throw FormatException('Unknown equipment: $v'));
 }
 
 /// Kullanıcının kişisel damak tadı ve mutfak kısıtları.
@@ -23,7 +23,7 @@ enum KitchenEquipment {
 class PersonalTasteProfile extends Equatable {
   const PersonalTasteProfile({
     this.equipment = const {KitchenEquipment.pan, KitchenEquipment.pot, KitchenEquipment.airfryer},
-    this.dietGoals = const ['Yüksek protein'],
+    this.dietGoals = const ['High protein'],
     this.dislikedIngredients = const [],
     this.allergies = const [],
     this.spiceLevel = 2,

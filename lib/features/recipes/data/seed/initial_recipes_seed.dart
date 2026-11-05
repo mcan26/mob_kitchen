@@ -9,25 +9,37 @@ import 'recipes/r07_sausage_potato_hash.dart';
 import 'recipes/r08_lemon_tuna_pasta.dart';
 import 'recipes/r09_arrabbiata_breadcrumb.dart';
 import 'recipes/r10_smash_burger.dart';
+import 'recipes/r11_thai_basil_chicken.dart';
+import 'recipes/r12_wild_mushroom_risotto.dart';
+import 'recipes/r13_crispy_salmon.dart';
+import 'recipes/r14_coconut_chickpea_curry.dart';
+import 'recipes/r15_korean_beef_bulgogi.dart';
+import 'recipes/r16_butter_chicken_rice.dart';
 
-/// Yerleşik "Mob Classics" kataloğunun sürümü.
-/// Katalogda herhangi bir tarif değiştirildiğinde bu sayıyı artır; uygulama bir
-/// sonraki açılışta yerleşik tarifleri günceller (favoriler korunur).
-const int kSeedVersion = 1;
+/// Version number for the built-in SimmerLink offline recipe catalog.
+/// Bump this integer whenever recipes are added or modified; the app will
+/// automatically refresh built-in recipes in the local Drift SQLite database on next boot.
+const int kSeedVersion = 2;
 
-/// Uygulama ilk açıldığında internet olmadan yerel veritabanına yüklenen tarifler.
+/// Offline-first seed recipes loaded into the local database on launch without network.
 ///
-/// Tüm içerik Türkçedir; her tarif altın kurallar, reyon/market ipuçları,
-/// alternatif malzemeler ve adım başına duyusal işaret + şef püf noktası içerir.
+/// 100% English catalog: each recipe includes chef golden rules, supermarket aisle buying tips,
+/// ingredient substitutes, step sensory cues, and wall-clock smart timers.
 const List<Recipe> kInitialRecipes = [
-  mobCreamyGarlicChickenPasta, // Tek Tava
-  mobCarbonara, // Makarna
-  mobCrispyChickenHotHoney, // Çıtır Tavuk
-  mobBurritoBowl, // Bowl / Yüksek Protein
-  mobChickpeaShakshuka, // Bütçe Dostu
-  mobSoyGarlicBeefBowl, // 20 Dakikalık Akşam
-  mobSausagePotatoHash, // Bütçe Dostu / Tek Tava
-  mobLemonTunaPasta, // Yüksek Protein
-  mobArrabbiataCrispyBreadcrumb, // Makarna / Bütçe Dostu
-  mobSmashBurger, // 20 Dakikalık Akşam
+  mobCreamyGarlicChickenPasta, // One-Pan / Pasta
+  mobCarbonara, // Pasta
+  mobCrispyChickenHotHoney, // Crispy Chicken
+  mobBurritoBowl, // Bowl / High-Protein
+  mobChickpeaShakshuka, // Budget-Friendly / One-Pan
+  mobSoyGarlicBeefBowl, // 20-Minute Dinner / Rice Bowl
+  mobSausagePotatoHash, // Budget-Friendly / One-Pan
+  mobLemonTunaPasta, // High-Protein / Pasta
+  mobArrabbiataCrispyBreadcrumb, // Pasta / Budget-Friendly
+  mobSmashBurger, // 20-Minute Dinner
+  mobThaiBasilChicken, // 20-Minute Dinner / High-Protein
+  mobWildMushroomRisotto, // One-Pan / Vegetarian
+  mobCrispySalmon, // High-Protein / Seafood
+  mobCoconutChickpeaCurry, // Budget-Friendly / Plant-Based
+  mobKoreanBeefBulgogi, // 20-Minute Dinner / High-Protein
+  mobButterChickenRice, // Crispy Chicken / Comfort Food
 ];

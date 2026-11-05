@@ -10,13 +10,13 @@ import '../providers/recipe_providers.dart';
 import 'widgets/recipe_card.dart';
 
 enum RecipeFilter {
-  all('Tümü'),
-  onePot('Tek Tava'),
-  quick('Hızlı (≤ 25 dk)'),
-  highProtein('Yüksek Protein'),
-  budget('Bütçe Dostu'),
-  aiGenerated('AI ile Üretilenler'),
-  favorites('Favorilerim');
+  all('All'),
+  onePot('One-Pan'),
+  quick('Quick (≤ 25 min)'),
+  highProtein('High Protein'),
+  budget('Budget Friendly'),
+  aiGenerated('AI Recipes'),
+  favorites('My Favorites');
 
   const RecipeFilter(this.label);
   final String label;
@@ -91,7 +91,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: Text(
-                'Katalog yüklenirken hata oluştu: $err',
+                'Error loading catalog: $err',
                 style: const TextStyle(color: MobColors.red),
                 textAlign: TextAlign.center,
               ),
@@ -102,7 +102,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
 
             return CustomScrollView(
               slivers: [
-                // 1. Profil & Karşılama Başlığı
+                // 1. Profile & Welcome Header
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
@@ -138,7 +138,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'MOB KITCHEN',
+                                            'SIMMERLINK',
                                             style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w900,
@@ -147,7 +147,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                             ),
                                           ),
                                           Text(
-                                            'Kişisel Mutfak Rehberi',
+                                            'Smart Culinary Guide',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
@@ -167,10 +167,10 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                // Bluetooth (BLE) & Wi-Fi Co-Op Akıllı Mutfak Hub Butonu
+                                // Bluetooth (BLE) & Wi-Fi Co-Op Smart Hub Button
                                 IconButton(
                                   visualDensity: VisualDensity.compact,
-                                  tooltip: 'Bluetooth (BLE) & Wi-Fi Akıllı Mutfak Hub',
+                                  tooltip: 'Bluetooth (BLE) & Wi-Fi Smart Kitchen Hub',
                                   onPressed: () => context.push(AppRoutes.wirelessHub),
                                   icon: Container(
                                     padding: const EdgeInsets.all(7),
@@ -186,10 +186,10 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                     ),
                                   ),
                                 ),
-                                // Sosyal Medya (Reels/TikTok) Tarif Aktar Hızlı Butonu
+                                // Social Media (Reels/TikTok) Recipe Import Button
                                 IconButton(
                                   visualDensity: VisualDensity.compact,
-                                  tooltip: 'Reels / TikTok Linkinden Tarif Aktar',
+                                  tooltip: 'Import Recipe from Reels / TikTok',
                                   onPressed: () => context.push('${AppRoutes.pantryGenerator}?mode=social'),
                                   icon: Container(
                                     padding: const EdgeInsets.all(7),
@@ -205,10 +205,10 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                     ),
                                   ),
                                 ),
-                                // Süpermarket Modu Butonu
+                                // Supermarket Mode Button
                                 IconButton(
                                   visualDensity: VisualDensity.compact,
-                                  tooltip: 'Süpermarket Modu',
+                                  tooltip: 'Supermarket Mode',
                                   onPressed: () => context.push(AppRoutes.supermarket),
                                   icon: Container(
                                     padding: const EdgeInsets.all(7),
@@ -224,10 +224,10 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                                     ),
                                   ),
                                 ),
-                                // Mutfak Profili & Ayarlar Butonu
+                                // Profile & Settings Button
                                 IconButton(
                                   visualDensity: VisualDensity.compact,
-                                  tooltip: 'Mutfak Profilim & Ayarlar',
+                                  tooltip: 'Taste Profile & Settings',
                                   onPressed: () => context.push(AppRoutes.profile),
                                   icon: Container(
                                     padding: const EdgeInsets.all(7),
@@ -248,7 +248,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        // Arama Çubuğu
+                        // Search Bar
                         Container(
                           decoration: BoxDecoration(
                             color: MobColors.surface,
@@ -260,7 +260,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             style: const TextStyle(color: MobColors.textPrimary, fontSize: 14),
                             onChanged: (val) => setState(() => _searchQuery = val),
                             decoration: InputDecoration(
-                              hintText: 'Tarif veya malzeme ara (örn: Guanciale, Tavuk)...',
+                              hintText: 'Search recipe or ingredient (e.g. Pasta, Chicken)...',
                               hintStyle: const TextStyle(color: MobColors.textMuted, fontSize: 13),
                               prefixIcon: const Icon(
                                 Icons.search,
@@ -379,7 +379,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             ),
                             const SizedBox(height: 16),
                             const Text(
-                              'Aradığın kriterlere uygun tarif bulunamadı',
+                              'No recipes found matching your criteria',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -389,7 +389,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              'Farklı bir arama yapabilir veya dolabındaki malzemelerle Gemini AI\'a özel bir tarif ürettirebilirsin.',
+                              'Try a different search or use Gemini AI to generate a custom recipe from your fridge ingredients.',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: MobColors.textSecondary,
@@ -409,7 +409,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                               ),
                               icon: const Icon(Icons.auto_awesome, size: 18),
                               label: const Text(
-                                'Dolaptan Tarif Üret',
+                                'Generate from Fridge',
                                 style: TextStyle(fontWeight: FontWeight.w800),
                               ),
                             ),
@@ -450,7 +450,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
         onPressed: () => context.push(AppRoutes.pantryGenerator),
         icon: const Icon(Icons.auto_awesome, size: 20),
         label: const Text(
-          'Dolaptan Üret',
+          'AI Pantry Chef',
           style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: -0.2),
         ),
       ),

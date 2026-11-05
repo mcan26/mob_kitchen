@@ -39,12 +39,12 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
   Recipe? _remixedRecipe;
 
   static const _quickPrompts = [
-    'Fırınsız yap (tavada pişir)',
-    'Proteini artır',
-    'Daha ucuz / bütçe dostu malzemelerle uyarla',
-    'Daha hafif ve düşük kalorili yap',
-    'Vejetaryen alternatife çevir',
-    'Daha acı ve baharatlı yap',
+    'Make it ovenless (skillet only)',
+    'Boost protein content',
+    'Budget-friendly adaptation',
+    'Lighter / lower calorie',
+    'Convert to vegetarian',
+    'Spicier with bold heat',
   ];
 
   @override
@@ -91,7 +91,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Remix oluşturulurken hata meydana geldi: $e';
+          _errorMessage = 'An error occurred creating the remix: $e';
         });
       }
     }
@@ -104,7 +104,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('"${_remixedRecipe!.title}" varyasyon olarak kaydedildi!'),
+          content: Text('"${_remixedRecipe!.title}" saved as a custom variation!'),
           backgroundColor: MobColors.green,
         ),
       );
@@ -115,11 +115,11 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
   Future<void> _overwriteCurrent() async {
     if (_remixedRecipe == null) return;
 
-    // Yerleşik tariflerin üzerine doğrudan yazılamaz
+    // Built-in recipes cannot be overwritten
     if (widget.sourceRecipe.isBuiltIn) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Yerleşik Mob klasikleri değiştirilemez. Varyasyon olarak kaydedildi!'),
+          content: Text('Built-in classics cannot be overwritten. Saved as a new variation!'),
           backgroundColor: MobColors.gold,
         ),
       );
@@ -137,7 +137,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('"${updated.title}" güncellendi!'),
+          content: Text('"${updated.title}" updated!'),
           backgroundColor: MobColors.green,
         ),
       );
@@ -196,7 +196,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'AI RE-MIX & KİŞİSELLEŞTİR',
+                        'AI RE-MIX & CUSTOMIZE',
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w900,
@@ -226,7 +226,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
           ),
           const Divider(height: 1, color: MobColors.border),
 
-          // İçerik Gövdesi
+          // Content Body
           Flexible(
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
@@ -250,7 +250,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
           const CircularProgressIndicator(color: MobColors.primary),
           const SizedBox(height: 24),
           const Text(
-            'Gemini Şef Reçetenizi Dengeliyor...',
+            'Gemini AI Chef Balancing Your Recipe...',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,
@@ -259,7 +259,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Kişisel mutfak profiliniz ve seçtiğiniz talimat doğrultusunda malzeme oranları, pişirme tekniği ve altın kurallar yeniden kurgulanıyor.',
+            'Rebalancing ingredient proportions, cooking techniques, and golden rules for your kitchen profile.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 13,
@@ -301,7 +301,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
         ],
 
         const Text(
-          'Hızlı Dönüştürme Seçenekleri',
+          'Quick Transformation Prompts',
           style: TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w800,
@@ -334,7 +334,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
 
         const SizedBox(height: 20),
         const Text(
-          'Veya Kendi Cümlenizle İsteğinizi Yazın',
+          'Or Describe Your Custom Twist',
           style: TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w800,
@@ -353,7 +353,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
             maxLines: 3,
             style: const TextStyle(color: MobColors.textPrimary, fontSize: 14),
             decoration: const InputDecoration(
-              hintText: 'Örn: Kremayı çıkarıp yoğurt sosla yap, tavuk göğsü yerine hindi kullan...',
+              hintText: 'e.g., Replace heavy cream with Greek yogurt, use turkey breast instead of beef...',
               hintStyle: TextStyle(color: MobColors.textMuted, fontSize: 13),
               border: InputBorder.none,
               contentPadding: EdgeInsets.all(16),
@@ -374,7 +374,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
             ),
             icon: const Icon(Icons.auto_awesome, size: 18),
             label: const Text(
-              'Remix Reçeteyi Üret',
+              'Generate Remixed Recipe',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
             ),
           ),
@@ -389,7 +389,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Başarı Rozeti
+        // Success Badge
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
@@ -403,7 +403,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
               SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Yeni Reçete Başarıyla Dengelendi!',
+                  'New Recipe Successfully Balanced!',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -416,7 +416,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
         ),
         const SizedBox(height: 16),
 
-        // Yeni Başlık & Alt Başlık
+        // New Title & Subtitle
         Text(
           recipe.title,
           style: const TextStyle(
@@ -436,13 +436,13 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
         ),
         const SizedBox(height: 12),
 
-        // Yeni Makrolar
+        // New Macros
         MacroBadgeRow(macros: recipe.macros),
         const SizedBox(height: 16),
 
-        // Malzeme Özeti
+        // Ingredients Summary
         const Text(
-          'Güncellenen Malzemeler:',
+          'Updated Ingredients:',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w800,
@@ -468,9 +468,9 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
           ),
 
         const SizedBox(height: 16),
-        // Adım Sayısı
+        // Step Count & Time
         Text(
-          'Hazırlık: ${recipe.steps.length} adım  ·  Toplam: ${recipe.totalTimeMinutes} dk',
+          'Prep & Cook: ${recipe.steps.length} steps  ·  Total: ${recipe.totalTimeMinutes} min',
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
@@ -479,7 +479,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
         ),
 
         const SizedBox(height: 24),
-        // Aksiyon Butonları
+        // Action Buttons
         Row(
           children: [
             Expanded(
@@ -491,7 +491,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text(
-                  'Yeniden Dene',
+                  'Try Again',
                   style: TextStyle(color: MobColors.textSecondary, fontWeight: FontWeight.w700),
                 ),
               ),
@@ -508,7 +508,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text(
-                  'Varyasyon Olarak Kaydet',
+                  'Save as Variation',
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),
@@ -521,7 +521,7 @@ class _AiRemixBottomSheetState extends ConsumerState<AiRemixBottomSheet> {
             child: TextButton(
               onPressed: _overwriteCurrent,
               child: const Text(
-                'Mevcut Tarifin Üzerine Yaz',
+                'Overwrite Current Recipe',
                 style: TextStyle(
                   color: MobColors.textMuted,
                   fontSize: 12.5,

@@ -1,4 +1,4 @@
-# Mob Kitchen: Offline-First Smart Kitchen & Multi-Protocol Wireless Ecosystem
+# SimmerLink: Offline-First Smart Kitchen & Multi-Protocol Wireless Ecosystem
 **Universitat Jaume I (UJI) · EI-1057 (*Xarxes i Dispositius Mòbils / Mobile Networks & Devices*)**  
 *100% English Oral Presentation Guide, Speaker Scripts, Rubric Alignment & Live Android Demo Playbook*
 
@@ -28,7 +28,7 @@ This presentation is engineered specifically around the six official resources i
 ## Slide 1 — Title & "Connecting the Dots" Hook (0:00 – 1:00)
 
 ### Visual Slide Content (Minimalist — Do Not Crowd)
-- **Title:** **Mob Kitchen**
+- **Title:** **SimmerLink**
 - **Subtitle:** *Offline-First Smart Culinary Guide & Multi-Protocol Mobile Wireless Ecosystem*
 - **Platform Badges:** `Android APK (API 35/36)` · `iOS` · `Flutter + Riverpod + Drift` · `ESP32 IoT`
 - **4 Network Pillars:** `WPAN (BLE 5.0 GATT)` · `MANET (UDP :41234)` · `WLAN (WebSocket :8765)` · `WWAN (HTTPS AI)`
@@ -41,7 +41,7 @@ This presentation is engineered specifically around the six official resources i
 >
 > Picture a very common everyday problem: you are in the basement of a supermarket with **zero cellular coverage**, trying to coordinate a grocery list with your flatmate. Later, you are in the kitchen with flour on your hands: your Android phone locks its screen, your background timer freezes, and you have no idea if your steak is at 56 degrees Celsius inside.
 >
-> Today, I am presenting **Mob Kitchen**—an Android and iOS application that **connects the dots** of everything we have studied in **EI-1057 (*Mobile Networks and Devices*)**.
+> Today, I am presenting **SimmerLink**—an Android and iOS application that **connects the dots** of everything we have studied in **EI-1057 (*Mobile Networks and Devices*)**.
 >
 > **[SIGNPOSTING ROADMAP]**  
 > I have structured this presentation into **four main parts**:
@@ -63,7 +63,7 @@ This presentation is engineered specifically around the six official resources i
 ### Word-for-Word English Speaker Script
 > **[SIGNPOSTING]** "Let us begin with the fundamental rule of mobile computing from **Theory 1 and Lab 1**: *mobile connectivity is intermittent, and the operating system aggressively suspends background processes.*"
 >
-> **[GESTURE TO ITEM 1]** "First, if a user walks into a supermarket basement without 5G or Wi-Fi, cloud-only apps fail. Mob Kitchen uses **Drift**, a reactive relational **SQLite** database (`lib/core/database/app_database.dart`). Every recipe, aisle-sorted ingredient, and portion scaling calculation runs locally at **zero bits per second**."
+> **[GESTURE TO ITEM 1]** "First, if a user walks into a supermarket basement without 5G or Wi-Fi, cloud-only apps fail. SimmerLink uses **Drift**, a reactive relational **SQLite** database (`lib/core/database/app_database.dart`). Every recipe, aisle-sorted ingredient, and portion scaling calculation runs locally at **zero bits per second**."
 >
 > **[GESTURE TO ITEM 2]** "Second, during cooking, if you use a naive periodic counter in Flutter and the Android OS puts the app into the background, the timer freezes. We solved this using **Wall-Clock Lifecycle Synchronization** (`lib/features/cooking/providers/cook_timer_provider.dart`). Instead of counting ticks, we persist the absolute `targetEndTime` timestamp and observe `AppLifecycleState.resumed` via `WidgetsBindingObserver`, recalculating the exact remaining seconds the instant the user unlocks the phone, while keeping the display awake in hands-free Cook Mode via `WakelockPlus`."
 
@@ -73,16 +73,16 @@ This presentation is engineered specifically around the six official resources i
 
 ### Visual Slide Content
 
-| Network Layer (EI-1057 Syllabus) | Protocol & Addressing | Role in `mob_kitchen` | Source Code Module |
+| Network Layer (EI-1057 Syllabus) | Protocol & Addressing | Role in `simmerlink` | Source Code Module |
 | :--- | :--- | :--- | :--- |
 | **Native OS Radio API** | `MethodChannel` (`com.mobkitchen/native_network`) | Android `ConnectivityManager`, `WifiManager`, `MulticastLock`, `BluetoothManager` & iOS `getifaddrs` | `MainActivity.kt` & `AppDelegate.swift` |
 | **WPAN (Short-Range IoT)** | **BLE 5.0 GATT** (`0x181A` & `0x181D`) | Core meat thermometer (`0x2A6E`) & 0.1g smart kitchen scale (`0x2A9D`) | `LanSyncAndBleCodecEngine` & `esp32_smart_kitchen_node.ino` |
-| **MANET (Ad-Hoc Discovery)** | **UDP Broadcast** (`255.255.255.255:41234` + `/24` broadcast) | Zero-config peer discovery (`mob_beacon`) every 4 seconds | `startUdpDiscovery()` |
+| **MANET (Ad-Hoc Discovery)** | **UDP Broadcast** (`255.255.255.255:41234` + `/24` broadcast) | Zero-config peer discovery (`simmer_beacon`) every 4 seconds | `startUdpDiscovery()` |
 | **WLAN (Local P2P Sync)** | **TCP / HTTP + WebSocket** (`Port 8765`) | Full-duplex Co-Op shopping checkoffs & live cooking step sync | `startServer()` & `connectToPeerWebSocket()` |
 | **WWAN (Cloud AI)** | **HTTPS REST / TLS 1.3** (`gemini-2.5-flash`) | Multimodal fridge photo vision & AI Sous-Chef with JSON schema | `GeminiRecipeServiceImpl` |
 
 ### Word-for-Word English Speaker Script
-> **[SIGNPOSTING]** "Moving on to our global network architecture, this table maps every wireless layer of **Mob Kitchen** directly to the **EI-1057 syllabus**."
+> **[SIGNPOSTING]** "Moving on to our global network architecture, this table maps every wireless layer of **SimmerLink** directly to the **EI-1057 syllabus**."
 >
 > **[EYE CONTACT]** "Instead of relying on a single protocol, we selected the right transport for each physical range and latency requirement:
 > - At the **hardware OS level**, a custom native `MethodChannel` inspects real radio link metrics and manages the Android `WifiManager.MulticastLock`.
@@ -102,7 +102,7 @@ This presentation is engineered specifically around the six official resources i
   - `ConnectivityManager.activeNetwork` + `NetworkCapabilities` (`TRANSPORT_WIFI`, `TRANSPORT_CELLULAR`, `signalStrength`).
   - `ConnectivityManager.getLinkProperties()` + `NetworkInterface.getNetworkInterfaces()` (`wlan0`/`ap0` RFC-1918 priority) → Local IPv4 (`192.168.x.x`).
   - `WifiManager.connectionInfo` → **RSSI (dBm)**, **Link Speed (Mbps)**, and **Frequency Band (2.4 GHz vs. 5 GHz MHz)**.
-  - `WifiManager.createMulticastLock("mob_kitchen_udp_manet_lock")` → Prevents Android Wi-Fi hardware from dropping incoming UDP Broadcast (`:41234`) packets.
+  - `WifiManager.createMulticastLock("simmerlink_udp_manet_lock")` → Prevents Android Wi-Fi hardware from dropping incoming UDP Broadcast (`:41234`) packets.
   - `BluetoothManager.adapter` → Hardware BLE adapter status (`ON` / `OFF`).
 - **Modern Android 12–15 (`API 31–36`) Security (`AndroidManifest.xml`):**
   - `NEARBY_WIFI_DEVICES` & `BLUETOOTH_SCAN` with `android:usesPermissionFlags="neverForLocation"` (privacy-preserving discovery without GPS tracking).
@@ -127,7 +127,7 @@ This presentation is engineered specifically around the six official resources i
 ### Visual Slide Content
 - **Phase 1 — Zero-Config Discovery (UDP `RawDatagramSocket` · Port `41234`):**
   - Broadcasts every **4 s** to both `255.255.255.255:41234` and the directed `/24` subnet broadcast (`192.168.x.255:41234`):
-    `{"type": "mob_beacon", "ip": "192.168.1.42", "port": 8765, "room": "MOB-2026", "device": "Pixel 9 Pro"}`
+    `{"type": "simmer_beacon", "ip": "192.168.1.42", "port": 8765, "room": "SIMMER-2026", "device": "Pixel 9 Pro"}`
   - Why UDP? Connectionless, zero handshake overhead, supports subnet broadcast (`broadcastEnabled = true`).
 - **Phase 2 — Reliable State Sync (TCP `HttpServer` + `WebSocket` · Port `8765`):**
   - Automatic upgrade to `ws://<peer-ip>:8765/ws` (plus `POST /sync` HTTP fallback).
@@ -139,7 +139,7 @@ This presentation is engineered specifically around the six official resources i
 > **[SIGNPOSTING]** "This brings me to one of the most important engineering questions in **EI-1057**: *Why do we use both UDP and TCP/WebSockets in the same local network engine?*"
 >
 > **[CONTRAST UDP vs TCP]** "In `lan_sync_engine.dart`, we split peer-to-peer networking into two phases:
-> - **Phase 1 is Discovery via UDP on Port 41234.** When two phones join the same Wi-Fi or mobile hotspot, neither knows the other's IP address. TCP cannot broadcast to an entire subnet because it requires a 3-way handshake with a single unicast IP. Using `RawDatagramSocket` with `broadcastEnabled = true`, each phone broadcasts a lightweight 98-byte `mob_beacon` JSON datagram every four seconds to both `255.255.255.255:41234` and the `/24` directed subnet broadcast address (`192.168.x.255`).
+> - **Phase 1 is Discovery via UDP on Port 41234.** When two phones join the same Wi-Fi or mobile hotspot, neither knows the other's IP address. TCP cannot broadcast to an entire subnet because it requires a 3-way handshake with a single unicast IP. Using `RawDatagramSocket` with `broadcastEnabled = true`, each phone broadcasts a lightweight 98-byte `simmer_beacon` JSON datagram every four seconds to both `255.255.255.255:41234` and the `/24` directed subnet broadcast address (`192.168.x.255`).
 > - **Phase 2 is State Synchronization via TCP WebSockets on Port 8765.** Once a peer receives that UDP beacon, it automatically opens a persistent **Full-Duplex WebSocket** connection (`ws://<peer-ip>:8765/ws`). When you check off *Guanciale* in the Supermarket screen or advance to *Step 3* in Cook Mode, the JSON frame arrives on the second phone in under 10 milliseconds."
 >
 > **[HIGHLIGHT ENGINEERING EDGE CASE]** "Notice a critical distributed-systems bug we solved: if Phone A connects to Phone B while Phone B also connects to Phone A, a naive relay server creates an **infinite packet echo storm**. We solved this by stamping every packet with a unique `_pkt_id` and maintaining a bounded 256-entry `_seenPacketIds` deduplication set, alongside `_outboundSocketsByEndpoint` socket reuse. We verified this exact mutual-connection scenario in our automated test suite."
@@ -162,7 +162,7 @@ This presentation is engineered specifically around the six official resources i
   2. **Deterministic Physics Simulator:** Models **Newton's Law of Heating** (`T(t) = T_ambient + (T_0 - T_ambient)·e^(-kt)`) and load-cell tare offsets for live classroom grading.
 
 ### Word-for-Word English Speaker Script
-> **[SIGNPOSTING]** "Now let us look at the **WPAN IoT layer**: how Mob Kitchen communicates with smart culinary hardware over **Bluetooth Low Energy 5.0**."
+> **[SIGNPOSTING]** "Now let us look at the **WPAN IoT layer**: how SimmerLink communicates with smart culinary hardware over **Bluetooth Low Energy 5.0**."
 >
 > "Because BLE link-layer packets have a strict payload budget, sending verbose JSON strings over BLE characteristics wastes radio energy. Instead, we implemented standard **Bluetooth SIG GATT binary framing** using Dart's `ByteData`:
 > - For our **Smart Meat Thermometer** (`Service 0x181A`, `Characteristic 0x2A6E`), temperature is encoded as a **2-byte signed 16-bit little-endian integer** in hundredths of a degree Celsius—including negative freezer temperatures down to `-18.50 °C`.
@@ -205,7 +205,7 @@ This presentation is engineered specifically around the six official resources i
 
 ### Word-for-Word English Speaker Script
 > **[SIGNPOSTING — CONCLUSION]** "To wrap up and connect all the dots:
-> **Mob Kitchen** demonstrates that modern mobile engineering is not about choosing between offline reliability, local peer-to-peer networking, or cloud AI—it is about orchestrating all of them across the network stack.
+> **SimmerLink** demonstrates that modern mobile engineering is not about choosing between offline reliability, local peer-to-peer networking, or cloud AI—it is about orchestrating all of them across the network stack.
 >
 > By combining **SQLite offline persistence**, **Android and iOS native network diagnostics**, **BLE 5.0 GATT binary telemetry**, **MANET UDP zero-config discovery**, and **Full-Duplex WebSocket synchronization**, we built a kitchen companion that works in a zero-signal supermarket basement just as smoothly as it does in a connected smart kitchen.
 >
@@ -219,7 +219,7 @@ This presentation is engineered specifically around the six official resources i
 
 ### Q1: *"Why did you use UDP Broadcast on Port 41234 for discovery instead of scanning all 254 IP addresses with TCP?"*
 - **English Answer:**
-  > "Scanning a `/24` subnet with TCP requires opening up to 254 individual 3-way handshakes (`SYN`, `SYN-ACK`, `ACK`), which takes several seconds, drains mobile battery, and triggers OS firewall rate limits. By contrast, a single **UDP Broadcast datagram** to `255.255.255.255:41234` and the directed `/24` subnet broadcast (`192.168.x.255:41234`) via `RawDatagramSocket` (`broadcastEnabled = true`) reaches every peer on the local Wi-Fi AP in a single transmission. Once a peer parses the `mob_beacon` datagram, it immediately initiates a single targeted TCP WebSocket connection to the advertised IP and port."
+  > "Scanning a `/24` subnet with TCP requires opening up to 254 individual 3-way handshakes (`SYN`, `SYN-ACK`, `ACK`), which takes several seconds, drains mobile battery, and triggers OS firewall rate limits. By contrast, a single **UDP Broadcast datagram** to `255.255.255.255:41234` and the directed `/24` subnet broadcast (`192.168.x.255:41234`) via `RawDatagramSocket` (`broadcastEnabled = true`) reaches every peer on the local Wi-Fi AP in a single transmission. Once a peer parses the `simmer_beacon` datagram, it immediately initiates a single targeted TCP WebSocket connection to the advertised IP and port."
 
 ### Q2: *"What happens if two phones discover each other via UDP at the same time and both call `connectToPeerWebSocket`?"*
 - **English Answer:**
@@ -229,7 +229,7 @@ This presentation is engineered specifically around the six official resources i
 
 ### Q3: *"How does your Android native `MethodChannel` handle Android 10+ and Android 12+ privacy and Wi-Fi hardware restrictions?"*
 - **English Answer:**
-  > "On Android 10 (API 29) and above, `NetworkCapabilities.signalStrength` provides transport-layer RSSI directly from `ConnectivityManager`, and we fall back to `WifiManager.connectionInfo` for link speed (Mbps) and frequency (MHz). In addition, Android Wi-Fi chipsets filter out incoming UDP broadcast packets by default to save battery, so `MainActivity.kt` acquires a `WifiManager.MulticastLock` (`mob_kitchen_udp_manet_lock`) backed by `CHANGE_WIFI_MULTICAST_STATE`. Finally, in `AndroidManifest.xml`, we explicitly declared `NEARBY_WIFI_DEVICES` and `BLUETOOTH_SCAN` with `android:usesPermissionFlags="neverForLocation"`, complying with Android 12–15 privacy guidelines so the user is never forced to grant fine GPS location just to use local kitchen sensors."
+  > "On Android 10 (API 29) and above, `NetworkCapabilities.signalStrength` provides transport-layer RSSI directly from `ConnectivityManager`, and we fall back to `WifiManager.connectionInfo` for link speed (Mbps) and frequency (MHz). In addition, Android Wi-Fi chipsets filter out incoming UDP broadcast packets by default to save battery, so `MainActivity.kt` acquires a `WifiManager.MulticastLock` (`simmerlink_udp_manet_lock`) backed by `CHANGE_WIFI_MULTICAST_STATE`. Finally, in `AndroidManifest.xml`, we explicitly declared `NEARBY_WIFI_DEVICES` and `BLUETOOTH_SCAN` with `android:usesPermissionFlags="neverForLocation"`, complying with Android 12–15 privacy guidelines so the user is never forced to grant fine GPS location just to use local kitchen sensors."
 
 ### Q4: *"Why encode BLE GATT telemetry in 2-byte and 3-byte Little-Endian binary instead of sending JSON over BLE?"*
 - **English Answer:**

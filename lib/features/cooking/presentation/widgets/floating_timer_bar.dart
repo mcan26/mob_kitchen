@@ -74,7 +74,7 @@ class FloatingTimerBar extends ConsumerWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'Adım ${timer.stepNumber}: ',
+                    'Step ${timer.stepNumber}: ',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -82,7 +82,7 @@ class FloatingTimerBar extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    isFinished ? 'Bitti! 🎉' : timer.formattedRemaining,
+                    isFinished ? 'Done! 🎉' : timer.formattedRemaining,
                     style: TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w900,

@@ -32,10 +32,10 @@ class RecipeStep extends Equatable {
 
   factory RecipeStep.fromJson(Map<String, dynamic> json) => RecipeStep(
         stepNumber: (json['step_number'] as num?)?.toInt() ?? 1,
-        title: (json['title'] as String?)?.trim() ?? 'Adım',
+        title: (json['title'] as String?)?.trim() ?? 'Step',
         instruction: (json['instruction'] as String?)?.trim() ?? '',
-        sensoryCue: (json['sensory_cue'] as String?)?.trim() ?? 'Piştiğinde ocaktan al.',
-        chefTip: (json['chef_tip'] as String?)?.trim() ?? 'Tavayı ısıt ve acele etme.',
+        sensoryCue: (json['sensory_cue'] as String?)?.trim() ?? 'Take it off the heat once cooked.',
+        chefTip: (json['chef_tip'] as String?)?.trim() ?? 'Preheat the pan and take your time.',
         timerSeconds: (json['timer_seconds'] as num?)?.toInt(),
         mistakeWarning: json['mistake_warning'] as String?,
       );

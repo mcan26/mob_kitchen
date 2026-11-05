@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mob Kitchen — UJI EI-1057 English Oral Presentation Deck</title>
+  <title>SimmerLink — UJI EI-1057 English Oral Presentation Deck</title>
   <style>
     :root {
       --bg: #0c0d12;
@@ -33,9 +33,10 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Bar */
+    /* Top Bar (Screen Only) */
     header {
       display: flex;
       align-items: center;
@@ -56,6 +57,7 @@
     }
 
     .badge {
+      display: inline-block;
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 11px;
@@ -68,6 +70,7 @@
     .badge-accent  { background: rgba(56, 189, 248, 0.16); color: var(--accent);  border: 1px solid rgba(56, 189, 248, 0.4); }
     .badge-green   { background: rgba(34, 197, 94, 0.16);  color: var(--green);   border: 1px solid rgba(34, 197, 94, 0.4); }
     .badge-purple  { background: rgba(168, 85, 247, 0.16); color: var(--purple);  border: 1px solid rgba(168, 85, 247, 0.4); }
+    .badge-amber   { background: rgba(245, 158, 11, 0.16); color: var(--amber);   border: 1px solid rgba(245, 158, 11, 0.4); }
 
     .controls {
       display: flex;
@@ -115,7 +118,7 @@
       flex: 1;
       position: relative;
       overflow-y: auto;
-      padding: 36px 56px;
+      padding: 28px 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -129,93 +132,108 @@
     }
 
     .slide.active {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide-print-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(44, 49, 72, 0.7);
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .slide-kicker {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.1px;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
     }
 
     h1 {
-      font-size: 42px;
+      font-size: 38px;
       font-weight: 900;
       line-height: 1.15;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     h2 {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 900;
-      line-height: 1.2;
-      margin-bottom: 18px;
+      line-height: 1.18;
+      margin-bottom: 12px;
     }
 
     .subtitle {
-      font-size: 19px;
+      font-size: 17.5px;
       color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 28px;
-      max-width: 920px;
+      line-height: 1.45;
+      margin-bottom: 20px;
+      max-width: 980px;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 18px;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
 
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 14px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 18px;
     }
 
     .card h3 {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .card p, .card li {
-      font-size: 14.5px;
+      font-size: 13.8px;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .card ul {
       padding-left: 18px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .card strong {
@@ -232,10 +250,10 @@
     }
 
     th, td {
-      padding: 13px 16px;
+      padding: 11px 14px;
       text-align: left;
       border-bottom: 1px solid var(--border);
-      font-size: 14px;
+      font-size: 13.5px;
     }
 
     th {
@@ -243,7 +261,7 @@
       color: var(--accent);
       font-weight: 800;
       text-transform: uppercase;
-      font-size: 12px;
+      font-size: 11.5px;
       letter-spacing: 0.6px;
     }
 
@@ -251,15 +269,15 @@
       font-family: "SFMono-Regular", Consolas, Menlo, monospace;
       background: #10121b;
       color: #7dd3fc;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 5px;
-      font-size: 13px;
+      font-size: 12.2px;
     }
 
     .byte-box {
       display: flex;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 10px;
       flex-wrap: wrap;
     }
 
@@ -267,30 +285,121 @@
       background: #10121b;
       border: 1px solid var(--accent);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       text-align: center;
-      min-width: 90px;
+      min-width: 86px;
     }
 
     .byte-cell .hex {
       font-family: monospace;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       color: var(--accent);
     }
 
     .byte-cell .label {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .interactive-box {
+      background: #10131d;
+      border: 1px dashed var(--accent);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    /* Phone Mockup Cards for Slide 7 (No-Phone Classroom Visual Walkthrough) */
+    .phone-mockup {
+      background: #11131c;
+      border: 2px solid #2e344e;
+      border-radius: 20px;
+      padding: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .phone-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--text);
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .phone-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      background: var(--surface);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 9.5px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .phone-tab {
+      padding: 4px 2px;
+      border-radius: 6px;
+      color: var(--muted);
+    }
+
+    .phone-tab.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .mini-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 7px 9px;
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+
+    .mini-card-title {
+      font-weight: 800;
+      color: var(--text);
+      font-size: 11px;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mini-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
       margin-top: 4px;
+    }
+
+    .mini-chip {
+      background: #0c0d12;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1.5px 5px;
+      font-size: 9.2px;
+      font-weight: 700;
+      color: var(--text);
     }
 
     /* Speaker Notes Drawer */
     .speaker-drawer {
       background: #10131e;
       border-top: 2px solid var(--primary);
-      padding: 16px 36px;
-      max-height: 215px;
+      padding: 14px 36px;
+      max-height: 195px;
       overflow-y: auto;
       transition: all 0.2s ease;
     }
@@ -303,8 +412,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      font-size: 12px;
+      margin-bottom: 6px;
+      font-size: 11.5px;
       font-weight: 800;
       text-transform: uppercase;
       color: var(--primary);
@@ -312,15 +421,15 @@
     }
 
     .speaker-text {
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 14.5px;
+      line-height: 1.55;
       color: #e2e8f0;
     }
 
     .cue {
       color: var(--amber);
       font-weight: 800;
-      font-size: 12.5px;
+      font-size: 12px;
       background: rgba(245, 158, 11, 0.14);
       padding: 2px 7px;
       border-radius: 4px;
@@ -340,12 +449,59 @@
       transition: width 0.2s ease;
     }
 
-    .interactive-box {
-      background: #10131d;
-      border: 1px dashed var(--accent);
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 14px;
+    /* 16:9 WIDESCREEN PDF EXPORT RULES */
+    @page {
+      size: 1280px 720px;
+      margin: 0;
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body {
+        width: 1280px !important;
+        height: auto !important;
+        overflow: visible !important;
+        background-color: var(--bg) !important;
+        color: var(--text) !important;
+        display: block !important;
+      }
+
+      header, .progress-bar, .speaker-drawer {
+        display: none !important;
+      }
+
+      main {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+      }
+
+      .slide {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        width: 1280px !important;
+        height: 720px !important;
+        max-width: 1280px !important;
+        padding: 36px 52px 26px 52px !important;
+        background-color: var(--bg) !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        overflow: hidden !important;
+        animation: none !important;
+      }
+
+      .slide:last-of-type {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
     }
   </style>
 </head>
@@ -354,13 +510,14 @@
   <header>
     <div class="brand">
       <span class="badge badge-primary">UJI · EI-1057</span>
-      <span>Mob Kitchen — Smart Wireless &amp; IoT Culinary Ecosystem</span>
-      <span class="badge badge-green">Android APK Verified</span>
+      <span>SimmerLink — Smart Wireless &amp; IoT Culinary Ecosystem</span>
+      <span class="badge badge-green">PDF + Mac Simulator Ready</span>
     </div>
     <div class="controls">
       <div class="timer-box" id="timerDisplay" onclick="toggleTimer()" title="Click to Start/Pause Presentation Timer">
         ⏱ 00:00 / 10:00
       </div>
+      <button onclick="window.print()" title="Export 16:9 PDF">🖨 Export PDF</button>
       <button onclick="toggleNotes()" id="notesBtn" class="active">🎙 Speaker Script (S)</button>
       <button onclick="prevSlide()">◀ Prev</button>
       <span id="slideCounter" style="font-size:13px;font-weight:800;min-width:60px;text-align:center;">1 / 8</span>
@@ -374,282 +531,495 @@
 
   <main>
     <!-- SLIDE 1: TITLE & STEVE JOBS HOOK -->
-    <section class="slide active" data-notes='<span class="cue">[EYE CONTACT — DO NOT READ SCREEN]</span> Good morning everyone. In his famous Stanford commencement speech, Steve Jobs talked about <strong>"connecting the dots"</strong>—how separate experiences and technologies come together to solve a human problem. Picture this: you are in a supermarket basement with zero 5G signal trying to share a grocery list, or cooking with flour on your hands when your Android phone locks, your background timer freezes, and your steak overcooks. Today I present <strong>Mob Kitchen</strong>, a cross-platform Android and iOS application that connects four core networking dots from <strong>EI-1057</strong>: <strong>Offline-First SQLite + Native OS Radio APIs</strong>, <strong>MANET UDP Discovery</strong>, <strong>Full-Duplex WebSocket P2P Sync</strong>, and <strong>BLE 5.0 GATT Smart Sensors</strong>.'>
-      <div class="slide-kicker">
-        <span>Universitat Jaume I (UJI) · EI-1057 Mobile Networks &amp; Devices</span>
-        <span class="badge badge-accent">100% English Oral Defense</span>
-      </div>
-      <h1>Mob Kitchen: Connecting the Dots Across the Mobile Network Stack</h1>
-      <p class="subtitle">
-        An Offline-First Android &amp; iOS Culinary Companion Integrating <strong>BLE 5.0 GATT Sensors</strong>,
-        <strong>MANET UDP Discovery</strong>, <strong>Full-Duplex WebSocket P2P</strong>, and <strong>Multimodal Cloud AI</strong>.
-      </p>
+    <section class="slide active" data-notes='<span class="cue">[EYE CONTACT — DO NOT READ SCREEN]</span> Good morning everyone. In his famous Stanford commencement speech, Steve Jobs talked about <strong>"connecting the dots"</strong>—how separate experiences and technologies come together to solve a human problem. Picture this: you are in a supermarket basement with zero 5G signal trying to share a grocery list, or cooking with flour on your hands when your mobile phone locks, your background timer freezes, and your steak overcooks. Today I present <strong>SimmerLink</strong>, a cross-platform Android and iOS application that connects four core networking dots from <strong>EI-1057</strong>: <strong>Offline-First SQLite + Native OS Radio APIs</strong>, <strong>MANET UDP Discovery</strong>, <strong>Full-Duplex WebSocket P2P Sync</strong>, and <strong>BLE 5.0 GATT Smart Sensors</strong>.'>
+      <div>
+        <div class="slide-kicker">
+          <span>Universitat Jaume I (UJI) · EI-1057 Mobile Networks &amp; Devices</span>
+          <span class="badge badge-accent">100% English Oral Defense</span>
+        </div>
+        <h1>SimmerLink: Connecting the Dots Across the Mobile Network Stack</h1>
+        <p class="subtitle">
+          An Offline-First Android &amp; iOS Culinary Companion Integrating <strong>BLE 5.0 GATT Sensors</strong>,
+          <strong>MANET UDP Discovery</strong>, <strong>Full-Duplex WebSocket P2P</strong>, and <strong>Multimodal Cloud AI</strong>.
+        </p>
 
-      <div class="grid-4">
-        <div class="card">
-          <span class="badge badge-primary">Dot 1 · Offline &amp; OS</span>
-          <h3 style="margin-top:10px;">SQLite + Native Radio</h3>
-          <p>Works at <strong>0 bps</strong> in supermarket basements via <code>Drift</code> + Kotlin <code>ConnectivityManager</code> &amp; <code>WifiManager</code>.</p>
+        <div class="grid-4" style="margin-top: 24px;">
+          <div class="card">
+            <span class="badge badge-primary">Dot 1 · Offline &amp; OS</span>
+            <h3 style="margin-top:10px;">SQLite + Native Radio</h3>
+            <p>Works at <strong>0 bps</strong> in supermarket basements via <code>Drift</code> + Kotlin <code>ConnectivityManager</code>, <code>WifiManager</code> &amp; iOS <code>getifaddrs</code>.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-accent">Dot 2 · MANET Discovery</span>
+            <h3 style="margin-top:10px;">UDP Broadcast :41234</h3>
+            <p>Zero-configuration peer discovery via <code>RawDatagramSocket</code> subnet beacons every 4 seconds.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-green">Dot 3 · WLAN Co-Op</span>
+            <h3 style="margin-top:10px;">Full-Duplex WS :8765</h3>
+            <p>Sub-10ms real-time shopping checkoffs &amp; Cook Mode step sync with <code>_pkt_id</code> loop prevention.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-purple">Dot 4 · WPAN &amp; WWAN</span>
+            <h3 style="margin-top:10px;">BLE 5.0 GATT + Gemini AI</h3>
+            <p>Binary <code>0x181A</code> Thermometer &amp; <code>0x181D</code> Scale codecs + ESP32 C++ firmware &amp; Gemini 2.5 Flash vision.</p>
+          </div>
         </div>
-        <div class="card">
-          <span class="badge badge-accent">Dot 2 · MANET Discovery</span>
-          <h3 style="margin-top:10px;">UDP Broadcast :41234</h3>
-          <p>Zero-configuration peer discovery via <code>RawDatagramSocket</code> subnet beacons every 4 seconds.</p>
+
+        <div class="card" style="margin-top: 18px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, #161926, #1d2236);">
+          <div>
+            <strong style="color: var(--primary); font-size: 14px;">Presentation Roadmap (Signposting):</strong>
+            <span style="color: var(--muted); font-size: 13.5px; margin-left: 8px;">1. Offline &amp; OS Lifecycle &rarr; 2. 5-Layer Stack &rarr; 3. Native Radio API &rarr; 4. UDP vs. TCP P2P &rarr; 5. BLE Binary Framing &rarr; 6. Visual Demo &amp; Verification</span>
+          </div>
+          <span class="badge badge-green">120 / 120 Tests Passing</span>
         </div>
-        <div class="card">
-          <span class="badge badge-green">Dot 3 · WLAN Co-Op</span>
-          <h3 style="margin-top:10px;">Full-Duplex WS :8765</h3>
-          <p>Sub-10ms real-time shopping checkoffs &amp; Cook Mode step sync with <code>_pkt_id</code> loop prevention.</p>
-        </div>
-        <div class="card">
-          <span class="badge badge-purple">Dot 4 · WPAN &amp; WWAN</span>
-          <h3 style="margin-top:10px;">BLE 5.0 GATT + Gemini AI</h3>
-          <p>Binary <code>0x181A</code> Thermometer &amp; <code>0x181D</code> Scale codecs + ESP32 C++ firmware &amp; Gemini 2.5 Flash vision.</p>
-        </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — SimmerLink Oral Defense</span>
+        <span>Slide 1 / 8</span>
       </div>
     </section>
 
     <!-- SLIDE 2: REAL-WORLD PROBLEM & OFFLINE-FIRST CORE -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: MOVING TO PROBLEM STATEMENT]</span> Let us begin with the fundamental reality of mobile devices from Theory 1 and Lab 1: connectivity is unreliable, and mobile operating systems aggressively suspend background execution. First, supermarket basements often have zero cellular reception. Mob Kitchen uses <strong>Drift over SQLite</strong> so every recipe, aisle-sorted ingredient, and portion calculation runs offline at zero bits per second. Second, when an Android or iOS screen locks during cooking, naive periodic timers freeze. We engineered <strong>Wall-Clock Lifecycle Timers</strong> that persist the absolute <code>targetEndTime</code> and listen to <code>AppLifecycleState.resumed</code>, recalculating exact remaining seconds immediately upon wake.'>
-      <div class="slide-kicker">1 · Mobile Context &amp; OS Lifecycle Resilience (EI-1057 Theory 1–2 &amp; Lab 1)</div>
-      <h2>Why Cloud-Only Kitchen Apps Fail on Mobile Devices</h2>
-      <p class="subtitle">Three physical kitchen constraints solved through clean mobile systems engineering:</p>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: MOVING TO PROBLEM STATEMENT]</span> Let us begin with the fundamental reality of mobile devices from Theory 1 and Lab 1: connectivity is unreliable, and mobile operating systems aggressively suspend background execution. First, supermarket basements often have zero cellular reception. SimmerLink uses <strong>Drift over SQLite</strong> so every recipe, aisle-sorted ingredient, and portion calculation runs offline at zero bits per second. Second, when an Android or iOS screen locks during cooking, naive periodic timers freeze. We engineered <strong>Wall-Clock Lifecycle Timers</strong> that persist the absolute <code>targetEndTime</code> and listen to <code>AppLifecycleState.resumed</code>, recalculating exact remaining seconds immediately upon wake.'>
+      <div>
+        <div class="slide-kicker">
+          <span>1 · Mobile Context &amp; OS Lifecycle Resilience (EI-1057 Theory 1–2 &amp; Lab 1)</span>
+          <span class="badge badge-primary">Offline-First Core</span>
+        </div>
+        <h2>Why Cloud-Only Kitchen Apps Fail on Mobile Devices</h2>
+        <p class="subtitle">Three physical kitchen &amp; supermarket constraints solved through clean mobile systems engineering:</p>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>1. Supermarket Dead Zones (0 bps)</h3>
-          <ul>
-            <li><strong>Problem:</strong> Basement supermarkets lose LTE/5G signal when users need their grocery list.</li>
-            <li><strong>Solution:</strong> Reactive relational <strong>SQLite (<code>Drift</code>)</strong> in <code>app_database.dart</code>.</li>
-            <li><strong>Impact:</strong> Deterministic ingredient aggregation (<code>SmartShoppingAggregator</code>) with zero network latency.</li>
-          </ul>
+        <div class="grid-3">
+          <div class="card">
+            <h3>1. Supermarket Dead Zones (0 bps)</h3>
+            <ul>
+              <li><strong>Problem:</strong> Basement supermarkets lose LTE/5G signal right when users need their grocery list.</li>
+              <li><strong>Solution:</strong> Reactive relational <strong>SQLite (<code>Drift</code>)</strong> in <code>app_database.dart</code> (<code>Recipes</code>, <code>Ingredients</code>, <code>ShoppingListItems</code>).</li>
+              <li><strong>Impact:</strong> Deterministic ingredient aggregation (<code>SmartShoppingAggregator</code>) with zero network latency.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>2. OS Background Doze &amp; Lock</h3>
+            <ul>
+              <li><strong>Problem:</strong> Android/iOS throttles <code>Timer.periodic</code> when the phone screen locks or backgrounds.</li>
+              <li><strong>Solution:</strong> Wall-clock <code>targetEndTime</code> timestamp + <code>WidgetsBindingObserver</code> (<code>AppLifecycleState.resumed</code>).</li>
+              <li><strong>Impact:</strong> Zero timer drift upon unlock + hands-free display wake via <code>WakelockPlus</code>.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>3. Multi-Device Kitchen Latency</h3>
+            <ul>
+              <li><strong>Problem:</strong> Two people shopping or cooking together need instant state sync without cloud logins.</li>
+              <li><strong>Solution:</strong> Local ad-hoc <strong>UDP :41234 discovery</strong> + <strong>WebSocket :8765</strong> P2P sync.</li>
+              <li><strong>Impact:</strong> <strong>&lt; 10 ms</strong> LAN latency across Android &amp; iOS devices.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card">
-          <h3>2. OS Background Doze &amp; Lock</h3>
-          <ul>
-            <li><strong>Problem:</strong> Android/iOS throttles <code>Timer.periodic</code> when the phone is locked or backgrounded.</li>
-            <li><strong>Solution:</strong> Wall-clock <code>targetEndTime</code> timestamp + <code>WidgetsBindingObserver</code> (<code>AppLifecycleState.resumed</code>).</li>
-            <li><strong>Impact:</strong> Zero timer drift + hands-free screen wake via <code>WakelockPlus</code>.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>3. Multi-Device Kitchen Latency</h3>
-          <ul>
-            <li><strong>Problem:</strong> Two people shopping or cooking together need instant sync without cloud accounts.</li>
-            <li><strong>Solution:</strong> Local ad-hoc <strong>UDP :41234 discovery</strong> + <strong>WebSocket :8765</strong> P2P sync.</li>
-            <li><strong>Impact:</strong> <strong>&lt; 10 ms</strong> LAN latency across Android &amp; iOS phones.</li>
-          </ul>
-        </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — Offline-First Architecture &amp; OS Lifecycle</span>
+        <span>Slide 2 / 8</span>
       </div>
     </section>
 
     <!-- SLIDE 3: MULTI-LAYER NETWORK STACK -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: ARCHITECTURE OVERVIEW]</span> Moving on to our global network architecture, this matrix maps every wireless protocol in Mob Kitchen directly to the EI-1057 syllabus. Notice how we match physical range and payload size to the right protocol: Kotlin and Swift native APIs for hardware radio telemetry, BLE 5.0 GATT for 2-byte and 3-byte sensor frames under 10 meters, UDP Broadcast for connectionless subnet discovery, TCP WebSockets for reliable state sync, and TLS HTTPS for cloud multimodal AI.'>
-      <div class="slide-kicker">2 · Complete EI-1057 Network Stack Mapping</div>
-      <h2>Five Networking Layers Orchestrated in One App</h2>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: ARCHITECTURE OVERVIEW]</span> Moving on to our global network architecture, this matrix maps every wireless protocol in SimmerLink directly to the EI-1057 syllabus. Notice how we match physical range and payload size to the right protocol: Kotlin and Swift native APIs for hardware radio telemetry, BLE 5.0 GATT for 2-byte and 3-byte sensor frames under 10 meters, UDP Broadcast for connectionless subnet discovery, TCP WebSockets for reliable state sync, and TLS HTTPS for cloud multimodal AI.'>
+      <div>
+        <div class="slide-kicker">
+          <span>2 · Complete EI-1057 Network Stack Mapping</span>
+          <span class="badge badge-accent">5 Wireless Layers</span>
+        </div>
+        <h2>Five Networking Layers Orchestrated in One App</h2>
+        <p class="subtitle" style="margin-bottom: 14px;">Selecting the optimal transport protocol for each physical range, power budget, and reliability requirement:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>EI-1057 Network Layer</th>
-            <th>Protocol / Port / UUID</th>
-            <th>Engineering Purpose in Mob Kitchen</th>
-            <th>Code Implementation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Native OS Radio API</strong></td>
-            <td><code>MethodChannel("com.mobkitchen/native_network")</code></td>
-            <td>Reads physical RSSI (dBm), Link Speed (Mbps), 2.4/5 GHz frequency &amp; BLE adapter state</td>
-            <td><code>MainActivity.kt</code> &amp; <code>AppDelegate.swift</code></td>
-          </tr>
-          <tr>
-            <td><strong>WPAN (Short-Range IoT)</strong></td>
-            <td><strong>BLE 5.0 GATT</strong> (<code>0x181A</code> / <code>0x181D</code>)</td>
-            <td>Binary core meat temperature (<code>0x2A6E</code>) &amp; 0.1g load-cell scale weight (<code>0x2A9D</code>)</td>
-            <td><code>lan_sync_engine.dart</code> &amp; <code>esp32_smart_kitchen_node.ino</code></td>
-          </tr>
-          <tr>
-            <td><strong>MANET (Ad-Hoc Discovery)</strong></td>
-            <td><strong>UDP Broadcast</strong> (<code>255.255.255.255:41234</code>)</td>
-            <td>Zero-config peer discovery (<code>mob_beacon</code> JSON) every 4 seconds on local subnet</td>
-            <td><code>LanSyncAndBleCodecEngine.startUdpDiscovery()</code></td>
-          </tr>
-          <tr>
-            <td><strong>WLAN (Local P2P Sync)</strong></td>
-            <td><strong>TCP HTTP + WebSocket</strong> (<code>Port 8765</code>)</td>
-            <td>Full-duplex Co-Op supermarket checkoffs &amp; active cooking step synchronization</td>
-            <td><code>startServer()</code> &amp; <code>connectToPeerWebSocket()</code></td>
-          </tr>
-          <tr>
-            <td><strong>WWAN (Cloud AI)</strong></td>
-            <td><strong>HTTPS REST / TLS</strong> (<code>gemini-2.5-flash</code>)</td>
-            <td>Multimodal fridge photo ingredient vision, URL recipe import &amp; AI Sous-Chef</td>
-            <td><code>GeminiRecipeServiceImpl</code> (<code>lib/features/ai/</code>)</td>
-          </tr>
-        </tbody>
-      </table>
+        <table>
+          <thead>
+            <tr>
+              <th>EI-1057 Network Layer</th>
+              <th>Protocol / Port / UUID</th>
+              <th>Engineering Purpose in SimmerLink</th>
+              <th>Code Implementation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Native OS Radio API</strong></td>
+              <td><code>MethodChannel("com.mobkitchen/native_network")</code></td>
+              <td>Reads physical RSSI (dBm), Link Speed (Mbps), 2.4/5 GHz band, <code>MulticastLock</code> &amp; BLE state</td>
+              <td><code>MainActivity.kt</code> &amp; <code>AppDelegate.swift</code></td>
+            </tr>
+            <tr>
+              <td><strong>WPAN (Short-Range IoT)</strong></td>
+              <td><strong>BLE 5.0 GATT</strong> (<code>0x181A</code> / <code>0x181D</code>)</td>
+              <td>Binary core meat temperature (<code>0x2A6E</code>, 2B) &amp; 0.1g load-cell scale weight (<code>0x2A9D</code>, 3B)</td>
+              <td><code>lan_sync_engine.dart</code> &amp; <code>esp32_smart_kitchen_node.ino</code></td>
+            </tr>
+            <tr>
+              <td><strong>MANET (Ad-Hoc Discovery)</strong></td>
+              <td><strong>UDP Broadcast</strong> (<code>255.255.255.255:41234</code>)</td>
+              <td>Zero-config peer discovery (<code>simmer_beacon</code> JSON) every 4s on local <code>/24</code> subnet</td>
+              <td><code>LanSyncAndBleCodecEngine.startUdpDiscovery()</code></td>
+            </tr>
+            <tr>
+              <td><strong>WLAN (Local P2P Sync)</strong></td>
+              <td><strong>TCP HTTP + WebSocket</strong> (<code>Port 8765</code>)</td>
+              <td>Full-duplex Co-Op supermarket checkoffs &amp; active cooking step synchronization</td>
+              <td><code>startServer()</code> &amp; <code>connectToPeerWebSocket()</code></td>
+            </tr>
+            <tr>
+              <td><strong>WWAN (Cloud AI)</strong></td>
+              <td><strong>HTTPS REST / TLS</strong> (<code>gemini-2.5-flash</code>)</td>
+              <td>Multimodal fridge photo ingredient vision, URL recipe import &amp; AI Sous-Chef</td>
+              <td><code>GeminiRecipeServiceImpl</code> (<code>lib/features/ai/</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — WPAN, MANET, WLAN &amp; WWAN Architecture</span>
+        <span>Slide 3 / 8</span>
+      </div>
     </section>
 
     <!-- SLIDE 4: NATIVE ANDROID NETWORK API -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: DEEP DIVE INTO LAB 5 — ANDROID NETWORK API]</span> Let us now focus on Lab 5: the Native Android Network API. Pure Dart sockets cannot inspect physical Wi-Fi link speed, radio carrier frequency, or Bluetooth hardware state. In <code>MainActivity.kt</code>, we registered <code>MethodChannel("com.mobkitchen/native_network")</code>. On Android, it queries <code>ConnectivityManager</code> and <code>NetworkCapabilities</code> for active transport and signal strength, <code>WifiManager</code> for link speed in Mbps and 2.4 vs 5 GHz band classification, and <code>BluetoothManager</code> for adapter state. In <code>AndroidManifest.xml</code>, we use Android 12+ privacy-preserving permissions (<code>NEARBY_WIFI_DEVICES</code> and <code>BLUETOOTH_SCAN</code> with <code>neverForLocation</code>).'>
-      <div class="slide-kicker">3 · Native Mobile OS Network APIs (EI-1057 Theory 5 &amp; Lab 5)</div>
-      <h2>Android Kotlin &amp; iOS Swift Radio Diagnostics Bridge</h2>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: DEEP DIVE INTO LAB 5 — ANDROID NETWORK API]</span> Let us now focus on Lab 5: the Native Android and iOS Network APIs. Pure Dart sockets cannot inspect physical Wi-Fi link speed, radio carrier frequency, or Bluetooth hardware state. In <code>MainActivity.kt</code>, we registered <code>MethodChannel("com.mobkitchen/native_network")</code>. On Android, it queries <code>ConnectivityManager</code> and <code>NetworkCapabilities</code> for active transport and signal strength, <code>WifiManager</code> for link speed in Mbps, 2.4 vs 5 GHz band classification, and hardware <code>MulticastLock</code>, and <code>BluetoothManager</code> for adapter state. In <code>AndroidManifest.xml</code>, we use Android 12+ privacy-preserving permissions with <code>neverForLocation</code>.'>
+      <div>
+        <div class="slide-kicker">
+          <span>3 · Native Mobile OS Network APIs (EI-1057 Theory 5 &amp; Lab 5)</span>
+          <span class="badge badge-green">Kotlin + Swift Bridge</span>
+        </div>
+        <h2>Android Kotlin &amp; iOS Swift Radio Diagnostics Bridge</h2>
+        <p class="subtitle" style="margin-bottom: 16px;">Bridging OS-level hardware radio telemetry into Flutter via <code>MethodChannel("com.mobkitchen/native_network")</code>:</p>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>🤖 Android Native (<code>MainActivity.kt</code>)</h3>
-          <ul>
-            <li><strong><code>ConnectivityManager</code> + <code>NetworkCapabilities</code>:</strong> Detects active transport (<code>TRANSPORT_WIFI</code>, <code>TRANSPORT_CELLULAR</code>, <code>TRANSPORT_ETHERNET</code>) and Android 10+ <code>caps.signalStrength</code>.</li>
-            <li><strong><code>WifiManager.connectionInfo</code>:</strong> Reads physical <strong>RSSI (dBm)</strong>, <strong>Link Speed (Mbps)</strong>, and <strong>Frequency (MHz)</strong> (classifying <code>&ge; 4900 MHz</code> as <strong>5 GHz</strong> vs. <strong>2.4 GHz</strong>).</li>
-            <li><strong><code>LinkProperties</code> &amp; <code>NetworkInterface</code>:</strong> Resolves non-loopback local IPv4 address (<code>192.168.x.x</code>).</li>
-            <li><strong><code>BluetoothManager.adapter</code>:</strong> Reports hardware BLE radio state (<code>ON</code> / <code>OFF</code>).</li>
-          </ul>
+        <div class="grid-2">
+          <div class="card">
+            <h3>🤖 Android Native (<code>MainActivity.kt</code>)</h3>
+            <ul>
+              <li><strong><code>ConnectivityManager</code> + <code>NetworkCapabilities</code>:</strong> Detects active transport (<code>TRANSPORT_WIFI</code>, <code>TRANSPORT_CELLULAR</code>, <code>TRANSPORT_ETHERNET</code>) and Android 10+ <code>caps.signalStrength</code>.</li>
+              <li><strong><code>WifiManager.connectionInfo</code>:</strong> Reads physical <strong>RSSI (dBm)</strong>, <strong>Link Speed (Mbps)</strong>, and <strong>Frequency (MHz)</strong> (classifying <code>&ge; 4900 MHz</code> as <strong>5 GHz</strong> vs. <strong>2.4 GHz</strong>).</li>
+              <li><strong><code>LinkProperties</code> &amp; <code>NetworkInterface</code>:</strong> Prioritizes private RFC-1918 LAN IPv4 on <code>wlan0</code> / <code>ap0</code> (<code>192.168.x.x</code>).</li>
+              <li><strong><code>BluetoothManager.adapter</code>:</strong> Reports hardware BLE radio state (<code>ON</code> / <code>OFF</code>).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🔒 Android 12–15 Security &amp; iOS <code>getifaddrs</code></h3>
+            <ul>
+              <li><strong><code>AndroidManifest.xml</code> (API 31–36):</strong>
+                <br/><code>NEARBY_WIFI_DEVICES</code> &amp; <code>BLUETOOTH_SCAN</code> with <code>android:usesPermissionFlags="neverForLocation"</code> — discovers BLE &amp; Wi-Fi peers without harvesting user GPS location.</li>
+              <li><strong><code>CHANGE_WIFI_MULTICAST_STATE</code> + <code>WifiManager.MulticastLock</code>:</strong> Acquires <code>simmerlink_udp_manet_lock</code> in <code>MainActivity.kt</code> so Android Wi-Fi chipsets do not filter incoming UDP Broadcast (<code>:41234</code>) packets.</li>
+              <li><strong>iOS Native (<code>AppDelegate.swift</code>):</strong> Inspects BSD POSIX <code>getifaddrs</code> on interface <code>en0</code> (<code>AF_INET</code>) to resolve Wi-Fi IPv4 natively on iPhone &amp; iOS Simulator.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card">
-          <h3>🔒 Android 12–15 Permissions &amp; iOS <code>getifaddrs</code></h3>
-          <ul>
-            <li><strong><code>AndroidManifest.xml</code> (API 31–36):</strong>
-              <br/><code>NEARBY_WIFI_DEVICES</code> &amp; <code>BLUETOOTH_SCAN</code> with <code>android:usesPermissionFlags="neverForLocation"</code> — scans BLE &amp; Wi-Fi peers without harvesting user GPS location.</li>
-            <li><strong><code>CHANGE_WIFI_MULTICAST_STATE</code> + <code>WifiManager.MulticastLock</code>:</strong> Acquires <code>mob_kitchen_udp_manet_lock</code> in <code>MainActivity.kt</code> so Android Wi-Fi chipsets do not filter incoming UDP Broadcast (<code>:41234</code>) beacons.</li>
-            <li><strong>iOS Native (<code>AppDelegate.swift</code>):</strong> Inspects BSD POSIX <code>getifaddrs</code> on interface <code>en0</code> (<code>AF_INET</code>) to resolve Wi-Fi IPv4 natively.</li>
-          </ul>
-        </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — Lab 5 Native Android &amp; iOS Network APIs</span>
+        <span>Slide 4 / 8</span>
       </div>
     </section>
 
     <!-- SLIDE 5: UDP MANET DISCOVERY VS TCP WEBSOCKET SYNC -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: LAB 3 &amp; LAB 4 — UDP VS TCP]</span> A key engineering question in EI-1057 is: why combine UDP and TCP in the same local network engine? We use UDP on Port 41234 for Phase 1 (Zero-Configuration Discovery) because TCP requires a unicast 3-way handshake and cannot broadcast to a subnet. Every 4 seconds, each phone broadcasts a <code>mob_beacon</code> UDP datagram to both <code>255.255.255.255:41234</code> and the directed <code>/24</code> subnet broadcast (e.g. <code>192.168.1.255</code>). Once discovered, Phase 2 upgrades automatically to a full-duplex TCP WebSocket on Port 8765. Crucially, to prevent infinite packet relay loops when two phones connect to each other simultaneously, we implemented a 256-entry <code>_seenPacketIds</code> ring buffer and outbound endpoint socket reuse.'>
-      <div class="slide-kicker">4 · MANET Discovery vs. Reliable P2P Sync (EI-1057 Lab 3 &amp; Lab 4)</div>
-      <h2>Why UDP Broadcast (:41234) + Full-Duplex WebSocket (:8765)?</h2>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: LAB 3 &amp; LAB 4 — UDP VS TCP]</span> A key engineering question in EI-1057 is: why combine UDP and TCP in the same local network engine? We use UDP on Port 41234 for Phase 1 (Zero-Configuration Discovery) because TCP requires a unicast 3-way handshake and cannot broadcast to a subnet. Every 4 seconds, each phone broadcasts a <code>simmer_beacon</code> UDP datagram to both <code>255.255.255.255:41234</code> and the directed <code>/24</code> subnet broadcast (e.g. <code>192.168.1.255</code>). Once discovered, Phase 2 upgrades automatically to a full-duplex TCP WebSocket on Port 8765. Crucially, to prevent infinite packet relay loops when two phones connect to each other simultaneously, we implemented a 256-entry <code>_seenPacketIds</code> ring buffer and outbound endpoint socket reuse.'>
+      <div>
+        <div class="slide-kicker">
+          <span>4 · MANET Discovery vs. Reliable P2P Sync (EI-1057 Lab 3 &amp; Lab 4)</span>
+          <span class="badge badge-accent">UDP :41234 + WS :8765</span>
+        </div>
+        <h2>Why UDP Broadcast (:41234) + Full-Duplex WebSocket (:8765)?</h2>
+        <p class="subtitle" style="margin-bottom: 16px;">Two-phase local peer-to-peer protocol in <code>lib/features/wireless/data/lan_sync_engine.dart</code>:</p>
 
-      <div class="grid-2">
-        <div class="card">
-          <span class="badge badge-accent">Phase 1 · Connectionless Discovery</span>
-          <h3 style="margin-top:8px;">UDP Broadcast (<code>RawDatagramSocket</code> :41234)</h3>
-          <ul>
-            <li>Binds to <code>0.0.0.0:41234</code> with <code>reuseAddress = true</code> and <code>broadcastEnabled = true</code>.</li>
-            <li>Broadcasts every <strong>4 seconds</strong> to <code>255.255.255.255:41234</code> + directed <code>/24</code> broadcast (<code>192.168.x.255</code>):
-              <br/><code>{"type":"mob_beacon","ip":"192.168.1.42","port":8765,"room":"MOB-2026"}</code></li>
-            <li><strong>Why not TCP scan?</strong> Scanning 254 IPs via TCP takes seconds and triggers OS rate limits; 1 UDP broadcast reaches the whole subnet in &lt; 2 ms.</li>
-          </ul>
+        <div class="grid-2">
+          <div class="card">
+            <span class="badge badge-accent">Phase 1 · Connectionless Discovery</span>
+            <h3 style="margin-top:8px;">UDP Broadcast (<code>RawDatagramSocket</code> :41234)</h3>
+            <ul>
+              <li>Binds to <code>0.0.0.0:41234</code> with <code>reuseAddress = true</code> and <code>broadcastEnabled = true</code>.</li>
+              <li>Broadcasts every <strong>4 seconds</strong> to <code>255.255.255.255:41234</code> + directed <code>/24</code> subnet broadcast (<code>192.168.x.255</code>):
+                <br/><code>{"type":"simmer_beacon","ip":"192.168.1.42","port":8765,"room":"SIMMER-2026"}</code></li>
+              <li><strong>Why not TCP scan?</strong> Scanning 254 IPs via TCP requires 254 3-way handshakes and triggers OS firewall rate limits; 1 UDP datagram reaches the subnet in <strong>&lt; 2 ms</strong>.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge badge-green">Phase 2 · Reliable Full-Duplex Sync</span>
+            <h3 style="margin-top:8px;">TCP HTTP + WebSocket (<code>HttpServer</code> :8765)</h3>
+            <ul>
+              <li>Upgrades discovered peers automatically to <code>ws://&lt;peer-ip&gt;:8765/ws</code> (with <code>POST /sync</code> HTTP fallback).</li>
+              <li><strong>Echo-Storm Prevention (<code>_pkt_id</code>):</strong> Every frame carries a unique ID checked against a 256-entry <code>_seenPacketIds</code> ring buffer so mutually connected phones never loop packets infinitely.</li>
+              <li><strong>Socket Reuse (<code>_outboundSocketsByEndpoint</code>):</strong> Reuses open WebSockets across periodic 4-second UDP beacons.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card">
-          <span class="badge badge-green">Phase 2 · Reliable Full-Duplex Sync</span>
-          <h3 style="margin-top:8px;">TCP HTTP + WebSocket (<code>HttpServer</code> :8765)</h3>
-          <ul>
-            <li>Upgrades discovered peers automatically to <code>ws://&lt;peer-ip&gt;:8765/ws</code> (with <code>POST /sync</code> HTTP fallback).</li>
-            <li><strong>Echo-Storm Prevention (<code>_pkt_id</code>):</strong> Every frame carries a unique ID checked against a 256-entry <code>_seenPacketIds</code> set so mutually connected phones never loop packets infinitely.</li>
-            <li><strong>Socket Reuse (<code>_outboundSocketsByEndpoint</code>):</strong> Reuses open WebSockets across periodic UDP beacons.</li>
-          </ul>
-        </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — MANET UDP Broadcast &amp; Full-Duplex WebSocket P2P</span>
+        <span>Slide 5 / 8</span>
       </div>
     </section>
 
     <!-- SLIDE 6: BLE 5.0 GATT BINARY FRAMING & INTERACTIVE INSPECTOR -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: THEORY 6 &amp; LAB 2 — BLUETOOTH LOW ENERGY]</span> Turning to the WPAN IoT layer: BLE 5.0 has a default ATT payload limit of 20 bytes, making verbose JSON inefficient for battery-powered probes. We implemented official Bluetooth SIG GATT binary framing in Dart <code>ByteData</code> and C++ ESP32 firmware. Service <code>0x181A</code> encodes temperature in 2 bytes (signed int16 little-endian, 0.01°C resolution). Service <code>0x181D</code> encodes weight in 3 bytes (flags + uint16 little-endian, 0.1g resolution). You can even test our live binary encoder right here on this slide.'>
-      <div class="slide-kicker">5 · WPAN IoT Telemetry &amp; Binary Framing (EI-1057 Theory 6 &amp; Lab 2)</div>
-      <h2>BLE 5.0 GATT Binary Codecs + ESP32 Firmware &amp; Physics Engine</h2>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>🌡 Service <code>0x181A</code> · Temperature (<code>0x2A6E</code>)</h3>
-          <p><strong>Format:</strong> 2-Byte Signed <code>int16</code> Little-Endian (<strong>0.01 &deg;C</strong> resolution)</p>
-          <div class="interactive-box">
-            <label style="font-size:12.5px;font-weight:700;">Interactive GATT 0x2A6E Encoder (°C): </label>
-            <input type="number" id="tempInput" value="56.00" step="0.25" style="width:90px;padding:4px;border-radius:6px;border:1px solid var(--border);background:#0c0d12;color:#fff;font-weight:800;" oninput="updateBleBytes()" />
-            <div class="byte-box" id="tempBytesBox">
-              <div class="byte-cell"><div class="hex">0xE0</div><div class="label">LSB (Byte 0)</div></div>
-              <div class="byte-cell"><div class="hex">0x15</div><div class="label">MSB (Byte 1)</div></div>
-              <div class="byte-cell"><div class="hex" style="color:var(--green);">5600</div><div class="label">Raw int16</div></div>
-            </div>
-          </div>
-          <p style="margin-top:10px;font-size:13px;">Models <strong>Newton's Law of Heating</strong>: <code>T(t) = T<sub>env</sub> + (T<sub>0</sub> &minus; T<sub>env</sub>)&middot;e<sup>&minus;kt</sup></code> with live ETA countdown.</p>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: THEORY 6 &amp; LAB 2 — BLUETOOTH LOW ENERGY]</span> Turning to the WPAN IoT layer: BLE 5.0 has a default ATT payload limit of 20 bytes, making verbose JSON inefficient for battery-powered probes. We implemented official Bluetooth SIG GATT binary framing in Dart <code>ByteData</code> and C++ ESP32 firmware. Service <code>0x181A</code> encodes temperature in 2 bytes (signed int16 little-endian, 0.01°C resolution). Service <code>0x181D</code> encodes weight in 3 bytes (flags + uint16 little-endian, 0.1g resolution).'>
+      <div>
+        <div class="slide-kicker">
+          <span>5 · WPAN IoT Telemetry &amp; Binary Framing (EI-1057 Theory 6 &amp; Lab 2)</span>
+          <span class="badge badge-purple">BLE 5.0 GATT Binary</span>
         </div>
+        <h2>BLE 5.0 GATT Binary Codecs + ESP32 Firmware &amp; Physics Engine</h2>
+        <p class="subtitle" style="margin-bottom: 16px;">Fitting within the 20-byte BLE ATT payload MTU with 90% less radio airtime than JSON:</p>
 
-        <div class="card">
-          <h3>⚖️ Service <code>0x181D</code> · Smart Scale (<code>0x2A9D</code>)</h3>
-          <p><strong>Format:</strong> 1-Byte Flags (<code>0x00</code> SI) + 2-Byte <code>uint16</code> Little-Endian (<strong>0.1 g</strong> resolution)</p>
-          <div class="interactive-box">
-            <label style="font-size:12.5px;font-weight:700;">Interactive GATT 0x2A9D Encoder (grams): </label>
-            <input type="number" id="weightInput" value="125.4" step="5.0" min="0" max="6500" style="width:90px;padding:4px;border-radius:6px;border:1px solid var(--border);background:#0c0d12;color:#fff;font-weight:800;" oninput="updateBleBytes()" />
-            <div class="byte-box" id="weightBytesBox">
-              <div class="byte-cell"><div class="hex">0x00</div><div class="label">Flags (SI)</div></div>
-              <div class="byte-cell"><div class="hex">0xE6</div><div class="label">LSB (Byte 1)</div></div>
-              <div class="byte-cell"><div class="hex">0x04</div><div class="label">MSB (Byte 2)</div></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>🌡 Service <code>0x181A</code> · Temperature (<code>0x2A6E</code>)</h3>
+            <p><strong>Format:</strong> 2-Byte Signed <code>int16</code> Little-Endian (<strong>0.01 &deg;C</strong> resolution)</p>
+            <div class="interactive-box">
+              <label style="font-size:12px;font-weight:700;">GATT 0x2A6E Little-Endian Frame (56.00 &deg;C Target Steak): </label>
+              <input type="number" id="tempInput" value="56.00" step="0.25" style="width:86px;padding:3px 6px;border-radius:6px;border:1px solid var(--border);background:#0c0d12;color:#fff;font-weight:800;" oninput="updateBleBytes()" />
+              <div class="byte-box" id="tempBytesBox">
+                <div class="byte-cell"><div class="hex">0xE0</div><div class="label">LSB (Byte 0)</div></div>
+                <div class="byte-cell"><div class="hex">0x15</div><div class="label">MSB (Byte 1)</div></div>
+                <div class="byte-cell"><div class="hex" style="color:var(--green);">5600</div><div class="label">Raw int16</div></div>
+              </div>
             </div>
+            <p style="margin-top:10px;font-size:13px;">Models <strong>Newton's Law of Heating</strong>: <code>T(t) = T<sub>env</sub> + (T<sub>0</sub> &minus; T<sub>env</sub>)&middot;e<sup>&minus;kt</sup></code> with live ETA countdown &amp; negative freezer support (<code>-18.50&deg;C</code>).</p>
           </div>
-          <p style="margin-top:10px;font-size:13px;">Matches <code>iot_firmware/esp32_smart_kitchen_node.ino</code> (<code>BLE2902</code> notifications + HTTP <code>POST /telemetry</code>).</p>
+
+          <div class="card">
+            <h3>⚖️ Service <code>0x181D</code> · Smart Scale (<code>0x2A9D</code>)</h3>
+            <p><strong>Format:</strong> 1-Byte Flags (<code>0x00</code> SI) + 2-Byte <code>uint16</code> Little-Endian (<strong>0.1 g</strong> resolution)</p>
+            <div class="interactive-box">
+              <label style="font-size:12px;font-weight:700;">GATT 0x2A9D Little-Endian Frame (125.4 g Pour): </label>
+              <input type="number" id="weightInput" value="125.4" step="5.0" min="0" max="6500" style="width:86px;padding:3px 6px;border-radius:6px;border:1px solid var(--border);background:#0c0d12;color:#fff;font-weight:800;" oninput="updateBleBytes()" />
+              <div class="byte-box" id="weightBytesBox">
+                <div class="byte-cell"><div class="hex">0x00</div><div class="label">Flags (SI)</div></div>
+                <div class="byte-cell"><div class="hex">0xE6</div><div class="label">LSB (Byte 1)</div></div>
+                <div class="byte-cell"><div class="hex">0x04</div><div class="label">MSB (Byte 2)</div></div>
+              </div>
+            </div>
+            <p style="margin-top:10px;font-size:13px;">Matches <code>iot_firmware/esp32_smart_kitchen_node.ino</code> (C++ <code>BLE2902</code> notifications + Wi-Fi HTTP <code>POST /telemetry</code>).</p>
+          </div>
         </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — BLE 5.0 GATT 0x181A &amp; 0x181D Binary Codecs</span>
+        <span>Slide 6 / 8</span>
       </div>
     </section>
 
-    <!-- SLIDE 7: ANDROID APK BUILD & TEST VERIFICATION -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: VERIFICATION &amp; LIVE ANDROID DEMO]</span> Before jumping into the live demonstration, let us review our engineering verification record. We compiled the complete Android APK with Gradle and Android SDK 36, passed <code>flutter analyze</code> with zero warnings, and executed 120 automated unit, widget, and real socket integration tests—including real loopback RawDatagramSocket UDP discovery and two-node mutual WebSocket loop prevention. Let us now demonstrate the application workflow.'>
-      <div class="slide-kicker">6 · Android APK Verification &amp; Live Demo Playbook</div>
-      <h2>100% Verified on Android &amp; Automated Socket Test Suite</h2>
+    <!-- SLIDE 7: VISUAL WALKTHROUGH OF ALL 3 SMART KITCHEN HUB TABS + VERIFICATION -->
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: VISUAL APP WALKTHROUGH &amp; VERIFICATION]</span> Let us now walk through the three tabs of the Smart Kitchen Wireless Hub and our verification metrics. Even without a physical Android cable in the classroom, you can see all three live screens right here—and running on our Mac simulator: First, on the left, the <strong>Device Radar tab</strong> queries <code>MethodChannel("com.mobkitchen/native_network")</code> to display Wi-Fi RSSI (-52 dBm), 866 Mbps 5 GHz link speed, local IPv4, and active BLE connections. Second, in the center, the <strong>Live Telemetry tab</strong> plots the GATT <code>0x2A6E</code> temperature curve toward 56°C with Newton heating ETA and the <code>0x2A9D</code> 0.1g Smart Scale with Tare calibration. Third, on the right, the <strong>Wi-Fi Co-Op tab</strong> binds TCP WebSocket Port 8765 and UDP Broadcast Port 41234, logging real-time peer shopping checkoffs and Cook Mode step synchronization.'>
+      <div>
+        <div class="slide-kicker">
+          <span>6 · Smart Kitchen Wireless Hub — 3-Tab Visual Walkthrough &amp; Verification</span>
+          <div>
+            <span class="badge badge-green">app-debug.apk (SDK 36)</span>
+            <span class="badge badge-accent" style="margin-left:6px;">0 Analyzer Issues</span>
+            <span class="badge badge-primary" style="margin-left:6px;">120 / 120 Tests Passing</span>
+          </div>
+        </div>
+        <h2 style="margin-bottom: 10px;">Live Wireless Hub Walkthrough: Device Radar · BLE Telemetry · Wi-Fi Co-Op</h2>
 
-      <div class="grid-3" style="margin-bottom:18px;">
-        <div class="card" style="border-color:var(--green);">
-          <span class="badge badge-green">Android APK Artifact</span>
-          <h3 style="margin-top:8px;font-size:22px;"><code>app-debug.apk</code></h3>
-          <p>Compiled cleanly via <code>flutter build apk --debug</code> (Kotlin <code>MainActivity.kt</code> + Android SDK 36).</p>
-        </div>
-        <div class="card" style="border-color:var(--accent);">
-          <span class="badge badge-accent">Static Analysis</span>
-          <h3 style="margin-top:8px;font-size:22px;">0 Issues Found</h3>
-          <p>Strict type safety across <code>lib/</code> and <code>test/</code> verified via <code>flutter analyze</code>.</p>
-        </div>
-        <div class="card" style="border-color:var(--primary);">
-          <span class="badge badge-primary">Automated Tests</span>
-          <h3 style="margin-top:8px;font-size:22px;">120 / 120 Passing</h3>
-          <p>Includes real <code>HttpServer</code> WebSocket P2P, <code>RawDatagramSocket</code> UDP, BLE codecs &amp; UI widget tests.</p>
+        <div class="grid-3">
+          <!-- PHONE SCREEN 1: TAB 1 DEVICE RADAR -->
+          <div class="phone-mockup">
+            <div class="phone-topbar">
+              <span>1 · Cihaz Radarı (Device Radar)</span>
+              <span style="color:var(--green);">● 2 BLE Aktif</span>
+            </div>
+            <div class="phone-tabs">
+              <div class="phone-tab active">Cihaz Radarı</div>
+              <div class="phone-tab">Canlı Telemetri</div>
+              <div class="phone-tab">Wi-Fi Co-Op</div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--green);">
+              <div class="mini-card-title">
+                <span>🌡 SimmerLink Probe Pro (BLE 0x181A)</span>
+                <span style="color:var(--green);">Bağlı ✓</span>
+              </div>
+              <div style="color:var(--muted);font-size:9.8px;">GATT 0x2A6E · AA:BB:CC:18:1A:01</div>
+              <div class="mini-chip-row">
+                <span class="mini-chip" style="color:var(--amber);">BLE 5.0 GATT</span>
+                <span class="mini-chip">-52 dBm (80%)</span>
+                <span class="mini-chip" style="color:var(--green);">🔋 94%</span>
+              </div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--green);">
+              <div class="mini-card-title">
+                <span>⚖️ MobScale Precision (0x181D)</span>
+                <span style="color:var(--green);">Bağlı ✓</span>
+              </div>
+              <div style="color:var(--muted);font-size:9.8px;">GATT 0x2A9D · 0.1g Load-Cell</div>
+              <div class="mini-chip-row">
+                <span class="mini-chip" style="color:var(--amber);">BLE 5.0 GATT</span>
+                <span class="mini-chip">-58 dBm (70%)</span>
+                <span class="mini-chip" style="color:var(--green);">🔋 87%</span>
+              </div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--accent); background: #141826;">
+              <div class="mini-card-title">
+                <span style="color:var(--amber);">📡 Native OS Network Diagnostics</span>
+                <span style="color:var(--accent);font-size:9px;">Sorgula ↻</span>
+              </div>
+              <div style="color:var(--muted);font-size:9.3px;">MethodChannel: <code>com.mobkitchen/native_network</code></div>
+              <div class="mini-chip-row">
+                <span class="mini-chip" style="color:var(--green);">Taşıyıcı: WIFI</span>
+                <span class="mini-chip" style="color:var(--amber);">RSSI: -52 dBm</span>
+                <span class="mini-chip" style="color:var(--accent);">866 Mbps (5 GHz)</span>
+                <span class="mini-chip">IPv4: 192.168.1.42</span>
+                <span class="mini-chip" style="color:var(--green);">BT: ON · MulticastLock</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHONE SCREEN 2: TAB 2 LIVE TELEMETRY -->
+          <div class="phone-mockup">
+            <div class="phone-topbar">
+              <span>2 · Canlı Telemetri (BLE GATT)</span>
+              <span style="color:var(--primary);">● CANLI AKIŞ</span>
+            </div>
+            <div class="phone-tabs">
+              <div class="phone-tab">Cihaz Radarı</div>
+              <div class="phone-tab active">Canlı Telemetri</div>
+              <div class="phone-tab">Wi-Fi Co-Op</div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--primary);">
+              <div class="mini-card-title">
+                <span>🌡 BLE Et &amp; Tava Termometresi</span>
+                <span style="color:var(--green);font-size:9.5px;">0x2A6E [0x31, 0x15]</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;">
+                <div style="background:#0c0d12;padding:6px;border-radius:7px;border:1px solid var(--border);">
+                  <div style="font-size:8.5px;color:var(--muted);font-weight:800;">ÇEKİRDEK SICAKLIK</div>
+                  <div style="font-size:18px;font-weight:900;color:var(--primary);">54.2°C</div>
+                  <div style="font-size:9px;color:var(--muted);">+14.5 °C/dk hız</div>
+                </div>
+                <div style="background:#0c0d12;padding:6px;border-radius:7px;border:1px solid var(--border);">
+                  <div style="font-size:8.5px;color:var(--muted);font-weight:800;">HEDEF (STEAK)</div>
+                  <div style="font-size:18px;font-weight:900;color:var(--amber);">56°C</div>
+                  <div style="font-size:9px;color:var(--green);">Tahmini: 0dk 08sn</div>
+                </div>
+              </div>
+              <!-- SVG Newton Heating Curve -->
+              <svg viewBox="0 0 260 44" style="width:100%;height:42px;background:#0c0d12;border-radius:6px;margin-top:6px;border:1px solid var(--border);">
+                <line x1="0" y1="10" x2="260" y2="10" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3" />
+                <polyline fill="none" stroke="#ff6b4a" stroke-width="2.5" points="6,38 45,33 90,27 135,21 180,16 225,13 254,11" />
+                <circle cx="254" cy="11" r="3" fill="#22c55e" />
+              </svg>
+              <div class="mini-chip-row" style="margin-top:5px;">
+                <span class="mini-chip" style="background:var(--primary);color:#fff;border-color:var(--primary);">Orta-Az Steak (56°C)</span>
+                <span class="mini-chip">🔥 Isıyı Artır (+7.5°C)</span>
+              </div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--green);">
+              <div class="mini-card-title">
+                <span>⚖️ BLE Akıllı Tartı (0x181D)</span>
+                <span style="color:var(--amber);">Dara Al (Tare)</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:2px;">
+                <div>
+                  <div style="font-size:9px;color:var(--muted);">Hedef: Makarna (400 g)</div>
+                  <div style="font-size:17px;font-weight:900;color:var(--green);">400.0 g</div>
+                </div>
+                <span class="mini-chip" style="color:var(--green);border-color:var(--green);">✅ Tam Gramaj! (0x00 0xA0 0x0F)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHONE SCREEN 3: TAB 3 WI-FI CO-OP -->
+          <div class="phone-mockup">
+            <div class="phone-topbar">
+              <span>3 · Wi-Fi Co-Op (UDP + WS P2P)</span>
+              <span style="color:var(--green);">● SUNUCU AKTİF</span>
+            </div>
+            <div class="phone-tabs">
+              <div class="phone-tab">Cihaz Radarı</div>
+              <div class="phone-tab">Canlı Telemetri</div>
+              <div class="phone-tab active">Wi-Fi Co-Op</div>
+            </div>
+
+            <div class="mini-card" style="border-color: var(--green);">
+              <div class="mini-card-title">
+                <span>🌐 Wi-Fi LAN Co-Op Sunucusu</span>
+                <span style="color:var(--green);">:8765 + :41234</span>
+              </div>
+              <div style="color:var(--muted);font-size:9.5px;">Aktif: <code>ws://192.168.1.42:8765/ws</code> · Oda: <code>SIMMER-2026</code></div>
+              <div class="mini-chip-row">
+                <span class="mini-chip" style="color:var(--green);">UDP MANET (:41234): AKTİF</span>
+                <span class="mini-chip" style="color:var(--accent);">Bağlı Eşler: 1</span>
+                <span class="mini-chip" style="color:var(--amber);">Adım: spicy_vodka_rigatoni:2/4</span>
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-card-title"><span>⚡ Co-Op Canlı Senkron Aksiyonları</span></div>
+              <div class="mini-chip-row">
+                <span class="mini-chip" style="color:var(--amber);">📲 Market İşaretlemesi Simüle Et</span>
+                <span class="mini-chip" style="color:var(--primary);">👨‍🍳 Simulate Peer Cook Step Sync</span>
+              </div>
+            </div>
+
+            <div class="mini-card" style="background:#0e1018;">
+              <div class="mini-card-title"><span>📋 Canlı Paket Günlüğü (Packet Log)</span></div>
+              <div style="font-size:9.3px;color:var(--muted);display:flex;flex-direction:column;gap:3px;">
+                <div><strong style="color:var(--amber);">⇄ Pixel 9 Pro (:41234):</strong> UDP <code>simmer_beacon</code> keşfedildi &rarr; WS bağlandı.</div>
+                <div><strong style="color:var(--primary);">⇄ Pixel 9 Pro (WS :8765):</strong> Cook Mode Sync: Step 2/4 (<code>_pkt_id</code> verified).</div>
+                <div><strong style="color:var(--green);">⇄ Sous-Chef iPhone:</strong> "Sarımsak" SQLite market listesinde işaretlendi!</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h3>📱 Live 60-Second Android Demonstration Flow</h3>
-        <div class="grid-3" style="margin-top:10px;">
-          <div>
-            <strong>Step 1 · Device Radar Tab (<em>Cihaz Radarı</em>)</strong>
-            <p>Show live <strong>Native OS Network Diagnostics</strong> card (Wi-Fi RSSI dBm, Mbps link speed, 5 GHz band, local IPv4) &amp; connect BLE Thermometer + Scale.</p>
-          </div>
-          <div>
-            <strong>Step 2 · Live Telemetry Tab (<em>Canlı Telemetri</em>)</strong>
-            <p>Select <em>Medium-Rare Steak (56°C)</em> preset, trigger a heat burst (+7.5°C) to show Newton heating ETA, and Tare + Pour on the 0.1g Smart Scale.</p>
-          </div>
-          <div>
-            <strong>Step 3 · Wi-Fi Co-Op Tab</strong>
-            <p>Start the <strong>Port 8765 WebSocket + Port 41234 UDP MANET Server</strong>, and trigger both a real-time peer supermarket checkoff &amp; <strong>Simulate Peer Cook Mode Step Sync</strong>.</p>
-          </div>
-        </div>
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — Smart Kitchen Wireless Hub Live Demo &amp; Verification</span>
+        <span>Slide 7 / 8</span>
       </div>
     </section>
 
     <!-- SLIDE 8: CONCLUSION, UJI RUBRIC CHECKLIST & Q&A -->
-    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: CONCLUSION &amp; Q&amp;A]</span> To conclude and connect all the dots: Mob Kitchen proves how an offline-first SQLite architecture, native Android and iOS network APIs, BLE 5.0 binary sensor codecs, MANET UDP discovery, and Full-Duplex WebSockets can work together in a real-world mobile product. As Steve Jobs said at Stanford—and as any chef would agree: <strong>"Stay Hungry, Stay Foolish."</strong> Thank you very much for your attention. I am happy to take any questions from the jury.'>
-      <div class="slide-kicker">7 · Conclusion, UJI Rubric Alignment &amp; Defense Q&amp;A</div>
-      <h2>"Stay Hungry, Stay Foolish" — Connecting Every Dot</h2>
+    <section class="slide" data-notes='<span class="cue">[SIGNPOSTING: CONCLUSION &amp; Q&amp;A]</span> To conclude and connect all the dots: SimmerLink proves how an offline-first SQLite architecture, native Android and iOS network APIs, BLE 5.0 binary sensor codecs, MANET UDP discovery, and Full-Duplex WebSockets can work together in a real-world mobile product. As Steve Jobs said at Stanford—and as any chef would agree: <strong>"Stay Hungry, Stay Foolish."</strong> Thank you very much for your attention. I am happy to take any questions from the jury.'>
+      <div>
+        <div class="slide-kicker">
+          <span>7 · Conclusion, UJI Rubric Alignment &amp; Defense Q&amp;A</span>
+          <span class="badge badge-green">Thank You · Q&amp;A</span>
+        </div>
+        <h2>"Stay Hungry, Stay Foolish" — Connecting Every Dot</h2>
+        <p class="subtitle" style="margin-bottom: 16px;">Full alignment with the EI-1057 curriculum and UJI English Oral Presentation Rubric:</p>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>✅ UJI Oral Presentation Rubric Coverage</h3>
-          <ul>
-            <li><strong>Storytelling &amp; Hook (Steve Jobs Framework):</strong> Relatable kitchen &amp; basement dead-zone story &rarr; 4 connected networking dots.</li>
-            <li><strong>Signposting &amp; Structure:</strong> Clear transitions across Problem &rarr; Stack &rarr; Native API &rarr; UDP/TCP &rarr; BLE &rarr; Verification.</li>
-            <li><strong>EI-1057 Technical Rigor:</strong> Real sockets (<code>RawDatagramSocket</code>, <code>HttpServer</code>, <code>WebSocket</code>), binary <code>ByteData</code> codecs, and Kotlin <code>MethodChannel</code>.</li>
-            <li><strong>Visual Do's &amp; Don'ts:</strong> High-contrast visual cards, interactive byte inspector, zero walls of text.</li>
-          </ul>
+        <div class="grid-2">
+          <div class="card">
+            <h3>✅ UJI Oral Presentation Rubric Coverage</h3>
+            <ul>
+              <li><strong>Storytelling &amp; Hook (Steve Jobs Framework):</strong> Relatable kitchen &amp; basement dead-zone story &rarr; 4 connected networking dots.</li>
+              <li><strong>Signposting &amp; Structure:</strong> Explicit transitions across Problem &rarr; Stack &rarr; Native API &rarr; UDP/TCP &rarr; BLE &rarr; Visual Demo.</li>
+              <li><strong>EI-1057 Technical Rigor:</strong> Real sockets (<code>RawDatagramSocket</code>, <code>HttpServer</code>, <code>WebSocket</code>), binary <code>ByteData</code> codecs, and Kotlin/Swift <code>MethodChannel</code>.</li>
+              <li><strong>Visual Do's &amp; Don'ts:</strong> High-contrast visual cards, byte frame diagrams, 3-tab mobile UI walkthrough, zero walls of text.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>💬 Ready for Jury Questions (Q&amp;A Highlights)</h3>
+            <ul>
+              <li><strong>Why UDP :41234 + TCP :8765?</strong> 1 UDP subnet broadcast discovers peers in &lt;2ms without 254 TCP handshakes; WebSocket guarantees ordered sync.</li>
+              <li><strong>How do you prevent WebSocket echo storms?</strong> Bounded 256-entry <code>_seenPacketIds</code> ring buffer + <code>_outboundSocketsByEndpoint</code> socket reuse.</li>
+              <li><strong>Why binary GATT <code>0x2A6E</code>/<code>0x2A9D</code> instead of JSON?</strong> Fits inside the 20-byte BLE ATT MTU (2–3 bytes vs. 35+ bytes JSON), saving 90% radio airtime.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card">
-          <h3>💬 Ready for Jury Questions (Q&amp;A Highlights)</h3>
-          <ul>
-            <li><strong>Why UDP :41234 + TCP :8765?</strong> 1 UDP subnet broadcast discovers peers in &lt;2ms without 254 TCP handshakes; WebSocket guarantees ordered sync.</li>
-            <li><strong>How do you prevent WebSocket echo storms?</strong> 256-entry <code>_seenPacketIds</code> ring buffer + <code>_outboundSocketsByEndpoint</code> socket reuse.</li>
-            <li><strong>Why binary GATT <code>0x2A6E</code>/<code>0x2A9D</code> instead of JSON?</strong> Fits inside the 20-byte BLE ATT MTU (2–3 bytes vs. 35+ bytes JSON), saving 90% radio airtime.</li>
-          </ul>
-        </div>
+      </div>
+
+      <div class="slide-print-footer">
+        <span>UJI · EI-1057 Mobile Networks &amp; Devices — Conclusion &amp; Jury Q&amp;A Defense</span>
+        <span>Slide 8 / 8</span>
       </div>
     </section>
   </main>
@@ -657,7 +1027,7 @@
   <aside class="speaker-drawer" id="speakerDrawer">
     <div class="speaker-header">
       <span>🎙 English Speaker Script &amp; Delivery Cues (UJI Rubric Aligned)</span>
-      <span>Keys: [← / →] Navigate · [S] Toggle Script · [T] Start/Pause Timer</span>
+      <span>Keys: [← / →] Navigate · [S] Toggle Script · [T] Start/Pause Timer · [P] Print PDF</span>
     </div>
     <div class="speaker-text" id="speakerText"></div>
   </aside>
@@ -741,6 +1111,7 @@
       if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
       if (e.key === 's' || e.key === 'S') { toggleNotes(); }
       if (e.key === 't' || e.key === 'T') { toggleTimer(); }
+      if (e.key === 'p' || e.key === 'P') { window.print(); }
     });
 
     renderSlide();

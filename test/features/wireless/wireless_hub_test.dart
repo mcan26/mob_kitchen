@@ -88,7 +88,7 @@ void main() {
       );
       final decoded = LanSyncAndBleCodecEngine.tryDecodeUdpBeaconBytes(encoded);
       expect(decoded, isNotNull);
-      expect(decoded!['type'], 'mob_beacon');
+      expect(decoded!['type'], 'simmer_beacon');
       expect(decoded['ip'], '192.168.1.77');
       expect(decoded['port'], 8765);
       expect(decoded['room'], 'MOB-2026');
@@ -522,37 +522,35 @@ void main() {
 
       // Radar tab shows BLE & Wi-Fi devices and Native OS Network Diagnostics card
       expect(find.text('Smart Kitchen BLE & Wireless Hub'), findsOneWidget);
-      expect(find.textContaining('MobProbe Pro'), findsOneWidget);
+      expect(find.textContaining('Probe Pro'), findsOneWidget);
       expect(
         find.textContaining('Native OS Network & Radio Diagnostics'),
         findsOneWidget,
       );
 
       // Switch to Live Telemetry tab
-      await tester.tap(find.text('Canlı Telemetri'));
+      await tester.tap(find.text('Live Telemetry'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Isıyı Artır (+7.5°C)'), findsOneWidget);
-      await tester.tap(find.text('Isıyı Artır (+7.5°C)'));
+      expect(find.text('Simulate Heat (+7.5°C)'), findsOneWidget);
+      await tester.tap(find.text('Simulate Heat (+7.5°C)'));
       await tester.pumpAndSettle();
 
       // Switch to Wi-Fi Co-Op tab
       await tester.tap(find.text('Wi-Fi Co-Op'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Wi-Fi LAN Co-Op Sunucusu'), findsOneWidget);
+      expect(find.textContaining('Wi-Fi LAN Co-Op Server'), findsOneWidget);
       expect(find.textContaining('UDP Broadcast MANET'), findsOneWidget);
-      final simBtn = find.text('Eş Telefondan Canlı Market İşaretlemesi Simüle Et');
+      final simBtn = find.text('Simulate Peer Grocery Check (Live Sync)');
       await tester.ensureVisible(simBtn);
       await tester.pumpAndSettle();
       await tester.tap(simBtn);
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Sarımsak'), findsOneWidget);
+      expect(find.textContaining('Garlic'), findsOneWidget);
 
-      final cookSimBtn = find.text(
-        'Simulate Peer Cook Mode Step Sync (Co-Op Adım Senkronu)',
-      );
+      final cookSimBtn = find.text('Simulate Peer Cook Mode Step Sync');
       await tester.ensureVisible(cookSimBtn);
       await tester.pumpAndSettle();
       await tester.tap(cookSimBtn);

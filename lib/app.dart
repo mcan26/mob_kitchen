@@ -10,7 +10,7 @@ class MobKitchenApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'Mob Kitchen',
+      title: 'SimmerLink',
       debugShowCheckedModeBanner: false,
       theme: MobTheme.darkTheme,
       routerConfig: ref.watch(appRouterProvider),

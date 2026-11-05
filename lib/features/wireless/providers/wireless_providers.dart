@@ -32,7 +32,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
   static const List<SmartKitchenDevice> _defaultCatalogDevices = [
     SmartKitchenDevice(
       id: 'ble_probe_01',
-      name: 'MobProbe Pro (BLE Et & Tava Termometresi)',
+      name: 'SimmerLink Probe Pro (BLE Meat Thermometer)',
       type: KitchenDeviceType.meatThermometer,
       protocol: WirelessProtocol.bleGatt,
       rssiDbm: -52,
@@ -43,7 +43,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     ),
     SmartKitchenDevice(
       id: 'ble_scale_01',
-      name: 'MobScale Precision (BLE Akıllı Tartı)',
+      name: 'SimmerLink Scale Precision (BLE Smart Scale)',
       type: KitchenDeviceType.smartScale,
       protocol: WirelessProtocol.bleGatt,
       rssiDbm: -58,
@@ -65,7 +65,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     ),
     SmartKitchenDevice(
       id: 'peer_phone_01',
-      name: 'Sous-Chef Telefonu (iPhone / Android Co-Op)',
+      name: 'Sous-Chef Companion (iPhone / Android Co-Op)',
       type: KitchenDeviceType.peerPhone,
       protocol: WirelessProtocol.wifiLan,
       rssiDbm: -49,
@@ -165,7 +165,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     final ip = beacon['ip']?.toString() ?? '192.168.1.99';
     final port = (beacon['port'] as num?)?.toInt() ?? 8765;
     final room = beacon['room']?.toString() ?? state.roomCode;
-    final deviceName = beacon['device']?.toString() ?? 'MANET Eş Telefon';
+    final deviceName = beacon['device']?.toString() ?? 'MANET Peer Companion';
     final endpoint = '$ip:$port';
     final isNewPeer = !state.discoveredPeers.contains(endpoint);
 
@@ -191,7 +191,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
               type: 'udp_beacon',
               senderDevice: '$deviceName ($endpoint)',
               description:
-                  'UDP Broadcast (Port 41234) MANET keşfi: Oda $room üzerinde eş cihaz bulundu ve otomatik bağlandı.',
+                  'UDP Broadcast (:41234) MANET discovery: Peer found on room $room and connected.',
               timestamp: DateTime.now(),
             ),
             ...state.syncEvents.take(19),
@@ -208,7 +208,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     unawaited(_engine.connectToPeerWebSocket(ip, port));
   }
 
-  /// Bir BLE veya Wi-Fi cihazının bağlantısını açar/kapatır.
+  /// Toggles connection for a BLE or Wi-Fi device.
   void toggleDeviceConnection(String deviceId) {
     final updated = state.devices.map((d) {
       if (d.id == deviceId) {
@@ -227,8 +227,8 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
       type: toggledDevice.isConnected ? 'connect' : 'disconnect',
       senderDevice: toggledDevice.name,
       description: toggledDevice.isConnected
-          ? '${toggledDevice.protocol.badge} üzerinden bağlantı kuruldu (${toggledDevice.rssiDbm} dBm).'
-          : 'Cihaz bağlantısı sonlandırıldı.',
+          ? 'Connected via ${toggledDevice.protocol.badge} (${toggledDevice.rssiDbm} dBm).'
+          : 'Device disconnected.',
       timestamp: DateTime.now(),
     );
 
@@ -409,9 +409,9 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     final event = WirelessSyncEvent(
       id: 'lan_${DateTime.now().microsecondsSinceEpoch}',
       type: 'lan_host',
-      senderDevice: 'Bu Telefon ($ip:$port)',
+      senderDevice: 'This Device ($ip:$port)',
       description:
-          'Wi-Fi P2P Sunucusu (HTTP/WS :$port) ve UDP MANET Broadcast (:41234) başlatıldı.',
+          'Wi-Fi P2P Server (HTTP/WS :$port) & UDP MANET Broadcast (:41234) started.',
       timestamp: DateTime.now(),
     );
 
@@ -424,11 +424,11 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     );
   }
 
-  /// Gelen kablosuz paketi doğrudan işlemek için dışa açık yardımcı metot.
+  /// Public helper method to process an incoming packet directly.
   Future<void> processIncomingPacket(Map<String, dynamic> packet) =>
       _handleIncomingWirelessPacket(packet);
 
-  /// Gerçek HTTP/WebSocket üzerinden gelen telemetri, market veya pişirme senkron paketini işler.
+  /// Handles incoming telemetry, grocery, or cooking sync packet over HTTP/WebSocket.
   Future<void> _handleIncomingWirelessPacket(Map<String, dynamic> packet) async {
     final nestedPayload = packet['payload'] is Map
         ? Map<String, dynamic>.from(packet['payload'] as Map)
@@ -436,7 +436,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     final data = <String, dynamic>{...nestedPayload, ...packet};
 
     final type = data['type'] as String? ?? 'telemetry';
-    final sender = data['sender'] as String? ?? 'Uzak Cihaz';
+    final sender = data['sender'] as String? ?? 'Remote Device';
 
     if (type == 'telemetry' || data.containsKey('temp_c') || data.containsKey('weight_g')) {
       final tempC = (data['temp_c'] as num?)?.toDouble();
@@ -466,7 +466,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
             type: 'telemetry',
             senderDevice: sender,
             description:
-                'Canlı telemetri alındı: ${tempC != null ? "${tempC.toStringAsFixed(1)}°C " : ""}${weightG != null ? "${weightG.toStringAsFixed(0)}g" : ""}',
+                'Live telemetry received: ${tempC != null ? "${tempC.toStringAsFixed(1)}°C " : ""}${weightG != null ? "${weightG.toStringAsFixed(0)}g" : ""}',
             timestamp: DateTime.now(),
           ),
           ...state.syncEvents.take(19),
@@ -478,7 +478,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     if (type == 'shopping_toggle' || type == 'shopping_item_toggle') {
       final itemId = (data['item_id'] ?? data['itemId'])?.toString();
       final itemName =
-          (data['item_name'] ?? data['name'] ?? data['item_Name'])?.toString() ?? 'Ürün';
+          (data['item_name'] ?? data['name'] ?? data['item_Name'])?.toString() ?? 'Item';
       final explicitChecked = (data['checked'] ?? data['is_checked']) as bool?;
       if (itemId != null && itemId.isNotEmpty) {
         try {
@@ -492,7 +492,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
       }
 
       final description = data['description']?.toString() ??
-          '"$itemName" market listesinde eşzamanlı işaretlendi!';
+          '"$itemName" updated on grocery list via Co-Op!';
 
       state = state.copyWith(
         syncEvents: [
@@ -514,7 +514,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
       final stepIndex = ((data['stepIndex'] ?? data['step_index']) as num?)?.toInt() ?? 1;
       final totalSteps = ((data['totalSteps'] ?? data['total_steps']) as num?)?.toInt() ?? 1;
       final description = data['description']?.toString() ??
-          'Co-Op Pişirme Senkronu ($recipeId): Adım $stepIndex/$totalSteps';
+          'Co-Op Cook Sync ($recipeId): Step $stepIndex/$totalSteps';
 
       state = state.copyWith(
         lastSyncedCookStep: '$recipeId:$stepIndex/$totalSteps',
@@ -532,8 +532,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     }
   }
 
-  /// İkinci bir telefondan (Android/iOS partner) canlı market veya pişirme senkronu
-  /// gelmiş gibi gerçek SQLite veritabanını güncelleyen demo aksiyonu.
+  /// Simulates a peer device updating the shopping list.
   Future<void> simulatePeerShoppingSync() async {
     try {
       final items = _ref.read(shoppingListItemsProvider).valueOrNull;
@@ -554,12 +553,11 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     await _handleIncomingWirelessPacket({
       'type': 'shopping_toggle',
       'sender': 'Sous-Chef Android (Wi-Fi LAN)',
-      'item_name': 'Sarımsak (Manav Reyonu)',
+      'item_name': 'Garlic (Produce)',
     });
   }
 
-  /// İkinci bir telefondan (Android/iOS partner) canlı Pişirme Modu (Cook Mode)
-  /// adım geçişi (`cook_step_sync`) gelmiş gibi durumu ve paket günlüğünü güncelleyen demo aksiyonu.
+  /// Simulates peer cook mode step progression.
   Future<void> simulatePeerCookStepSync() async {
     const recipeId = 'spicy_vodka_rigatoni';
     const totalSteps = 4;
@@ -577,12 +575,11 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
       'stepIndex': nextStep,
       'totalSteps': totalSteps,
       'description':
-          'Co-Op Cook Mode Sync ($recipeId): Step $nextStep/$totalSteps (Adım $nextStep/$totalSteps)',
+          'Co-Op Cook Mode Sync ($recipeId): Step $nextStep/$totalSteps',
     });
   }
 
-  /// Başka bir telefonun IP:Port adresine çift yönlü WebSocket ve HTTP `/sync`
-  /// üzerinden senkronizasyon el sıkışması (handshake) gönderir.
+  /// Sends a handshake ping to peer IP:Port via bi-directional WebSocket and HTTP fallback.
   Future<bool> sendSyncPingToPeer(String ipAndPort) async {
     final parts = ipAndPort.trim().split(':');
     final host = parts.first;
@@ -590,8 +587,8 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
 
     final payload = <String, dynamic>{
       'type': 'shopping_toggle',
-      'sender': 'Mob Kitchen (${state.localIpAddress})',
-      'item_name': 'Canlı Co-Op El Sıkışma (Handshake)',
+      'sender': 'SimmerLink (${state.localIpAddress})',
+      'item_name': 'Live Co-Op Handshake',
     };
 
     final wsOk = await _engine.connectToPeerWebSocket(host, port);
@@ -611,8 +608,8 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
       type: ok ? 'peer_ok' : 'peer_sim',
       senderDevice: '$host:$port',
       description: ok
-          ? 'Hedef cihazla çift yönlü WebSocket/HTTP el sıkışması başarılı!'
-          : 'Paket yerel ağa yayınlandı (Simülasyon Onayı: $host:$port).',
+          ? 'Bi-directional WebSocket/HTTP handshake successful!'
+          : 'Packet dispatched to local network (Simulated Ack: $host:$port).',
       timestamp: DateTime.now(),
     );
 
@@ -622,7 +619,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     return ok;
   }
 
-  /// Yerel Wi-Fi P2P ağına canlı bir Co-Op olayı (market tiki veya pişirme adımı) yayınlar.
+  /// Broadcasts a live Co-Op event over local Wi-Fi.
   void broadcastCoOpEvent(
     String type,
     String description, {
@@ -630,7 +627,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
   }) {
     final packet = <String, dynamic>{
       'type': type,
-      'sender': 'Mob Kitchen (${state.localIpAddress})',
+      'sender': 'SimmerLink (${state.localIpAddress})',
       'description': description,
       if (payload != null) ...payload,
     };
@@ -639,7 +636,7 @@ class SmartKitchenHubNotifier extends StateNotifier<SmartKitchenHubState> {
     final event = WirelessSyncEvent(
       id: 'coop_${DateTime.now().microsecondsSinceEpoch}',
       type: type,
-      senderDevice: 'Bu Telefon (${state.localIpAddress})',
+      senderDevice: 'This Device (${state.localIpAddress})',
       description: description,
       timestamp: DateTime.now(),
     );

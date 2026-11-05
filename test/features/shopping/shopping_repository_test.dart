@@ -41,7 +41,7 @@ void main() {
 
       final items = await shoppingRepo.watchItems().first;
       expect(items, isNotEmpty);
-      expect(items.any((i) => i.name.contains('Kemiksiz derisiz tavuk but')), isTrue);
+      expect(items.any((i) => i.name.contains('chicken thighs')), isTrue);
     });
 
     test('malzemenin isChecked durumu güncellenir ve kalıcı olur', () async {
@@ -64,7 +64,7 @@ void main() {
       await shoppingRepo.addOrUpdateRecipeInPlan(recipe.id, 2);
 
       var items = await shoppingRepo.watchItems().first;
-      final chicken = items.firstWhere((i) => i.name.contains('Kemiksiz derisiz tavuk but'));
+      final chicken = items.firstWhere((i) => i.name.contains('chicken thighs'));
       expect(chicken.aggregatedAmount, 400.0);
 
       // Tavuğu aldık diye işaretle
@@ -74,7 +74,7 @@ void main() {
       await shoppingRepo.addOrUpdateRecipeInPlan(recipe.id, 4);
 
       items = await shoppingRepo.watchItems().first;
-      final updatedChicken = items.firstWhere((i) => i.name.contains('Kemiksiz derisiz tavuk but'));
+      final updatedChicken = items.firstWhere((i) => i.name.contains('chicken thighs'));
       expect(updatedChicken.aggregatedAmount, 800.0);
       expect(updatedChicken.isChecked, isTrue, reason: 'Checked durumu korunmalıdır');
     });

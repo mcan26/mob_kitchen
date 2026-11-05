@@ -13,7 +13,7 @@ class CatalogPreviewScreen extends ConsumerWidget {
     final recipes = ref.watch(allRecipesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Mob Kitchen · Katalog')),
+      appBar: AppBar(title: const Text('SimmerLink · Catalog')),
       body: recipes.when(
         data: (list) => ListView.separated(
           itemCount: list.length,
@@ -23,8 +23,8 @@ class CatalogPreviewScreen extends ConsumerWidget {
             return ListTile(
               title: Text(r.title),
               subtitle: Text(
-                '${r.category.label} · ${r.totalTimeMinutes} dk · ${r.macros.proteinG} g protein · '
-                '${r.ingredients.length} malzeme · ${r.steps.length} adım',
+                '${r.category.label} · ${r.totalTimeMinutes} min · ${r.macros.proteinG} g protein · '
+                '${r.ingredients.length} ingredients · ${r.steps.length} steps',
               ),
               trailing: IconButton(
                 icon: Icon(r.isFavorite ? Icons.favorite : Icons.favorite_border),
@@ -34,7 +34,7 @@ class CatalogPreviewScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Hata: $e')),
+        error: (e, _) => Center(child: Text('Error: $e')),
       ),
     );
   }

@@ -36,8 +36,8 @@ class GeminiRecipeServiceImpl implements GeminiRecipeService {
     final apiKey = _apiKeyRepo.getApiKey();
     if (apiKey.isEmpty) {
       throw StateError(
-        'Gemini API anahtarı ayarlanmamış. Lütfen uygulama ayarlarından veya '
-        '--dart-define=GEMINI_API_KEY=... ile geçerli bir API anahtarı sağlayın.',
+        'Gemini API key is not configured. Please provide a valid key in settings or via '
+        '--dart-define=GEMINI_API_KEY=...',
       );
     }
 
@@ -75,21 +75,21 @@ class GeminiRecipeServiceImpl implements GeminiRecipeService {
     final userPrompt = StringBuffer();
     if (ingredients.isNotEmpty) {
       userPrompt
-        ..writeln('Elimdeki mevcut malzemeler şunlar:')
+        ..writeln('Available ingredients in my kitchen:')
         ..writeln(ingredients.map((e) => '- $e').join('\n'));
     } else if (imageBytes != null && imageBytes.isNotEmpty) {
       userPrompt.writeln(
-        'Ekteki buzdolabı / tezgah / malzeme fotoğrafındaki tüm yenilebilir gıda malzemelerini tespit et.',
+        'Identify all edible ingredients visible in this fridge / countertop / pantry photograph.',
       );
     }
 
     if (additionalPrompt != null && additionalPrompt.trim().isNotEmpty) {
-      userPrompt.writeln('\nÖzel istek / odak: ${additionalPrompt.trim()}');
+      userPrompt.writeln('\nSpecial request / culinary focus: ${additionalPrompt.trim()}');
     }
     userPrompt.writeln(
-      '\nBu malzemeleri (ve varsa fotoğraftaki ürünleri) temel alan, eksik temel kiler ürünlerini '
-      '(tuz, yağ, un, baharat vb.) akıllıca tamamlayan, Mob Kitchen ruhuna uygun ultra lezzetli, '
-      'çıtır/kremsi dokulu bir tarif üret.',
+      '\nBased on these ingredients (and any items in the photo), complete pantry staples '
+      '(salt, oil, flour, spices, etc.) thoughtfully, creating a vibrant, delicious, '
+      'SimmerLink-style meal with rich textures and deep flavor.',
     );
 
     parts.add(TextPart(userPrompt.toString()));
@@ -101,7 +101,7 @@ class GeminiRecipeServiceImpl implements GeminiRecipeService {
     final response = await model.generateContent([Content.multi(parts)]);
     final rawText = response.text;
     if (rawText == null || rawText.trim().isEmpty) {
-      throw StateError('Gemini API boş yanıt döndürdü.');
+      throw StateError('Gemini API returned an empty response.');
     }
 
     final recipeJson = jsonDecode(rawText) as Map<String, dynamic>;
@@ -133,25 +133,25 @@ class GeminiRecipeServiceImpl implements GeminiRecipeService {
 
     final sourceJsonStr = jsonEncode(sourceRecipe.toJson());
     final prompt = '''
-Mevcut bir Mob Kitchen tarifini kullanıcının isteği doğrultusunda yeniden kurgula (AI Remix).
+Re-imagine and customize an existing SimmerLink recipe according to user preferences (AI Remix).
 
-MEVCUT KAYNAK TARİF:
+ORIGINAL SOURCE RECIPE:
 $sourceJsonStr
 
-KULLANICININ REMİX İSTEĞİ:
+USER'S REMIX INSTRUCTION:
 "$remixInstruction"
 
-GÖREV:
-1. Kaynak tarifin ruhunu ve lezzet dengesini koru ancak kullanıcının istek ve kısıtlarına tam uyum sağla.
-2. Malzeme listesini, porsiyonu, reyonları, market ipuçlarını (buying_tip) ve alternatifleri (substitute_option) güncelle.
-3. Adımları yeni tekniğe göre yeniden yaz (örn. fırından tavaya geçtiyse süreler, duyusal işaretler ve şef ipuçları buna göre güncellenmeli).
-4. Altın kuralları (chef_golden_rules) yeni tekniğe göre revize et.
+MISSION:
+1. Preserve the soul and flavor harmony of the original dish while fully complying with the user's constraints.
+2. Update ingredient quantities, supermarket aisles, buying tips, and substitute options.
+3. Rewrite the steps to match the adapted technique (e.g. if switching from oven to pan, adjust timings, sensory cues, and chef tips accordingly).
+4. Revise chef golden rules (chef_golden_rules) for the new technique.
 ''';
 
     final response = await model.generateContent([Content.text(prompt)]);
     final rawText = response.text;
     if (rawText == null || rawText.trim().isEmpty) {
-      throw StateError('Gemini API boş yanıt döndürdü.');
+      throw StateError('Gemini API returned an empty response.');
     }
 
     final recipeJson = jsonDecode(rawText) as Map<String, dynamic>;
@@ -173,13 +173,13 @@ GÖREV:
   }) async {
     final profile = _getTasteProfile();
     final systemPrompt = '''
-Sen mutfakta yemek pişiren kullanıcının yanında duran kıdemli bir Mob Kitchen Sous-Chef'isin.
-Kullanıcının mutfak ekipmanları: ${profile.equipment.map((e) => e.label).join(', ')}.
-Kullanıcı şu an yemek yapıyor, elleri kirli ve tavası ocakta!
-Cevapların:
-- Çok hızlı, pratik ve doğrudan uygulanabilir olmalı (en fazla 2-4 kısa cümle).
-- Panik yapmasını engellemeli, sorunu mutfak kimyasıyla çözmeli (örn: sos kesildiyse soğuk su ekle, et yapıştıysa 30 saniye dokunma).
-- Sadece soruya odaklan; gereksiz tebrik veya uzun giriş cümleleri kurma.
+You are the veteran Sous-Chef at SimmerLink, standing right next to the user in the kitchen.
+User equipment available: ${profile.equipment.map((e) => e.label).join(', ')}.
+The user is actively cooking right now with sauce simmering or food in the hot pan!
+Your answers must:
+- Be fast, practical, and immediately actionable (at most 2-4 short sentences).
+- Prevent panic with real kitchen chemistry (e.g., if sauce broke add 1 tbsp cold liquid, if meat stuck wait 30 seconds for Maillard release).
+- Focus 100% on the solution; no fluff, verbose greetings, or filler.
 ''';
 
     final model = _createModel(
@@ -195,20 +195,20 @@ Cevapların:
     );
 
     final prompt = '''
-Şu an yapılan tarif: "${currentRecipe.title}"
-Kullanıcının bulunduğu adım (#${step.stepNumber} - ${step.title}):
-Talimat: "${step.instruction}"
-Duyusal İşaret: "${step.sensoryCue}"
-Şef İpucu: "${step.chefTip}"
+Current Recipe: "${currentRecipe.title}"
+User's Current Step (#${step.stepNumber} - ${step.title}):
+Instruction: "${step.instruction}"
+Sensory Cue: "${step.sensoryCue}"
+Chef Tip: "${step.chefTip}"
 
-Kullanıcının acil sorusu:
+User's Urgent Kitchen Question:
 "$question"
 
-Ne yapması gerektiğini tek bir şef refleksiyle kısaca söyle:
+Explain exactly what they should do right now:
 ''';
 
     final response = await model.generateContent([Content.text(prompt)]);
-    return response.text?.trim() ?? 'Ateşi hafifçe kısıp malzemeyi kontrol edin ve tavaya biraz sıvı ekleyin.';
+    return response.text?.trim() ?? 'Lower heat slightly, check pan liquid level, and stir gently.';
   }
 
   @override
@@ -228,24 +228,24 @@ Ne yapması gerektiğini tek bir şef refleksiyle kısaca söyle:
     );
 
     final prompt = '''
-Kullanıcı sosyal medyadan (Instagram Reels, TikTok, YouTube Shorts), bir yemek blogu linkinden veya açıklama metninden bir tarif aktarmak istiyor.
+The user wants to import a recipe from social media (Instagram Reels, TikTok, YouTube Shorts), food blog URL, or raw text.
 
-KULLANICININ GİRDİSİ (LİNK VEYA METİN):
+USER INPUT:
 """
 ${urlOrText.trim()}
 """
 
-GÖREV:
-1. Girdideki yemeği, malzemeleri, oranları ve pişirme adımlarını analiz et. Eksik bırakılmış gramajları veya süreleri profesyonel şef bilginle tamamla.
-2. Kullanıcının kişisel mutfak profilindeki ekipman ve alerji kurallarına tam uyum sağla.
-3. Her adıma mutlaka duyusal işaret (sensory_cue), şef sırrı (chef_tip) ve kritik adımlara zamanlayıcı (timer_seconds) ekle.
-4. Her malzemeye uygun süpermarket reyonu (aisle_category), market tüyosu (buying_tip) ve alternatif (substitute_option) ata.
+MISSION:
+1. Analyze the dish, ingredients, ratios, and cooking steps. Fill in any missing metric grammages or timings with professional chef knowledge.
+2. Comply strictly with user kitchen equipment and allergy restrictions.
+3. Supply sensory cues, chef tips, and timer_seconds for timed cooking steps.
+4. Categorize all ingredients into appropriate aisle_category with buying tips and substitute options.
 ''';
 
     final response = await model.generateContent([Content.text(prompt)]);
     final rawText = response.text;
     if (rawText == null || rawText.trim().isEmpty) {
-      throw StateError('Gemini API boş yanıt döndürdü.');
+      throw StateError('Gemini API returned an empty response.');
     }
 
     final recipeJson = jsonDecode(rawText) as Map<String, dynamic>;
@@ -260,47 +260,47 @@ GÖREV:
 
   static String _buildChefSystemPrompt(PersonalTasteProfile profile) {
     final buffer = StringBuffer()
-      ..writeln('Sen "Mob Kitchen" (Mob) ekolünün Baş Ar-Ge Şefisin.')
-      ..writeln('Tariflerin daima: cesur, bol soslu, çıtır/ipeksi doku kontrastlı, haftaiçine uygun ve yüksek lezzet odaklıdır.')
-      ..writeln('Asla kuru talimat verme; her adımda ne zaman hazır olduğunu duyusal işaretle (sensory_cue) ve neden yaptığımızı (chef_tip) açıkla.')
-      ..writeln('\nKULLANICININ KİŞİSEL MUTFAK PROFİLİ VE ZORUNLU KISITLARI:');
+      ..writeln('You are the Lead Culinary R&D Chef at "SimmerLink".')
+      ..writeln('Your recipes are always: bold, generously sauced, texture-contrasted (crispy/silky), weeknight-friendly, and packed with umami.')
+      ..writeln('Never output dry instructions; always include sensory cues (when is it ready?) and chef tips (why this technique works).')
+      ..writeln('\nUSER PERSONAL KITCHEN PROFILE & MANDATORY RESTRICTIONS:');
 
-    // Ekipman kısıtları
+    // Equipment constraints
     final eqLabels = profile.equipment.map((e) => e.label).join(', ');
-    buffer.writeln('- Mevcut Ekipmanlar: $eqLabels');
+    buffer.writeln('- Available Equipment: $eqLabels');
     if (!profile.hasOven) {
-      buffer.writeln('  * KRİTİK: Kullanıcının evinde FIRIN YOKTUR! ASLA fırın gerektiren tarif önerme; tüm pişirme tava, tencere veya airfryer\'da bitecek şekilde kurgulanmalı.');
+      buffer.writeln('  * CRITICAL: User has NO OVEN! NEVER suggest recipes requiring baking; all cooking must conclude on stovetop, pan, pot, or air fryer.');
     }
 
-    // Beslenme hedefleri
+    // Dietary goals
     if (profile.dietGoals.isNotEmpty) {
-      buffer.writeln('- Beslenme Hedefleri: ${profile.dietGoals.join(', ')}');
+      buffer.writeln('- Dietary Goals: ${profile.dietGoals.join(', ')}');
     }
 
-    // Alerjiler
+    // Allergies
     if (profile.allergies.isNotEmpty) {
-      buffer.writeln('- ALERJİLER (KESİNLİKLE YASAK, HAYATİ TEHLİKE): ${profile.allergies.join(', ')}');
+      buffer.writeln('- ALLERGIES (STRICTLY FORBIDDEN, VITAL SAFETY HAZARD): ${profile.allergies.join(', ')}');
     }
 
-    // Sevmediği malzemeler
+    // Dislikes
     if (profile.dislikedIngredients.isNotEmpty) {
-      buffer.writeln('- Kullanıcının Kesinlikle Sevmediği Malzemeler (ASLA KULLANMA): ${profile.dislikedIngredients.join(', ')}');
+      buffer.writeln('- Disliked Ingredients (DO NOT USE): ${profile.dislikedIngredients.join(', ')}');
     }
 
-    // Acı toleransı
+    // Spice tolerance
     final spiceDesc = switch (profile.spiceLevel) {
-      0 => 'Sıfır acı (hiç acı biber kullanma)',
-      1 => 'Hafif acı',
-      2 => 'Orta / dengeli acı',
-      _ => 'Yüksek acı toleransı (cesurca acı kullanabilirsin)',
+      0 => 'Zero heat (no chili peppers or hot spices)',
+      1 => 'Mild heat',
+      2 => 'Medium / balanced kick',
+      _ => 'High spice tolerance (bold chili heat welcome)',
     };
-    buffer.writeln('- Acı Seviyesi: $spiceDesc');
+    buffer.writeln('- Spice Level: $spiceDesc');
 
     if (profile.extraNotes.isNotEmpty) {
-      buffer.writeln('- Özel Notlar: ${profile.extraNotes}');
+      buffer.writeln('- Personal Notes: ${profile.extraNotes}');
     }
 
-    buffer.writeln('\nTüm çıktıları Türkçe üret. Ölçü birimlerini ve reyonları kesinlikle izin verilen enum listesinden seç.');
+    buffer.writeln('\nAlways output all recipe text in English. Select measurement units and aisle categories strictly from allowed enum schemas.');
     return buffer.toString();
   }
 }

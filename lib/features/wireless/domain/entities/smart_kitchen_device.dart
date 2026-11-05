@@ -3,23 +3,23 @@ import 'package:equatable/equatable.dart';
 enum KitchenDeviceType {
   meatThermometer(
     'meat_thermometer',
-    'BLE Akıllı Et & Tava Termometresi',
-    'GATT 0x181A · Çekirdek & Ortam Isısı Sensörü',
+    'BLE Smart Meat & Pan Thermometer',
+    'GATT 0x181A · Core & Ambient Thermal Sensor',
   ),
   smartScale(
     'smart_scale',
-    'BLE Akıllı Mutfak Tartısı',
-    'GATT 0x181D · 0.1g Hassasiyetli Yük Hücresi',
+    'BLE Precision Kitchen Scale',
+    'GATT 0x181D · 0.1g Precision Load Cell',
   ),
   esp32SensorNode(
     'esp32_node',
-    'ESP32 Mutfak IoT Düğümü',
-    'Çift Mod: BLE 5.0 + Wi-Fi WebSocket Telemetri',
+    'ESP32 Smart Kitchen IoT Node',
+    'Dual-Mode: BLE 5.0 + Wi-Fi WebSocket Telemetry',
   ),
   peerPhone(
     'peer_phone',
-    'Kablosuz Co-Op Telefon (iOS / Android)',
-    'Wi-Fi LAN P2P · Canlı Market & Pişirme Senkronu',
+    'Co-Op Companion Device (iOS / Android)',
+    'Wi-Fi LAN P2P · Real-time Grocery & Cook Sync',
   );
 
   const KitchenDeviceType(this.id, this.title, this.specSubtitle);
@@ -37,11 +37,11 @@ enum WirelessProtocol {
 }
 
 enum CulinaryTempPreset {
-  mediumRareSteak('Orta-Az Steak (Medium Rare)', 56.0, 210.0),
-  mediumSteak('Orta Pişmiş Steak (Medium)', 62.0, 210.0),
-  juicyChicken('Sulu Tavuk Göğsü / Kalça', 74.0, 185.0),
-  crispySkinSalmon('Çıtır Derili Somon', 58.0, 175.0),
-  deepFryOil('Derin Kızartma Yağı', 180.0, 220.0);
+  mediumRareSteak('Medium Rare Steak', 56.0, 210.0),
+  mediumSteak('Medium Steak', 62.0, 210.0),
+  juicyChicken('Juicy Chicken Breast / Thigh', 74.0, 185.0),
+  crispySkinSalmon('Crispy Skin Salmon', 58.0, 175.0),
+  deepFryOil('Deep Frying Oil', 180.0, 220.0);
 
   const CulinaryTempPreset(this.label, this.targetTempC, this.recommendedPanTempC);
   final String label;
@@ -166,7 +166,7 @@ class SmartScaleTelemetry extends Equatable {
     this.rawWeightGrams = 0.0,
     this.tareOffsetGrams = 0.0,
     this.targetWeightGrams = 400.0,
-    this.targetIngredientName = 'Tavuk / Makarna',
+    this.targetIngredientName = 'Chicken / Pasta',
     this.isStable = true,
   });
 
@@ -322,7 +322,7 @@ class SmartKitchenHubState extends Equatable {
     this.isUdpDiscoveryActive = false,
     this.localIpAddress = '192.168.1.42',
     this.lanPort = 8765,
-    this.roomCode = 'MOB-2026',
+    this.roomCode = 'SIMMER-2026',
     this.connectedPeerCount = 0,
     this.discoveredPeers = const [],
     this.nativeDiagnostics = const NativeNetworkDiagnostics(),

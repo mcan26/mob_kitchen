@@ -53,7 +53,7 @@ class RecipeRepositoryImpl implements RecipeRepository {
     final row = await (_db.select(_db.recipes)..where((t) => t.id.equals(id))).getSingleOrNull();
     if (row == null) return;
     if (row.isBuiltIn) {
-      throw StateError('Yerleşik tarifler silinemez: $id');
+      throw StateError('Built-in recipes cannot be deleted: $id');
     }
     await (_db.delete(_db.recipes)..where((t) => t.id.equals(id))).go();
   }

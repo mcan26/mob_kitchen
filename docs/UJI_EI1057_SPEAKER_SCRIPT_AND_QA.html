@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SimmerLink — UJI EI-1057 Speaker Script &amp; Jury Q&amp;A Defense Bank</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 14mm 15mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      font-size: 10.5pt;
+      line-height: 1.48;
+    }
+
+    .doc-header {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border-left: 6px solid #ff6b4a;
+    }
+
+    .doc-header h1 {
+      font-size: 16pt;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .doc-header p {
+      font-size: 9.5pt;
+      color: #cbd5e1;
+    }
+
+    .slide-block {
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 11px 14px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 5px;
+      margin-bottom: 7px;
+    }
+
+    .slide-title {
+      font-size: 11pt;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .time-badge {
+      background: #ff6b4a;
+      color: #ffffff;
+      font-size: 8.5pt;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .cue {
+      display: inline-block;
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #f59e0b;
+      font-size: 8pt;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+
+    .script-p {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    .script-p:last-child {
+      margin-bottom: 0;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-size: 9pt;
+    }
+
+    .qa-section-title {
+      font-size: 13pt;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 14px 0 8px 0;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #ff6b4a;
+      page-break-after: avoid;
+    }
+
+    .qa-card {
+      border: 1px solid #94a3b8;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 9px;
+      background: #ffffff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .qa-q {
+      font-weight: 800;
+      color: #0369a1;
+      margin-bottom: 4px;
+      font-size: 10.2pt;
+    }
+
+    .qa-a {
+      color: #1e293b;
+      font-size: 9.8pt;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="doc-header">
+    <h1>SimmerLink — Word-for-Word English Speaker Script &amp; Jury Q&amp;A Guide</h1>
+    <p>Universitat Jaume I (UJI) · EI-1057 (<em>Mobile Networks &amp; Devices</em>) · Companion Script for <code>UJI_EI1057_ENGLISH_PRESENTATION.pdf</code> (Slides 1–8)</p>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 1 — Title &amp; Steve Jobs "Connecting the Dots" Hook</span>
+      <span class="time-badge">0:00 – 1:15</span>
+    </div>
+    <p class="script-p"><span class="cue">Eye Contact · Smile</span> "Good morning everyone. In his famous Stanford commencement address, Steve Jobs talked about <strong>connecting the dots</strong>—how seemingly separate experiences and technologies only make sense when you connect them into something meaningful."</p>
+    <p class="script-p">"Picture a very common everyday problem: you are in the basement of a supermarket with <strong>zero cellular coverage</strong>, trying to coordinate a grocery list with your flatmate. Later, you are in the kitchen with flour on your hands: your mobile phone locks its screen, your background timer freezes, and you have no idea if your steak is at 56 degrees Celsius inside."</p>
+    <p class="script-p"><span class="cue">Signposting Roadmap</span> "Today, I am presenting <strong>SimmerLink</strong>—an Android and iOS application that connects four core networking dots from <strong>EI-1057</strong>: <strong>first</strong>, our Offline-First SQLite core and Native OS Radio Diagnostics; <strong>second</strong>, our MANET UDP Broadcast discovery and Full-Duplex WebSocket P2P engine; <strong>third</strong>, our BLE 5.0 GATT binary telemetry protocol; and <strong>finally</strong>, our verification suite and visual walkthrough of the Smart Kitchen Wireless Hub."</p>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 2 — Mobile Context &amp; Offline-First Core (Theory 1–2 &amp; Lab 1)</span>
+      <span class="time-badge">1:15 – 2:30</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting</span> "Let us begin with the fundamental rule of mobile computing from <strong>Theory 1 and Lab 1</strong>: <em>mobile connectivity is intermittent, and the operating system aggressively suspends background processes.</em>"</p>
+    <p class="script-p"><span class="cue">Point to Cards 1–3</span> "First, if a user walks into a supermarket basement without 5G or Wi-Fi, cloud-only apps fail. SimmerLink uses <strong>Drift over SQLite</strong> (<code>app_database.dart</code>), so every recipe, aisle-sorted ingredient, and portion scaling calculation runs locally at <strong>zero bits per second</strong>. Second, when an Android or iOS screen locks during cooking, naive periodic counters freeze. We solved this using <strong>Wall-Clock Lifecycle Synchronization</strong>: we persist the absolute <code>targetEndTime</code> timestamp and observe <code>AppLifecycleState.resumed</code> via <code>WidgetsBindingObserver</code>, recalculating exact remaining seconds the instant the phone wakes while keeping the display active in Cook Mode via <code>WakelockPlus</code>."</p>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 3 — Five Networking Layers Mapped to EI-1057 Syllabus</span>
+      <span class="time-badge">2:30 – 3:45</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting</span> "Moving on to our global network architecture, this table maps every wireless layer of <strong>SimmerLink</strong> directly to the <strong>EI-1057 syllabus</strong>."</p>
+    <p class="script-p">"Instead of forcing one protocol to do everything, we matched each physical range and payload size to the optimal transport: at the <strong>OS hardware layer</strong>, our Kotlin and Swift <code>MethodChannel</code> inspects real radio link metrics; at the <strong>WPAN layer</strong> under 10 meters, <strong>BLE 5.0 GATT</strong> streams 2-byte and 3-byte binary sensor frames; at the <strong>MANET layer</strong>, connectionless <strong>UDP Broadcast on port 41234</strong> discovers nearby phones without manual IP entry; at the <strong>WLAN layer</strong>, <strong>Full-Duplex WebSockets on port 8765</strong> synchronize state in under 10 milliseconds; and at the <strong>WWAN layer</strong>, <strong>HTTPS</strong> connects to <strong>Google Gemini 2.5 Flash</strong> for multimodal fridge-photo computer vision."</p>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 4 — Native Android &amp; iOS Network APIs (Theory 5 &amp; Lab 5)</span>
+      <span class="time-badge">3:45 – 5:00</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting</span> "Let us now examine <strong>Lab 5: Native Mobile OS Network APIs</strong> in detail."</p>
+    <p class="script-p">"Standard Dart sockets cannot read physical Wi-Fi link speed, carrier frequency bands, or Bluetooth adapter state, nor can they acquire an Android hardware <code>MulticastLock</code>. Therefore, in <code>MainActivity.kt</code> and <code>AppDelegate.swift</code>, I implemented a native bridge over <code>MethodChannel('com.mobkitchen/native_network')</code>."</p>
+    <p class="script-p">"On Android, it queries <code>ConnectivityManager</code> and <code>NetworkCapabilities</code> for active transport and signal strength, <code>WifiManager</code> for link speed in Mbps, 2.4 vs. 5 GHz band classification, and <code>WifiManager.MulticastLock</code> (<code>simmerlink_udp_manet_lock</code>) so the Wi-Fi chipset does not drop incoming UDP broadcast packets, plus <code>BluetoothManager</code> for BLE radio state. In <code>AndroidManifest.xml</code>, we declare Android 12+ <code>NEARBY_WIFI_DEVICES</code> and <code>BLUETOOTH_SCAN</code> with <code>neverForLocation</code> to protect user GPS privacy. On iOS and our Mac Simulator, <code>AppDelegate.swift</code> inspects BSD POSIX <code>getifaddrs</code> on interface <code>en0</code>."</p>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 5 — MANET UDP Discovery (:41234) vs. Full-Duplex WebSocket (:8765)</span>
+      <span class="time-badge">5:00 – 6:30</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting</span> "This brings me to a core engineering question in <strong>EI-1057 (Labs 3 and 4)</strong>: <em>Why do we combine UDP and TCP/WebSockets in the same local network engine?</em>"</p>
+    <p class="script-p">"In <code>lan_sync_engine.dart</code>, Phase 1 uses <strong>UDP Broadcast on Port 41234</strong> via <code>RawDatagramSocket</code>. TCP cannot broadcast to a subnet because it requires a unicast 3-way handshake; scanning 254 IPs via TCP takes seconds and triggers OS rate limits. Instead, every 4 seconds, each phone sends a single UDP datagram to <code>255.255.255.255:41234</code> and the directed <code>/24</code> broadcast address."</p>
+    <p class="script-p"><span class="cue">Highlight Loop Prevention</span> "Once discovered, Phase 2 automatically upgrades to a persistent <strong>Full-Duplex TCP WebSocket on Port 8765</strong>. Crucially, if two phones discover each other simultaneously and open mutual WebSockets, a naive relay creates an infinite broadcast storm. We solved this by stamping every frame with a unique <code>_pkt_id</code> checked against a 256-entry <code>_seenPacketIds</code> ring buffer, alongside <code>_outboundSocketsByEndpoint</code> socket reuse."</p>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 6 — BLE 5.0 GATT Binary Framing &amp; Physics Engine (Theory 6 &amp; Lab 2)</span>
+      <span class="time-badge">6:30 – 7:45</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting</span> "Turning to the <strong>WPAN IoT layer</strong>: BLE 5.0 has a default ATT payload limit of 20 bytes, so sending verbose JSON wastes coin-cell battery energy. We implemented official <strong>Bluetooth SIG GATT binary framing</strong> using Dart <code>ByteData</code> and C++ ESP32 firmware (<code>esp32_smart_kitchen_node.ino</code>)."</p>
+    <p class="script-p">"For our <strong>Smart Meat Thermometer</strong> (Service <code>0x181A</code>, Characteristic <code>0x2A6E</code>), temperature is encoded as a <strong>2-byte signed 16-bit little-endian integer</strong> at 0.01°C resolution—for example, <code>56.00°C</code> is <code>5600</code>, or hex <code>[0xE0, 0x15]</code>. For our <strong>Smart Kitchen Scale</strong> (Service <code>0x181D</code>, Characteristic <code>0x2A9D</code>), weight is encoded in <strong>3 bytes</strong>: a 1-byte SI flag (<code>0x00</code>) plus a 2-byte unsigned little-endian integer at 0.1-gram precision. We also built a deterministic physics engine modeling <strong>Newton's Law of Heating</strong> so every feature can be tested in the classroom."</p>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 7 — 3-Tab Visual Walkthrough &amp; Verification Record</span>
+      <span class="time-badge">7:45 – 9:15</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting · Visual Walkthrough</span> "Let us now review our verification results and walk through the three tabs of the <strong>Smart Kitchen Wireless Hub</strong> shown on Slide 7 (and running on our Simulator):"</p>
+    <p class="script-p"><strong>1. Left Screen — Device Radar Tab (<em>Cihaz Radarı</em>):</strong> "At the bottom, the Native OS Network Diagnostics card invokes <code>com.mobkitchen/native_network</code> to display active <code>WIFI</code> transport, <code>-52 dBm</code> RSSI, <code>866 Mbps (5 GHz)</code> link speed, local IPv4 <code>192.168.1.42</code>, and active BLE connections."</p>
+    <p class="script-p"><strong>2. Center Screen — Live Telemetry Tab (<em>Canlı Telemetri</em>):</strong> "Here we stream GATT <code>0x2A6E</code> temperature frames toward the <strong>56°C Medium-Rare Steak</strong> target with a live Newton heating curve and ETA countdown, alongside the GATT <code>0x2A9D</code> 0.1g Smart Scale with Tare calibration at <code>400.0 g</code>."</p>
+    <p class="script-p"><strong>3. Right Screen — Wi-Fi Co-Op Tab:</strong> "Starting the Co-Op room binds both TCP WebSocket Port <code>8765</code> and MANET UDP Broadcast Port <code>41234</code>. The live Packet Log at the bottom records automatic UDP peer discovery, real-time Cook Mode step synchronization (<code>Step 2/4</code>), and live SQLite supermarket checkoffs. Across the entire repository, <code>flutter build apk --debug</code> succeeds cleanly, <code>flutter analyze</code> reports <strong>0 issues</strong>, and <strong>120 out of 120 automated tests pass</strong>."</p>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide-block">
+    <div class="slide-header">
+      <span class="slide-title">Slide 8 — Conclusion, Rubric Summary &amp; Opening the Floor to Q&amp;A</span>
+      <span class="time-badge">9:15 – 10:00</span>
+    </div>
+    <p class="script-p"><span class="cue">Signposting · Conclusion</span> "To conclude and connect all the dots: <strong>SimmerLink</strong> demonstrates how offline-first SQLite persistence, native Android and iOS radio diagnostics, BLE 5.0 binary telemetry, MANET UDP zero-config discovery, and Full-Duplex WebSockets work together in a cohesive mobile system. As Steve Jobs famously concluded at Stanford—and as any chef would agree: <strong>'Stay Hungry, Stay Foolish.'</strong> Thank you very much for your attention. I am happy to answer any questions from the jury."</p>
+  </div>
+
+  <div class="qa-section-title">Jury Q&amp;A Defense Bank (Prepared English Technical Answers)</div>
+
+  <div class="qa-card">
+    <div class="qa-q">Q1: "Why did you use UDP Broadcast on Port 41234 for discovery instead of scanning all 254 IP addresses with TCP?"</div>
+    <div class="qa-a">"Scanning a <code>/24</code> subnet with TCP requires up to 254 individual 3-way handshakes (<code>SYN</code>, <code>SYN-ACK</code>, <code>ACK</code>), which takes several seconds, drains mobile battery, and triggers OS firewall rate limits. By contrast, a single <strong>UDP Broadcast datagram</strong> to <code>255.255.255.255:41234</code> and the directed <code>/24</code> broadcast address (<code>192.168.x.255:41234</code>) via <code>RawDatagramSocket</code> (<code>broadcastEnabled = true</code>) reaches every peer on the local Wi-Fi AP in under 2 milliseconds. Once a peer parses the <code>simmer_beacon</code> JSON, it opens a single targeted TCP WebSocket connection to <code>ws://&lt;peer-ip&gt;:8765/ws</code>."</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-q">Q2: "What happens if two phones discover each other via UDP at the same time and both call connectToPeerWebSocket?"</div>
+    <div class="qa-a">"That creates two parallel WebSocket channels between Phone A and Phone B. Without protection, when Phone A relays an incoming packet to connected peers, Phone B would relay it back infinitely. In <code>LanSyncAndBleCodecEngine</code>, we prevented this in two ways: (1) every JSON frame is stamped with a unique <code>_pkt_id</code> checked against a bounded 256-entry <code>_seenPacketIds</code> ring buffer before processing or relaying, and (2) outbound client sockets are indexed in <code>_outboundSocketsByEndpoint['ip:port']</code> so periodic 4-second UDP beacons reuse the existing open WebSocket."</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-q">Q3: "How does your Android native MethodChannel handle Android 10+ and Android 12+ privacy and Wi-Fi hardware restrictions?"</div>
+    <div class="qa-a">"On Android 10 (API 29)+, <code>NetworkCapabilities.signalStrength</code> provides transport-layer RSSI directly from <code>ConnectivityManager</code>, supplemented by <code>WifiManager.connectionInfo</code> for link speed (Mbps) and 2.4/5 GHz frequency (MHz). Because Android Wi-Fi chipsets filter incoming UDP broadcast frames by default to save power, <code>MainActivity.kt</code> acquires a <code>WifiManager.MulticastLock</code> (<code>simmerlink_udp_manet_lock</code>). Finally, in <code>AndroidManifest.xml</code>, we declare <code>NEARBY_WIFI_DEVICES</code> and <code>BLUETOOTH_SCAN</code> with <code>android:usesPermissionFlags='neverForLocation'</code> so we never harvest user GPS location."</div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-q">Q4: "Why encode BLE GATT telemetry in 2-byte and 3-byte Little-Endian binary instead of sending JSON over BLE?"</div>
+    <div class="qa-a">"The default BLE ATT MTU is 23 bytes (20 bytes of usable notification payload). A JSON string like <code>{\"temp_c\":56.00,\"weight_g\":125.4}</code> exceeds 32 bytes, requiring fragmentation and higher radio duty cycle on coin-cell probes. By following Bluetooth SIG GATT specifications—<strong><code>0x2A6E</code> (signed <code>int16</code> little-endian, 0.01°C)</strong> and <strong><code>0x2A9D</code> (1-byte flags + <code>uint16</code> little-endian, 0.1g)</strong>—our payloads are just <strong>2 bytes and 3 bytes</strong>, cutting radio airtime by over 90%."</div>
+  </div>
+
+</body>
+</html>

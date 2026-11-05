@@ -43,7 +43,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
       appBar: AppBar(
         backgroundColor: MobColors.surface,
         title: const Text(
-          'Süpermarket Modu',
+          'Supermarket Mode',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w800,
@@ -56,7 +56,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Wi-Fi Co-Op Ortak Market Senkronizasyonu',
+            tooltip: 'Wi-Fi Co-Op Sync',
             icon: const Icon(Icons.wifi_tethering, color: MobColors.green, size: 20),
             onPressed: () {
               Navigator.of(context).push(
@@ -69,12 +69,12 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
             },
           ),
           IconButton(
-            tooltip: 'Listeyi Panoya Kopyala',
+            tooltip: 'Copy List to Clipboard',
             icon: const Icon(Icons.copy_all_outlined, color: MobColors.primaryLight, size: 20),
             onPressed: () {
               final items = itemsAsync.valueOrNull ?? const [];
               if (items.isEmpty) return;
-              final buffer = StringBuffer('🛒 Mob Kitchen Alışveriş Listesi\n\n');
+              final buffer = StringBuffer('🛒 SimmerLink Grocery List\n\n');
               for (final item in items) {
                 final check = item.isChecked ? '✅' : '⬜';
                 final amt = PortionScaler.formatAmount(item.aggregatedAmount, item.unit);
@@ -84,7 +84,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
               Clipboard.setData(ClipboardData(text: buffer.toString()));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Alışveriş listeniz panoya kopyalandı! WhatsApp veya Notlar\'a yapıştırabilirsiniz.'),
+                  content: Text('Grocery list copied to clipboard! You can paste it into WhatsApp or Notes.'),
                   backgroundColor: MobColors.green,
                 ),
               );
@@ -109,7 +109,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                   children: [
                     Icon(Icons.remove_done, size: 18, color: MobColors.textSecondary),
                     SizedBox(width: 10),
-                    Text('Alınanları Temizle', style: TextStyle(color: MobColors.textPrimary)),
+                    Text('Clear Checked', style: TextStyle(color: MobColors.textPrimary)),
                   ],
                 ),
               ),
@@ -119,7 +119,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                   children: [
                     Icon(Icons.delete_sweep_outlined, size: 18, color: MobColors.red),
                     SizedBox(width: 10),
-                    Text('Tüm Listeyi Sıfırla', style: TextStyle(color: MobColors.red)),
+                    Text('Reset Entire List', style: TextStyle(color: MobColors.red)),
                   ],
                 ),
               ),
@@ -132,7 +132,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
           child: CircularProgressIndicator(color: MobColors.primary),
         ),
         error: (err, _) => Center(
-          child: Text('Liste yüklenemedi: $err', style: const TextStyle(color: MobColors.red)),
+          child: Text('Failed to load list: $err', style: const TextStyle(color: MobColors.red)),
         ),
         data: (items) {
           if (items.isEmpty) {
@@ -143,7 +143,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
           final totalCount = items.length;
           final progress = totalCount > 0 ? checkedCount / totalCount : 0.0;
 
-          // Reyon bazlı gruplama ve reyon sırasına göre dizilim
+          // Group by aisle in shopping order
           final grouped = <AisleCategory, List<ShoppingListItem>>{};
           for (final item in items) {
             grouped.putIfAbsent(item.aisleCategory, () => []).add(item);
@@ -154,7 +154,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
 
           return CustomScrollView(
             slivers: [
-              // 1. İlerleme ve Plan Özeti Barı
+              // 1. Progress and plan summary bar
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -175,7 +175,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                               const Icon(Icons.shopping_cart_outlined, color: MobColors.primaryLight, size: 20),
                               const SizedBox(width: 8),
                               Text(
-                                '$checkedCount / $totalCount Ürün Sepette',
+                                '$checkedCount / $totalCount Items in Cart',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
@@ -206,7 +206,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                           minHeight: 6,
                         ),
                       ),
-                      // Plandaki Tarif İsimleri
+                      // Planned recipe tags
                       planAsync.when(
                         data: (plans) {
                           if (plans.isEmpty) return const SizedBox.shrink();
@@ -224,7 +224,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                                     border: Border.all(color: MobColors.border),
                                   ),
                                   child: Text(
-                                    '${p.recipe.title} (${p.servings} porsiyon)',
+                                    '${p.recipe.title} (${p.servings} servings)',
                                     style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
@@ -357,7 +357,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Alışveriş Listeniz Henüz Boş',
+              'Your Grocery List is Empty',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
@@ -367,7 +367,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Keşfet veya Tarif Detay ekranından beğendiğiniz tarifleri listenize ekleyin; akıllı reyon birleştirici tüm malzemeleri gramajlarıyla toplasın.',
+              'Explore recipes and add them to your plan to automatically aggregate and organize ingredients by supermarket aisle.',
               style: TextStyle(
                 fontSize: 13.5,
                 color: MobColors.textSecondary,
@@ -385,7 +385,7 @@ class _SupermarketScreenState extends ConsumerState<SupermarketScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
               icon: const Icon(Icons.explore_outlined, size: 18),
-              label: const Text('Tarifleri Keşfet', style: TextStyle(fontWeight: FontWeight.w800)),
+              label: const Text('Explore Recipes', style: TextStyle(fontWeight: FontWeight.w800)),
             ),
           ],
         ),
@@ -422,7 +422,7 @@ class _ShoppingItemTile extends ConsumerWidget {
             ref.read(shoppingRepositoryProvider).toggleItemChecked(item.id);
             ref.read(smartKitchenHubProvider.notifier).broadcastCoOpEvent(
                   'shopping_item_toggle',
-                  '${!isChecked ? "✅ Sepete eklendi" : "⬜ Sepetten çıkarıldı"}: ${item.name}',
+                  '${!isChecked ? "✅ Added to cart" : "⬜ Removed from cart"}: ${item.name}',
                   payload: {
                     'itemId': item.id,
                     'name': item.name,
@@ -492,7 +492,7 @@ class _ShoppingItemTile extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 36),
                     child: Text(
-                      'Gereken: ${item.sourceRecipeTitles.join(', ')}',
+                      'For: ${item.sourceRecipeTitles.join(', ')}',
                       style: TextStyle(
                         fontSize: 11.5,
                         color: isChecked ? MobColors.textMuted.withValues(alpha: 0.6) : MobColors.textSecondary,
@@ -540,7 +540,7 @@ class _ShoppingItemTile extends ConsumerWidget {
                               const SizedBox(width: 6),
                               Expanded(
                                 child: Text(
-                                  'Alternatif: ${item.substituteOption!}',
+                                  'Substitute: ${item.substituteOption!}',
                                   style: const TextStyle(
                                     fontSize: 11.5,
                                     height: 1.3,

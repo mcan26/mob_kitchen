@@ -99,7 +99,7 @@ class LanSyncAndBleCodecEngine {
     required String device,
   }) {
     return <String, dynamic>{
-      'type': 'mob_beacon',
+      'type': 'simmer_beacon',
       'ip': ip,
       'port': port,
       'room': room,
@@ -107,7 +107,7 @@ class LanSyncAndBleCodecEngine {
     };
   }
 
-  /// UDP Broadcast keşif paketini UTF-8 bayt dizisine kodlar.
+  /// UDP Broadcast discovery packet encoded to UTF-8 bytes.
   static Uint8List encodeUdpBeaconBytes({
     required String ip,
     required int port,
@@ -123,12 +123,13 @@ class LanSyncAndBleCodecEngine {
     return Uint8List.fromList(utf8.encode(jsonEncode(payload)));
   }
 
-  /// Gelen UDP datagram baytlarını doğrular ve `mob_beacon` ise çözümler.
+  /// Validates and decodes incoming UDP datagram bytes for simmer_beacon or mob_beacon.
   static Map<String, dynamic>? tryDecodeUdpBeaconBytes(List<int> bytes) {
     try {
       final raw = utf8.decode(bytes, allowMalformed: true).trim();
       final decoded = jsonDecode(raw);
-      if (decoded is Map<String, dynamic> && decoded['type'] == 'mob_beacon') {
+      if (decoded is Map<String, dynamic> &&
+          (decoded['type'] == 'simmer_beacon' || decoded['type'] == 'mob_beacon')) {
         return decoded;
       }
     } catch (_) {}

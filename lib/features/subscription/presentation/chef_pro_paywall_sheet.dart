@@ -40,23 +40,23 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
   static const _proFeatures = [
     (
       Icons.camera_alt_outlined,
-      'Buzdolabı Fotoğrafından Sınırsız Tarif',
-      'Dolabının veya malzemelerinin fotoğrafını çek, Gemini Vision saniyeler içinde şef reçetesi çıkarsın.',
+      'Unlimited Fridge & Pantry Vision',
+      'Snap your fridge or countertops; Gemini Vision crafts chef-grade recipes in seconds.',
     ),
     (
       Icons.bolt_rounded,
-      'TikTok, Reels & Web Linkinden Tarif Aktar',
-      'Kaydettiğin yemek videolarının linkini yapıştır, malzemeleri ve adımları anında ayıklasın.',
+      'Import from TikTok, Reels & Web URLs',
+      'Paste any cooking video link; ingredients and timed steps are parsed effortlessly.',
     ),
     (
       Icons.auto_awesome,
-      'Sınırsız AI Remix & Fırınsız Uyarlama',
-      '"Fırınsız yap", "Proteini 45g\'a çıkar" veya "Öğrenci bütçesine uyarla" komutlarıyla her tarifi kişiselleştir.',
+      'Unlimited AI Remix & Smart Adaptations',
+      '"Make it ovenless", "Boost protein to 45g", or "Budget adapt" with custom dietary remakes.',
     ),
     (
       Icons.record_voice_over_outlined,
-      'Canlı Sous-Chef & Sesli Komut Modu',
-      'Ellerin kirliyken sesle adım değiştir, sosun kesildiğinde ocağın başında canlı şefe sor.',
+      'Live AI Sous-Chef & Voice Cook Mode',
+      'Hands-free voice step advancement and instant emergency fixes right at the stove.',
     ),
   ];
 
@@ -67,7 +67,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
     setState(() => _isProcessing = false);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('🎉 ${_selectedPlan.title} aktif edildi! Tüm AI özellikleri sınırsız açıldı.'),
+        content: Text('🎉 ${_selectedPlan.title} activated! All AI features unlocked.'),
         backgroundColor: MobColors.green,
       ),
     );
@@ -81,7 +81,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
     setState(() => _isProcessing = false);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Satın alımlarınız başarıyla geri yüklendi!'),
+        content: Text('Purchases successfully restored!'),
         backgroundColor: MobColors.green,
       ),
     );
@@ -141,7 +141,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
                         Icon(Icons.workspace_premium, size: 15, color: Colors.black),
                         SizedBox(width: 4),
                         Text(
-                          'MOB CHEF PRO',
+                          'SIMMERLINK CHEF PRO',
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
@@ -162,8 +162,8 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
 
               Text(
                 widget.triggerFeatureName != null
-                    ? '${widget.triggerFeatureName} İçin Sınırları Kaldır'
-                    : 'Mutfağındaki Yapay Zeka Şefini Tam Güçle Aç',
+                    ? 'Unlock Limits for ${widget.triggerFeatureName}'
+                    : 'Unleash Your AI Kitchen Sous-Chef',
                 style: const TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.w900,
@@ -175,8 +175,8 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
               const SizedBox(height: 8),
               Text(
                 subState.isChefPro
-                    ? 'Chef Pro aboneliğiniz şu an aktif! Tüm özelliklerin keyfini çıkarın.'
-                    : 'Kalan ücretsiz AI hakkınız: ${subState.freeAiCreditsRemaining}. Chef Pro ile dolabındaki malzemeleri, sosyal medya videolarını ve tüm tarifleri sınırsızca dönüştür.',
+                    ? 'Your Chef Pro subscription is currently active! Enjoy all premium features.'
+                    : 'Free AI creations remaining: ${subState.freeAiCreditsRemaining}. Upgrade to Chef Pro for unlimited fridge vision, social media imports, and bespoke recipe remixes.',
                 style: const TextStyle(
                   fontSize: 13.5,
                   color: MobColors.textSecondary,
@@ -185,7 +185,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
               ),
               const SizedBox(height: 20),
 
-              // Özellik Listesi
+              // Features List
               for (final (icon, title, desc) in _proFeatures)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
@@ -232,7 +232,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
 
               const SizedBox(height: 12),
 
-              // Plan Seçenekleri
+              // Plan Options
               for (final plan in SubscriptionPlan.values)
                 _PlanOptionCard(
                   plan: plan,
@@ -243,7 +243,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
 
               const SizedBox(height: 16),
 
-              // Ana Satın Alma CTA
+              // Main Purchase CTA
               SizedBox(
                 width: double.infinity,
                 height: 54,
@@ -259,8 +259,8 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
                   icon: const Icon(Icons.auto_awesome, size: 20),
                   label: Text(
                     _selectedPlan == SubscriptionPlan.annual
-                        ? '7 Gün Ücretsiz Dene & Pro\'ya Geç'
-                        : 'Chef Pro\'yu Başlat',
+                        ? 'Try 7 Days Free & Start Pro'
+                        : 'Start Chef Pro',
                     style: const TextStyle(
                       fontSize: 15.5,
                       fontWeight: FontWeight.w900,
@@ -271,14 +271,14 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
 
               const SizedBox(height: 10),
 
-              // Alt Bilgilendirme & Restore Purchases (App Store Guideline 3.1.1)
+              // Restore Purchases & Demo Credits
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     onPressed: _isProcessing ? null : _restore,
                     child: const Text(
-                      'Satın Alımları Geri Yükle',
+                      'Restore Purchases',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -293,7 +293,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('+3 Ücretsiz AI Deneme Hakkı tanımlandı!'),
+                            content: Text('+3 Free AI trial credits added!'),
                             backgroundColor: MobColors.gold,
                           ),
                         );
@@ -301,7 +301,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
                       }
                     },
                     child: const Text(
-                      '+3 Ücretsiz Hak Al (Demo)',
+                      '+3 Free Trial Credits (Demo)',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -313,7 +313,7 @@ class _ChefProPaywallSheetState extends ConsumerState<ChefProPaywallSheet> {
               ),
               const Center(
                 child: Text(
-                  'Abonelik App Store hesabınız üzerinden otomatik yenilenir; Ayarlar > Abonelikler menüsünden dilediğiniz an iptal edebilirsiniz. Gizlilik Politikası & Kullanım Koşulları (EULA) geçerlidir.',
+                  'Subscription renews automatically via your Apple ID / Google Play account; cancel anytime in Settings > Subscriptions. Terms of Use (EULA) and Privacy Policy apply.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 10.5,
@@ -392,7 +392,7 @@ class _PlanOptionCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(
-                              '%55 TASARRUF',
+                              'SAVE 55%',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w900,

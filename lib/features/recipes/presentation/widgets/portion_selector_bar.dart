@@ -37,7 +37,7 @@ class PortionSelectorBar extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           const Text(
-            'Porsiyon:',
+            'Servings:',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,

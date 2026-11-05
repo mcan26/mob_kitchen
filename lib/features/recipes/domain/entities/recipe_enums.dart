@@ -1,11 +1,11 @@
 /// Mob tarzı tarif kategorileri.
 enum RecipeCategory {
-  onePot('one_pot', 'Tek Tava'),
-  quickDinner('quick_dinner', '20 Dakikalık Akşam'),
-  highProtein('high_protein', 'Yüksek Protein'),
-  budget('budget', 'Bütçe Dostu'),
-  crispyChicken('crispy_chicken', 'Çıtır Tavuk'),
-  pasta('pasta', 'Makarna'),
+  onePot('one_pot', 'One-Pan'),
+  quickDinner('quick_dinner', '20-Minute Dinner'),
+  highProtein('high_protein', 'High-Protein'),
+  budget('budget', 'Budget-Friendly'),
+  crispyChicken('crispy_chicken', 'Crispy Chicken'),
+  pasta('pasta', 'Pasta'),
   bowl('bowl', 'Bowl');
 
   const RecipeCategory(this.jsonValue, this.label);
@@ -26,9 +26,9 @@ enum RecipeCategory {
 }
 
 enum Difficulty {
-  easy('easy', 'Kolay'),
-  medium('medium', 'Orta'),
-  hard('hard', 'Zor');
+  easy('easy', 'Easy'),
+  medium('medium', 'Medium'),
+  hard('hard', 'Hard');
 
   const Difficulty(this.jsonValue, this.label);
 

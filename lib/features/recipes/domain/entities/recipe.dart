@@ -69,7 +69,7 @@ class Recipe extends Equatable {
   }) =>
       Recipe(
         id: id,
-        title: (json['title'] as String?)?.trim() ?? 'Yeni Tarif',
+        title: (json['title'] as String?)?.trim() ?? 'New Recipe',
         subtitle: (json['subtitle'] as String?)?.trim() ?? '',
         category: RecipeCategory.fromJson(json['category'] as String?),
         prepTimeMinutes: (json['prep_time'] as num?)?.toInt() ?? 10,
@@ -81,7 +81,7 @@ class Recipe extends Equatable {
         chefGoldenRules:
             (json['chef_golden_rules'] as List?)?.map((e) => e.toString()).toList() ?? const [],
         storageAndReheatingTip: (json['storage_and_reheating_tip'] as String?)?.trim() ??
-            'Buzdolabında 2 gün saklanabilir.',
+            'Keeps in the fridge for up to 2 days.',
         ingredients: (json['ingredients'] as List?)
                 ?.map((e) => RecipeIngredient.fromJson(e as Map<String, dynamic>))
                 .toList() ??

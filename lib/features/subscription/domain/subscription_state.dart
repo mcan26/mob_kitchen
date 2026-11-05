@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 enum SubscriptionPlan {
-  annual('annual', 'Yıllık Chef Pro', '₺399,99 / yıl', 'Aylık sadece ₺33,33 · 7 Gün Ücretsiz Deneme'),
-  monthly('monthly', 'Aylık Chef Pro', '₺74,99 / ay', 'İstediğin zaman iptal et');
+  annual('annual', 'Chef Pro Annual', '€39.99 / year', 'Just €3.33 / month · 7-day free trial'),
+  monthly('monthly', 'Chef Pro Monthly', '€6.99 / month', 'Cancel anytime');
 
   const SubscriptionPlan(this.id, this.title, this.priceLabel, this.subtitle);
   final String id;

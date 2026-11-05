@@ -74,7 +74,7 @@ class SmartShoppingAggregator {
       return g.toShoppingListItem(isChecked: isChecked);
     }).toList();
 
-    // Reyon dolaşma sırası (Manav → Kasap → Süt → Fırın → Bakliyat → Baharat), ardından isim
+    // Aisle shopping order (Produce -> Butcher -> Dairy -> Bakery -> Pantry -> Spices), then by name
     items.sort((a, b) {
       final aisleCmp = a.aisleCategory.shoppingOrder.compareTo(b.aisleCategory.shoppingOrder);
       if (aisleCmp != 0) return aisleCmp;
@@ -84,9 +84,8 @@ class SmartShoppingAggregator {
     return items;
   }
 
-  /// Malzeme adını eşleştirme için temizler:
-  /// parantez içi hazırlık notlarını (`Sarımsak (ezilmiş)` -> `sarımsak`),
-  /// virgülden sonraki açıklamaları ve fazla boşlukları siler.
+  /// Cleans ingredient names for grouping: removes parenthesized prep notes
+  /// and trailing comma descriptors.
   static String _normalizeIngredientName(String name) {
     var cleaned = name
         .toLowerCase()

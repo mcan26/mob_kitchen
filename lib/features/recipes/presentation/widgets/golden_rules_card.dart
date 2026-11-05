@@ -40,7 +40,7 @@ class GoldenRulesCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               const Text(
-                'Şefin Altın Kuralları',
+                "Chef's Golden Rules",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,

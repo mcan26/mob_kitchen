@@ -15,16 +15,16 @@ import '../../subscription/providers/subscription_providers.dart';
 import '../providers/ai_providers.dart';
 
 enum AiCreationMode {
-  pantryAndPhoto('Dolap & Fotoğraf', Icons.kitchen_outlined),
-  socialImport('Reels / TikTok Linki', Icons.bolt_rounded);
+  pantryAndPhoto('Pantry & Photo', Icons.kitchen_outlined),
+  socialImport('Reels / TikTok URL', Icons.bolt_rounded);
 
   const AiCreationMode(this.label, this.icon);
   final String label;
   final IconData icon;
 }
 
-/// Dolaptaki malzemelerden, buzdolabı fotoğrafından (Gemini Vision) veya
-/// sosyal medya (Reels / TikTok / Web) linkinden anında Mob tarzı tarif üretme ekranı.
+/// Instant culinary recipe generator from pantry staples, fridge photos (Gemini Vision),
+/// or social media cooking clips.
 class PantryGeneratorScreen extends ConsumerStatefulWidget {
   const PantryGeneratorScreen({
     super.key,
@@ -53,20 +53,20 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
   Recipe? _generatedRecipe;
 
   static const _pantrySuggestions = [
-    'Yumurta',
-    'Makarna',
-    'Kıyma',
-    'Tavuk Göğsü',
-    'Sarımsak',
-    'Soğan',
-    'Mantar',
-    'Krema',
-    'Parmesan / Kaşar',
-    'Konserve Domates',
-    'Pirinç',
-    'Zeytinyağı',
-    'Biber Salçası',
-    'Limon',
+    'Eggs',
+    'Pasta',
+    'Minced Beef',
+    'Chicken Breast',
+    'Garlic',
+    'Onion',
+    'Mushrooms',
+    'Heavy Cream',
+    'Parmesan',
+    'Canned Tomatoes',
+    'Rice',
+    'Olive Oil',
+    'Tomato Paste',
+    'Lemon',
   ];
 
   @override
@@ -119,7 +119,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Fotoğraf seçilemedi: $e'),
+            content: Text('Failed to select image: $e'),
             backgroundColor: MobColors.red,
           ),
         );
@@ -145,14 +145,14 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
     if (_ingredients.isEmpty && _selectedImageBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Lütfen en az bir malzeme ekleyin veya dolabınızın fotoğrafını çekin.'),
+          content: Text('Please add at least one ingredient or snap a photo of your fridge.'),
           backgroundColor: MobColors.gold,
         ),
       );
       return;
     }
 
-    final hasAccess = await _ensureAiAccess('Dolaptan & Fotoğraftan AI Tarif');
+    final hasAccess = await _ensureAiAccess('Pantry & Photo AI Recipe');
     if (!hasAccess) return;
 
     setState(() {
@@ -180,7 +180,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Tarif üretilirken bir sorun oluştu: $e';
+          _errorMessage = 'An error occurred generating the recipe: $e';
         });
       }
     }
@@ -191,14 +191,14 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
     if (text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Lütfen bir Instagram Reels / TikTok linki veya tarif açıklaması yapıştırın.'),
+          content: Text('Please paste an Instagram Reels / TikTok URL or recipe text.'),
           backgroundColor: MobColors.gold,
         ),
       );
       return;
     }
 
-    final hasAccess = await _ensureAiAccess('Sosyal Medyadan Tarif Aktarma');
+    final hasAccess = await _ensureAiAccess('Social Media Recipe Import');
     if (!hasAccess) return;
 
     setState(() {
@@ -221,7 +221,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Sosyal medya tarifi ayrıştırılamadı: $e';
+          _errorMessage = 'Failed to parse social media recipe: $e';
         });
       }
     }
@@ -235,7 +235,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('"${_generatedRecipe!.title}" kataloğunuza kaydedildi!'),
+          content: Text('"${_generatedRecipe!.title}" saved to your cookbook!'),
           backgroundColor: MobColors.green,
         ),
       );
@@ -252,7 +252,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
       appBar: AppBar(
         backgroundColor: MobColors.surface,
         title: const Text(
-          'Dolaptan Tarif Üret',
+          'AI Pantry Chef',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w800,
@@ -288,7 +288,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      subState.isChefPro ? 'CHEF PRO' : '${subState.freeAiCreditsRemaining} Hak',
+                      subState.isChefPro ? 'CHEF PRO' : '${subState.freeAiCreditsRemaining} Left',
                       style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w800,
@@ -312,7 +312,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Mod Seçici (Dolap & Fotoğraf vs Sosyal Medya Linki)
+                        // Mode Selector (Pantry & Photo vs Social Media URL)
                         Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -379,7 +379,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             const CircularProgressIndicator(color: MobColors.primary),
             const SizedBox(height: 24),
             const Text(
-              'Gemini Mutfak Şefi Düşünüyor...',
+              'Gemini AI Chef Thinking...',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
@@ -389,8 +389,8 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             const SizedBox(height: 10),
             Text(
               _mode == AiCreationMode.socialImport
-                  ? 'Sosyal medya içeriğindeki malzemeler, gramajlar ve pişirme adımları Mob standardına dönüştürülüyor.'
-                  : 'Dolabındaki malzemeler${_selectedImageBytes != null ? ' ve çektiğin fotoğraf' : ''} ile dengeli, lezzetli bir tarif tasarlanıyor.',
+                  ? 'Extracting ingredients, metrics, and step timings into a SimmerLink recipe.'
+                  : 'Synthesizing a balanced, flavorful recipe from your ingredients${_selectedImageBytes != null ? ' and fridge photo' : ''}.',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 13.5,
@@ -422,7 +422,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
               SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'Instagram Reels, TikTok veya YouTube Shorts\'ta gördüğün bir yemek videosunun linkini veya açıklama metnini yapıştır; eksiksiz malzeme listesi ve adım adım pişirme kartına dönüşsün!',
+                  'Paste an Instagram Reel, TikTok, or YouTube Shorts link or text description; Gemini parses ingredients and generates an interactive cooking card!',
                   style: TextStyle(fontSize: 13, height: 1.4, color: MobColors.textSecondary),
                 ),
               ),
@@ -431,7 +431,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
         ),
         const SizedBox(height: 18),
         const Text(
-          'Video Linki veya Tarif Metni',
+          'Video URL or Recipe Text',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: MobColors.textPrimary),
         ),
         const SizedBox(height: 8),
@@ -446,7 +446,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             maxLines: 4,
             style: const TextStyle(color: MobColors.textPrimary, fontSize: 13.5),
             decoration: const InputDecoration(
-              hintText: 'Örn: https://www.instagram.com/reel/... veya "200g makarna, 3 diş sarımsak, chili..."',
+              hintText: 'e.g., https://www.instagram.com/reel/... or "200g pasta, 3 garlic cloves, chili flakes..."',
               hintStyle: TextStyle(color: MobColors.textMuted, fontSize: 13),
               border: InputBorder.none,
               contentPadding: EdgeInsets.all(14),
@@ -466,7 +466,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             ),
             icon: const Icon(Icons.bolt_rounded, size: 20),
             label: const Text(
-              'Tarifi Ayıkla & Oluştur',
+              'Extract & Generate Recipe',
               style: TextStyle(fontSize: 15.5, fontWeight: FontWeight.w800),
             ),
           ),
@@ -509,7 +509,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
       children: [
         if (_errorMessage != null) _buildErrorBanner(),
 
-        // Bilgi Kartı
+        // Info Card
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -523,7 +523,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
               SizedBox(width: 14),
               Expanded(
                 child: Text(
-                  'Buzdolabının fotoğrafını çekin veya elinizdeki malzemeleri seçin; Gemini yapay zekası mutfak profilinize uygun özel bir Mob tarifi çıkarsın.',
+                  'Snap a photo of your fridge or select staple ingredients below; Gemini AI will craft a bespoke SimmerLink recipe tailored to your kitchen profile.',
                   style: TextStyle(fontSize: 13, height: 1.4, color: MobColors.textSecondary),
                 ),
               ),
@@ -532,7 +532,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
         ),
         const SizedBox(height: 16),
 
-        // Multimodal Buzdolabı Fotoğrafı Çek / Yükle Kartı
+        // Multimodal Fridge Photo Card
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
@@ -551,7 +551,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
-                      'Buzdolabı / Tezgah Fotoğrafı (Gemini Vision)',
+                      'Fridge / Countertop Photo (Gemini Vision)',
                       style: TextStyle(
                         fontSize: 13.5,
                         fontWeight: FontWeight.w800,
@@ -561,7 +561,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                   ),
                   if (_selectedImageBytes != null)
                     IconButton(
-                      tooltip: 'Fotoğrafı Kaldır',
+                      tooltip: 'Remove Photo',
                       icon: const Icon(Icons.delete_outline, size: 18, color: MobColors.red),
                       onPressed: () => setState(() {
                         _selectedImageBytes = null;
@@ -592,7 +592,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            '📸 ${_selectedImageName ?? "Fotoğraf Eklendi"}',
+                            '📸 ${_selectedImageName ?? "Photo Added"}',
                             style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w700,
@@ -611,7 +611,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () => _pickImage(ImageSource.camera),
                         icon: const Icon(Icons.photo_camera_outlined, size: 17, color: MobColors.primaryLight),
-                        label: const Text('Kamera ile Çek', style: TextStyle(fontSize: 12.5)),
+                        label: const Text('Take Photo', style: TextStyle(fontSize: 12.5)),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -619,7 +619,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () => _pickImage(ImageSource.gallery),
                         icon: const Icon(Icons.photo_library_outlined, size: 17, color: MobColors.gold),
-                        label: const Text('Galeriden Seç', style: TextStyle(fontSize: 12.5)),
+                        label: const Text('From Gallery', style: TextStyle(fontSize: 12.5)),
                       ),
                     ),
                   ],
@@ -629,9 +629,9 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
         ),
         const SizedBox(height: 20),
 
-        // Malzeme Giriş Alanı
+        // Ingredient Input Area
         const Text(
-          'Malzeme Ekle',
+          'Add Ingredients',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: MobColors.textPrimary),
         ),
         const SizedBox(height: 8),
@@ -649,7 +649,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                   style: const TextStyle(color: MobColors.textPrimary, fontSize: 14),
                   onSubmitted: _addIngredient,
                   decoration: const InputDecoration(
-                    hintText: 'Malzeme adı yazın (örn: Tavuk, Krema)...',
+                    hintText: 'Type ingredient name (e.g. Chicken, Cream)...',
                     hintStyle: TextStyle(color: MobColors.textMuted, fontSize: 13),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -671,11 +671,11 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
           ],
         ),
 
-        // Seçili Malzemeler
+        // Selected Ingredients
         if (_ingredients.isNotEmpty) ...[
           const SizedBox(height: 16),
           const Text(
-            'Dolabınızdakiler:',
+            'In Your Fridge:',
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: MobColors.textSecondary),
           ),
           const SizedBox(height: 8),
@@ -701,10 +701,10 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
           ),
         ],
 
-        // Hızlı Öneriler
+        // Quick Suggestions
         const SizedBox(height: 20),
         const Text(
-          'Hızlı Seçim Önerileri',
+          'Quick Pantry Staples',
           style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w800, color: MobColors.textPrimary),
         ),
         const SizedBox(height: 8),
@@ -742,10 +742,10 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
           }).toList(),
         ),
 
-        // Özel İstek & Not
+        // Custom Notes & Requests
         const SizedBox(height: 20),
         const Text(
-          'Özel Not / İstek (Opsiyonel)',
+          'Special Request / Note (Optional)',
           style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w800, color: MobColors.textPrimary),
         ),
         const SizedBox(height: 8),
@@ -760,7 +760,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             maxLines: 2,
             style: const TextStyle(color: MobColors.textPrimary, fontSize: 13.5),
             decoration: const InputDecoration(
-              hintText: 'Örn: Tek tavada ve 20 dakikada bitsin, fazla bulaşık çıkmasın...',
+              hintText: 'e.g., One-pan, under 20 minutes, minimal cleanup...',
               hintStyle: TextStyle(color: MobColors.textMuted, fontSize: 13),
               border: InputBorder.none,
               contentPadding: EdgeInsets.all(14),
@@ -783,7 +783,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
             ),
             icon: const Icon(Icons.auto_awesome, size: 20),
             label: const Text(
-              'Mob Tarzı Tarifi Yarat',
+              'Generate SimmerLink Recipe',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
             ),
           ),
@@ -798,7 +798,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Başarı Kutusu
+        // Success Banner
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
@@ -812,7 +812,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
               SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'Tarifiniz Başarıyla Oluşturuldu!',
+                  'Recipe Successfully Generated!',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
@@ -825,7 +825,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
         ),
         const SizedBox(height: 18),
 
-        // Başlık
+        // Title
         Text(
           recipe.title,
           style: const TextStyle(
@@ -846,19 +846,19 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
         ),
         const SizedBox(height: 14),
 
-        // Makrolar
+        // Macros
         MacroBadgeRow(macros: recipe.macros),
         const SizedBox(height: 16),
 
-        // Altın Kurallar
+        // Golden Rules
         if (recipe.chefGoldenRules.isNotEmpty) ...[
           GoldenRulesCard(rules: recipe.chefGoldenRules),
           const SizedBox(height: 16),
         ],
 
-        // Malzemeler
+        // Ingredients
         const Text(
-          'Gerekli Malzemeler:',
+          'Required Ingredients:',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w800,
@@ -885,7 +885,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
 
         const SizedBox(height: 24),
 
-        // Aksiyon Butonları
+        // Action Buttons
         Row(
           children: [
             Expanded(
@@ -897,7 +897,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
                 child: const Text(
-                  'Yeniden Ayarla',
+                  'Adjust & Retry',
                   style: TextStyle(color: MobColors.textSecondary, fontWeight: FontWeight.w700),
                 ),
               ),
@@ -915,7 +915,7 @@ class _PantryGeneratorScreenState extends ConsumerState<PantryGeneratorScreen> {
                 ),
                 icon: const Icon(Icons.bookmark_add_outlined, size: 18),
                 label: const Text(
-                  'Kaydet ve Pişir',
+                  'Save & Cook',
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),

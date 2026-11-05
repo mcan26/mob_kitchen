@@ -159,35 +159,35 @@ void main() {
 
       // 1. Adım Başlığı ve Talimatı
       expect(find.text('Tavukları Kızartma'), findsOneWidget);
-      expect(find.text('Adım 1 / 2'), findsOneWidget);
+      expect(find.text('Step 1 / 2'), findsOneWidget);
       expect(find.textContaining('6 dakika kızartın'), findsOneWidget);
       expect(find.textContaining('Kabuk sertleşip çıtırdadığında'), findsOneWidget);
 
       // Adım İçi Malzeme Göstergesi
-      expect(find.text('BU ADIMDA KULLANILACAKLAR:'), findsOneWidget);
+      expect(find.text('INGREDIENTS FOR THIS STEP:'), findsOneWidget);
       expect(find.text('Tavuk Kalça'), findsOneWidget);
       expect(find.text('400 g'), findsOneWidget);
 
       // Sayaç Butonu görünür (360 saniye = 6 dk)
-      expect(find.textContaining('Sayaç Başlat (6 Dakika)'), findsOneWidget);
+      expect(find.textContaining('Start Timer (6 Minutes)'), findsOneWidget);
 
       // Sayacı Başlat
-      await tester.tap(find.textContaining('Sayaç Başlat (6 Dakika)'));
+      await tester.tap(find.textContaining('Start Timer (6 Minutes)'));
       await tester.pumpAndSettle();
 
       // Sayaç çalışmaya başladı
-      expect(find.text('Sayaç Geri Sayıyor...'), findsOneWidget);
+      expect(find.text('Timer Counting Down...'), findsOneWidget);
 
       // Sonraki Adıma Geç
-      await tester.tap(find.text('Sonraki Adım'));
+      await tester.tap(find.text('Next Step'));
       await tester.pumpAndSettle();
 
       // 2. Adıma geçtiğini doğrula
       expect(find.text('Sosu Bağlama'), findsOneWidget);
-      expect(find.text('Adım 2 / 2'), findsOneWidget);
+      expect(find.text('Step 2 / 2'), findsOneWidget);
 
       // Bitir Butonunun geldiğini doğrula
-      expect(find.text('Bitir 🎉'), findsOneWidget);
+      expect(find.text('Finish 🎉'), findsOneWidget);
     });
 
     testWidgets('targetServings verildiğinde adım içi malzeme miktarlarını porsiyona göre ölçekler', (tester) async {
@@ -227,7 +227,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Adım 1 / 2'), findsOneWidget);
+      expect(find.text('Step 1 / 2'), findsOneWidget);
       expect(find.text('Tavukları Kızartma'), findsOneWidget);
 
       await container.read(smartKitchenHubProvider.notifier).processIncomingPacket({
@@ -240,7 +240,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // CookModeScreen otomatik olarak 2. adıma geçmeli
-      expect(find.text('Adım 2 / 2'), findsOneWidget);
+      expect(find.text('Step 2 / 2'), findsOneWidget);
       expect(find.text('Sosu Bağlama'), findsOneWidget);
       // Geri yankı (echo) yapılmadığı için syncEvents içinde yalnızca gelen 1 olay olmalı
       expect(container.read(smartKitchenHubProvider).syncEvents.length, 1);
@@ -267,22 +267,22 @@ void main() {
       await tester.pumpAndSettle();
 
       // Başlık ve İlerleme
-      expect(find.text('Süpermarket Modu'), findsOneWidget);
-      expect(find.text('1 / 2 Ürün Sepette'), findsOneWidget);
+      expect(find.text('Supermarket Mode'), findsOneWidget);
+      expect(find.text('1 / 2 Items in Cart'), findsOneWidget);
 
       // Reyonlar (Manav ve Kasap)
-      expect(find.text('Manav'), findsOneWidget);
-      expect(find.text('Kasap / Şarküteri'), findsOneWidget);
+      expect(find.text('Produce & Herbs'), findsOneWidget);
+      expect(find.text('Butcher & Deli'), findsOneWidget);
 
       // Malzemeler
       expect(find.text('Tavuk Kalça'), findsOneWidget);
       expect(find.text('400 g'), findsOneWidget);
       expect(find.text('Taze Soğan'), findsOneWidget);
-      expect(find.text('1 demet'), findsOneWidget);
+      expect(find.text('1 bunch'), findsOneWidget);
 
       // Market tüyosu görünürlüğü
       expect(find.text('Kemiksiz ve derisiz tercih edin.'), findsOneWidget);
-      expect(find.text('Alternatif: Tavuk göğsü'), findsOneWidget);
+      expect(find.text('Substitute: Tavuk göğsü'), findsOneWidget);
 
       // Tavuk Kalça satırına tıkla (işaretleme tetikle)
       await tester.tap(find.text('Tavuk Kalça'));
@@ -291,14 +291,14 @@ void main() {
       expect(fakeShopping.toggledItemId, equals('item_1'));
 
       // Reyon Daraltma Testi (Manav reyonuna tıkla ve kapat)
-      await tester.tap(find.text('Manav'));
+      await tester.tap(find.text('Produce & Herbs'));
       await tester.pumpAndSettle();
 
       // Taze Soğan artık kapalı olduğu için ekranda olmamalı
       expect(find.text('Taze Soğan'), findsNothing);
 
       // Manav reyonuna tekrar tıkla ve aç
-      await tester.tap(find.text('Manav'));
+      await tester.tap(find.text('Produce & Herbs'));
       await tester.pumpAndSettle();
 
       // Taze Soğan tekrar görünür olmalı

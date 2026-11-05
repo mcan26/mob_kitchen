@@ -59,25 +59,25 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text('MOB CHEF PRO'), findsOneWidget);
-      expect(find.textContaining('AI Remix İçin Sınırları Kaldır'), findsOneWidget);
-      expect(find.text('Yıllık Chef Pro'), findsOneWidget);
-      expect(find.text('Aylık Chef Pro'), findsOneWidget);
-      expect(find.text('Satın Alımları Geri Yükle'), findsOneWidget);
+      expect(find.text('SIMMERLINK CHEF PRO'), findsOneWidget);
+      expect(find.textContaining('Unlock Limits for AI Remix'), findsOneWidget);
+      expect(find.text('Chef Pro Annual'), findsOneWidget);
+      expect(find.text('Chef Pro Monthly'), findsOneWidget);
+      expect(find.text('Restore Purchases'), findsOneWidget);
     });
   });
 
   group('TasteProfileScreen & Allergen Safety Tests', () {
     test('findAllergenOrDislikeWarnings alerjen ve istenmeyen malzemeleri tespit eder', () {
-      final recipe = kInitialRecipes.first; // Sarımsak ve Tavuk içerir
+      final recipe = kInitialRecipes.first; // Garlic and Chicken
       const profile = PersonalTasteProfile(
-        allergies: ['Sarımsak'],
-        dislikedIngredients: ['Mantar'],
+        allergies: ['Garlic'],
+        dislikedIngredients: ['Mushroom'],
       );
 
       final warnings = RecipeVisuals.findAllergenOrDislikeWarnings(recipe, profile);
       expect(warnings, isNotEmpty);
-      expect(warnings.first, contains('Sarımsak'));
+      expect(warnings.first, contains('Garlic'));
     });
 
     testWidgets('TasteProfileScreen ekipmanları, alerjileri ve fırınsız mod bilgisini gösterir', (tester) async {
@@ -95,10 +95,10 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text('Mutfak Profilim & Ayarlar'), findsOneWidget);
-      expect(find.text('Mutfak Ekipmanlarım'), findsOneWidget);
-      expect(find.textContaining('Fırınsız Mod Aktif'), findsOneWidget);
-      expect(find.text('Alerjilerim (Hayati Kısıtlar)'), findsOneWidget);
+      expect(find.text('My Kitchen Profile & Settings'), findsOneWidget);
+      expect(find.text('My Kitchen Equipment'), findsOneWidget);
+      expect(find.textContaining('Ovenless Mode Active'), findsOneWidget);
+      expect(find.text('Allergies & Vital Restrictions'), findsOneWidget);
 
       // Gluten alerjisi seç ve kaydet
       await tester.ensureVisible(find.text('Gluten'));
@@ -106,7 +106,7 @@ void main() {
       await tester.tap(find.text('Gluten'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Kaydet'));
+      await tester.tap(find.text('Save'));
       await tester.pumpAndSettle();
 
       final saved = ProfileRepository(prefs).load();

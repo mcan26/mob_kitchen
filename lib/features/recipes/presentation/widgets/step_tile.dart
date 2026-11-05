@@ -103,7 +103,7 @@ class StepTile extends StatelessWidget {
                         ),
                         children: [
                           const TextSpan(
-                            text: 'Duyusal İşaret: ',
+                            text: 'Sensory Cue: ',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: MobColors.primaryLight,
@@ -147,7 +147,7 @@ class StepTile extends StatelessWidget {
                         ),
                         children: [
                           const TextSpan(
-                            text: 'Şefin Sırrı: ',
+                            text: "Chef's Secret: ",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: MobColors.gold,
@@ -211,7 +211,7 @@ class _TimerPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final minutes = seconds ~/ 60;
     final remainingSec = seconds % 60;
-    final label = remainingSec == 0 ? '$minutes dk' : '$minutes dk $remainingSec sn';
+    final label = remainingSec == 0 ? '$minutes min' : '$minutes min $remainingSec s';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

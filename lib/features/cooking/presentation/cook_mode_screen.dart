@@ -125,7 +125,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
             Text('🎉', style: TextStyle(fontSize: 24)),
             SizedBox(width: 8),
             Text(
-              'Ellerine Sağlık, Şef!',
+              'Great Job, Chef!',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
@@ -135,7 +135,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
           ],
         ),
         content: const Text(
-          'Tarifi başarıyla tamamladın. Şimdi sıcakken servis et ve Mob lezzetinin tadını çıkar!',
+          'You successfully completed the recipe! Serve hot and enjoy your SimmerLink meal.',
           style: TextStyle(fontSize: 14, color: MobColors.textSecondary, height: 1.4),
         ),
         actions: [
@@ -149,7 +149,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            child: const Text('Tamamla ve Kapat', style: TextStyle(fontWeight: FontWeight.w800)),
+            child: const Text('Complete & Exit', style: TextStyle(fontWeight: FontWeight.w800)),
           ),
         ],
       ),
@@ -167,12 +167,12 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
           child: CircularProgressIndicator(color: MobColors.primary),
         ),
         error: (err, _) => Center(
-          child: Text('Tarif yüklenemedi: $err', style: const TextStyle(color: MobColors.red)),
+          child: Text('Could not load recipe: $err', style: const TextStyle(color: MobColors.red)),
         ),
         data: (recipe) {
           if (recipe == null || recipe.steps.isEmpty) {
             return const Center(
-              child: Text('Pişirme adımı bulunamadı.', style: TextStyle(color: MobColors.textSecondary)),
+              child: Text('No cooking steps found.', style: TextStyle(color: MobColors.textSecondary)),
             );
           }
 
@@ -218,7 +218,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              'Adım ${_currentStepIndex + 1} / $totalSteps',
+                              'Step ${_currentStepIndex + 1} / $totalSteps',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w900,
@@ -228,9 +228,9 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                           ],
                         ),
                       ),
-                      // Canlı Sous-Chef İkonu
+                      // Live Sous-Chef Icon
                       IconButton(
-                        tooltip: 'Şefe Danış',
+                        tooltip: 'Ask Sous-Chef',
                         onPressed: () => SousChefBottomSheet.show(
                           context: context,
                           recipe: recipe,
@@ -250,7 +250,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                   ),
                 ),
 
-                // İlerleme Çizgisi
+                // Progress Bar
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ClipRRect(
@@ -264,10 +264,10 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                   ),
                 ),
 
-                // Üst Yüzen Zamanlayıcı Çubuğu
+                // Floating Timer Bar
                 const FloatingTimerBar(),
 
-                // Canlı BLE Akıllı Termometre & Tartı Telemetri Şeridi
+                // Live BLE Smart Thermometer & Scale Telemetry Bar
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
                   child: InkWell(
@@ -304,7 +304,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'BLE Sonda: ${wirelessHub.probeCurrentTempC.toStringAsFixed(1)}°C / ${wirelessHub.probeTargetTempC.toStringAsFixed(0)}°C  •  Tartı: ${wirelessHub.scaleNetWeightG.toStringAsFixed(0)}g',
+                              'BLE Probe: ${wirelessHub.probeCurrentTempC.toStringAsFixed(1)}°C / ${wirelessHub.probeTargetTempC.toStringAsFixed(0)}°C  •  Scale: ${wirelessHub.scaleNetWeightG.toStringAsFixed(0)}g',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -316,7 +316,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                           ),
                           const SizedBox(width: 6),
                           const Text(
-                            'Sensör Hub',
+                            'Sensor Hub',
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w800,
@@ -329,7 +329,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                   ),
                 ),
 
-                // 2. Büyük Adım Kartları (Swipeable PageView)
+                // 2. Step Cards (Swipeable PageView)
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
@@ -338,7 +338,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                       if (_isApplyingRemoteStepSync) return;
                       ref.read(smartKitchenHubProvider.notifier).broadcastCoOpEvent(
                             'cook_step_sync',
-                            '${recipe.title} -> Adım ${idx + 1}/$totalSteps geçildi',
+                            '${recipe.title} -> Advanced to Step ${idx + 1}/$totalSteps',
                             payload: {
                               'recipeId': recipe.id,
                               'stepIndex': idx + 1,
@@ -358,7 +358,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                   ),
                 ),
 
-                // 3. Alt Kontrol Barı
+                // 3. Bottom Control Bar
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
                   decoration: const BoxDecoration(
@@ -367,7 +367,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                   ),
                   child: Row(
                     children: [
-                      // Geri Butonu
+                      // Back Button
                       IconButton.filledTonal(
                         onPressed: _currentStepIndex > 0 ? _prevStep : null,
                         style: IconButton.styleFrom(
@@ -378,7 +378,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                         icon: const Icon(Icons.arrow_back_ios_new, size: 18),
                       ),
                       const SizedBox(width: 12),
-                      // Sous-Chef Butonu
+                      // Sous-Chef Button
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: () => SousChefBottomSheet.show(
@@ -393,7 +393,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                           ),
                           icon: const Text('👨‍🍳', style: TextStyle(fontSize: 16)),
                           label: const Text(
-                            'Şefe Danış',
+                            'Ask Chef',
                             style: TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.w800,
@@ -403,7 +403,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                         ),
                       ),
                       const SizedBox(width: 12),
-                      // İleri / Tamamla Butonu
+                      // Forward / Complete Button
                       Expanded(
                         flex: 2,
                         child: ElevatedButton.icon(
@@ -419,7 +419,7 @@ class _CookModeScreenState extends ConsumerState<CookModeScreen> with WidgetsBin
                             size: 18,
                           ),
                           label: Text(
-                            _currentStepIndex == totalSteps - 1 ? 'Bitir 🎉' : 'Sonraki Adım',
+                            _currentStepIndex == totalSteps - 1 ? 'Finish 🎉' : 'Next Step',
                             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                           ),
                         ),
@@ -527,7 +527,7 @@ class _CookStepView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'DUYUSAL İŞARET (NE ZAMAN HAZIR?)',
+                          'SENSORY CUE (WHEN IS IT DONE?)',
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
@@ -572,7 +572,7 @@ class _CookStepView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'ŞEFİN SIRRI & NEDEN YAPIYORUZ?',
+                          "CHEF'S SECRET & WHY WE DO IT",
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
@@ -617,7 +617,7 @@ class _CookStepView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'DİKKAT EDİLECEK HATA',
+                          'COMMON MISTAKE TO AVOID',
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
@@ -660,7 +660,7 @@ class _TimerActionButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isRunning = activeTimer?.isRunning ?? false;
     final isFinished = activeTimer?.isFinished ?? false;
-    final remainingText = activeTimer != null ? activeTimer!.formattedRemaining : '${step.timerSeconds! ~/ 60} dk';
+    final remainingText = activeTimer != null ? activeTimer!.formattedRemaining : '${step.timerSeconds! ~/ 60} min';
 
     return Container(
       width: double.infinity,
@@ -710,10 +710,10 @@ class _TimerActionButton extends ConsumerWidget {
                     children: [
                       Text(
                         isFinished
-                            ? 'Süre Tamamlandı!'
+                            ? 'Timer Finished!'
                             : isRunning
-                                ? 'Sayaç Geri Sayıyor...'
-                                : 'Sayaç Başlat (${step.timerSeconds! ~/ 60} Dakika)',
+                                ? 'Timer Counting Down...'
+                                : 'Start Timer (${step.timerSeconds! ~/ 60} Minutes)',
                         style: TextStyle(
                           fontSize: 13.5,
                           fontWeight: FontWeight.w800,
@@ -723,7 +723,7 @@ class _TimerActionButton extends ConsumerWidget {
                       if (activeTimer != null) ...[
                         const SizedBox(height: 2),
                         Text(
-                          'Kalan: $remainingText',
+                          'Remaining: $remainingText',
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -735,7 +735,7 @@ class _TimerActionButton extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  isFinished ? 'Yenile ↺' : isRunning ? 'Durdur' : 'Başlat',
+                  isFinished ? 'Reset ↺' : isRunning ? 'Pause' : 'Start',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
@@ -796,7 +796,7 @@ class _InStepIngredientsBar extends StatelessWidget {
             const Icon(Icons.kitchen, size: 14, color: MobColors.primaryLight),
             const SizedBox(width: 6),
             const Text(
-              'BU ADIMDA KULLANILACAKLAR:',
+              'INGREDIENTS FOR THIS STEP:',
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w900,

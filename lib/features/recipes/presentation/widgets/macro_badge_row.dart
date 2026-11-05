@@ -31,12 +31,12 @@ class MacroBadgeRow extends StatelessWidget {
         ),
         if (!compact) ...[
           _buildPill(
-            label: '${macros.carbsG}g karb',
+            label: '${macros.carbsG}g carbs',
             icon: Icons.grain,
             color: MobColors.gold,
           ),
           _buildPill(
-            label: '${macros.fatG}g yağ',
+            label: '${macros.fatG}g fat',
             icon: Icons.water_drop_outlined,
             color: MobColors.textSecondary,
           ),

@@ -3,11 +3,11 @@ import '../entities/macros.dart';
 import '../entities/recipe.dart';
 import '../entities/recipe_ingredient.dart';
 
-/// Mutfak mantığına uygun porsiyon ölçekleyici ve miktar formatlayıcı.
+/// Culinary portion scaler and amount formatter.
 class PortionScaler {
   const PortionScaler._();
 
-  /// Porsiyon oranına göre miktarı ölçekler ve mutfak pratiğine göre yuvarlar.
+  /// Scales the amount according to serving ratio and rounds to culinary practice.
   static double scaleAmount(
     double baseAmount, {
     required int baseServings,

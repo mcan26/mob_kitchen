@@ -79,9 +79,9 @@ void main() {
 
       expect(find.text('Test Spagetti Carbonara'), findsOneWidget);
       expect(find.text(sampleRecipe.subtitle), findsOneWidget);
-      expect(find.text('25 dk'), findsOneWidget);
-      expect(find.text('2 Porsiyon'), findsOneWidget);
-      expect(find.text('Makarna'), findsOneWidget);
+      expect(find.text('25 min'), findsOneWidget);
+      expect(find.text('2 Servings'), findsOneWidget);
+      expect(find.text('Pasta'), findsOneWidget);
       expect(find.text('650 kcal'), findsOneWidget);
       expect(find.text('32g protein'), findsOneWidget);
       expect(find.text('#Makarna'), findsOneWidget);
@@ -111,7 +111,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Porsiyon:'), findsOneWidget);
+      expect(find.text('Servings:'), findsOneWidget);
       expect(find.text('2'), findsNWidgets(2)); // Biri buton diğeri sayaç ortası
 
       // 4 porsiyon hızlı butonuna dokun
@@ -152,14 +152,14 @@ void main() {
       expect(find.text('300 g'), findsOneWidget);
 
       // Market tüyosu başlangıçta kapalı
-      expect(find.text('Market Tüyosu: '), findsNothing);
+      expect(find.text('Shopping Tip: '), findsNothing);
 
       // Karta dokunup genişlet
       await tester.tap(find.text('Guanciale'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Market Tüyosu: '), findsOneWidget);
-      expect(find.text('Alternatif: '), findsOneWidget);
+      expect(find.text('Shopping Tip: '), findsOneWidget);
+      expect(find.text('Swap: '), findsOneWidget);
       expect(find.text('Bulamazsan yağlı dana döş veya füme antrikot kullan.'), findsOneWidget);
       expect(find.text('Pancetta'), findsOneWidget);
     });
@@ -175,7 +175,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Şefin Altın Kuralları'), findsOneWidget);
+      expect(find.text("Chef's Golden Rules"), findsOneWidget);
       expect(find.text('Asla krema ekleme.'), findsOneWidget);
       expect(find.text('Yumurta sosunu ocak kapalıyken tavanın artık ısısıyla bağla.'), findsOneWidget);
     });
@@ -196,7 +196,7 @@ void main() {
       expect(find.text(step.instruction), findsOneWidget);
       expect(find.textContaining('Kenarları altın sarısı ve çıtır'), findsOneWidget);
       expect(find.textContaining('Tavaya ekstra yağ eklemeyin'), findsOneWidget);
-      expect(find.text('5 dk'), findsOneWidget); // 300 saniye = 5 dk
+      expect(find.text('5 min'), findsOneWidget); // 300 saniye = 5 dk
     });
   });
 }

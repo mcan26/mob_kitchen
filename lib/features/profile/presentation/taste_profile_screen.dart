@@ -31,30 +31,30 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
   final TextEditingController _dislikedInputController = TextEditingController();
 
   static const _availableDietGoals = [
-    'Yüksek protein',
-    'Hızlı (≤ 20 dk)',
-    'Bütçe dostu',
-    'Düşük karbonhidrat',
-    'Tek tava / Az bulaşık',
-    'Dengeli Ev Yemeği',
+    'High-Protein',
+    'Quick (≤ 20 min)',
+    'Budget-Friendly',
+    'Low-Carb',
+    'One-Pan / Easy Cleanup',
+    'Balanced Comfort Food',
   ];
 
   static const _commonAllergies = [
     'Gluten',
-    'Laktoz / Süt',
-    'Fıstık / Kuruyemiş',
-    'Yumurta',
-    'Deniz Ürünleri',
-    'Soya',
+    'Dairy / Lactose',
+    'Peanuts / Tree Nuts',
+    'Eggs',
+    'Shellfish & Seafood',
+    'Soy',
   ];
 
   static const _commonDislikes = [
-    'Kişniş',
-    'Mantar',
-    'Kereviz',
-    'Bamya',
-    'Sakatat',
-    'Dereotu',
+    'Coriander / Cilantro',
+    'Mushrooms',
+    'Celery',
+    'Okra',
+    'Offal',
+    'Dill',
   ];
 
   @override
@@ -101,7 +101,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Mutfak profiliniz ve tercihleriniz kaydedildi!'),
+          content: Text('Kitchen profile and preferences saved!'),
           backgroundColor: MobColors.green,
         ),
       );
@@ -129,7 +129,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
       appBar: AppBar(
         backgroundColor: MobColors.surface,
         title: const Text(
-          'Mutfak Profilim & Ayarlar',
+          'My Kitchen Profile & Settings',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w800,
@@ -145,7 +145,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
             onPressed: _saveProfile,
             icon: const Icon(Icons.check, size: 18, color: MobColors.primaryLight),
             label: const Text(
-              'Kaydet',
+              'Save',
               style: TextStyle(
                 color: MobColors.primaryLight,
                 fontWeight: FontWeight.w800,
@@ -160,7 +160,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Chef Pro Durum Kartı
+              // 1. Chef Pro Status Card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -196,7 +196,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            subState.isChefPro ? 'MOB CHEF PRO AKTİF' : 'ÜCRETSİZ PLAN',
+                            subState.isChefPro ? 'SIMMERLINK CHEF PRO ACTIVE' : 'FREE PLAN',
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w900,
@@ -207,8 +207,8 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                           const SizedBox(height: 2),
                           Text(
                             subState.isChefPro
-                                ? 'Sınırsız AI Tarif, Fotoğraf Vizyonu ve Sous-Chef açık.'
-                                : 'Kalan ücretsiz AI hakkınız: ${subState.freeAiCreditsRemaining}',
+                                ? 'Unlimited AI Recipes, Fridge Vision, and Sous-Chef active.'
+                                : 'Free AI creations remaining: ${subState.freeAiCreditsRemaining}',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -228,7 +228,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                         child: const Text(
-                          'Pro\'ya Geç',
+                          'Upgrade',
                           style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w900),
                         ),
                       ),
@@ -237,11 +237,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ),
               const SizedBox(height: 24),
 
-              // 2. Mutfak Ekipmanlarım
+              // 2. Kitchen Equipment
               const _SectionHeader(
                 icon: Icons.kitchen_outlined,
-                title: 'Mutfak Ekipmanlarım',
-                subtitle: 'Seçmediğin ekipmanlar (örn. Fırın) AI tariflerinde asla kullanılmaz.',
+                title: 'My Kitchen Equipment',
+                subtitle: 'Unchecked equipment (e.g., Oven) will never be required in AI recipes.',
               ),
               const SizedBox(height: 10),
               Wrap(
@@ -292,7 +292,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Fırınsız Mod Aktif: Gemini Şef tüm tarifleri sadece tava/tencere/airfryer ile pişecek şekilde kurgular.',
+                          'Ovenless Mode Active: Gemini Chef crafts all recipes exclusively for stovetop, skillet, or air fryer.',
                           style: TextStyle(fontSize: 12, color: MobColors.gold),
                         ),
                       ),
@@ -302,11 +302,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ],
               const SizedBox(height: 24),
 
-              // 3. Beslenme & Mutfak Hedeflerim
+              // 3. Nutrition & Culinary Goals
               const _SectionHeader(
                 icon: Icons.track_changes_outlined,
-                title: 'Beslenme & Mutfak Hedeflerim',
-                subtitle: 'Tarif önerilerinde önceliklendirilecek hedefler.',
+                title: 'Nutrition & Cooking Goals',
+                subtitle: 'Prioritized dietary goals for AI recipe recommendations.',
               ),
               const SizedBox(height: 10),
               Wrap(
@@ -334,11 +334,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ),
               const SizedBox(height: 24),
 
-              // 4. Alerjiler & Hayati Kısıtlar
+              // 4. Allergies & Vital Dietary Constraints
               const _SectionHeader(
                 icon: Icons.health_and_safety_outlined,
-                title: 'Alerjilerim (Hayati Kısıtlar)',
-                subtitle: 'Bu malzemeler AI tariflerinde kesinlikle yasaklanır ve katalogda uyarı verir.',
+                title: 'Allergies & Vital Restrictions',
+                subtitle: 'These ingredients are strictly barred from AI recipes and flagged in the catalog.',
               ),
               const SizedBox(height: 10),
               Wrap(
@@ -366,11 +366,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ),
               const SizedBox(height: 24),
 
-              // 5. Sevmediğim Malzemeler
+              // 5. Disliked Ingredients
               const _SectionHeader(
                 icon: Icons.block_outlined,
-                title: 'Sevmediğim Malzemeler',
-                subtitle: 'Tadını sevmediğiniz malzemeleri işaretleyin.',
+                title: 'Disliked Ingredients',
+                subtitle: 'Tag flavours or textures you prefer to avoid.',
               ),
               const SizedBox(height: 10),
               Wrap(
@@ -398,11 +398,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ),
               const SizedBox(height: 24),
 
-              // 6. Acı Seviyesi & Varsayılan Porsiyon
+              // 6. Spice Tolerance & Default Portions
               const _SectionHeader(
                 icon: Icons.whatshot_outlined,
-                title: 'Acı Toleransı & Varsayılan Porsiyon',
-                subtitle: 'Evde genellikle kaç kişilik ve ne kadar acı pişiriyorsunuz?',
+                title: 'Spice Tolerance & Default Servings',
+                subtitle: 'How spicy do you like your dishes and for how many people do you usually cook?',
               ),
               const SizedBox(height: 12),
               Container(
@@ -419,15 +419,15 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Acı Seviyesi:',
+                          'Spice Level:',
                           style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: MobColors.textPrimary),
                         ),
                         Text(
                           switch (_spiceLevel) {
-                            0 => '0 · Sıfır Acı',
-                            1 => '1 · Hafif Tatlı Acı',
-                            2 => '2 · Dengeli / Orta Acı',
-                            _ => '3 · Ateşli Şef Acısı 🌶️',
+                            0 => '0 · Mild / Zero Heat',
+                            1 => '1 · Gentle Warmth',
+                            2 => '2 · Balanced Kick',
+                            _ => '3 · Fiery Chef Heat 🌶️',
                           },
                           style: const TextStyle(
                             fontSize: 13,
@@ -448,7 +448,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                     const Divider(color: MobColors.border),
                     const SizedBox(height: 8),
                     const Text(
-                      'Varsayılan Porsiyon:',
+                      'Default Servings:',
                       style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: MobColors.textPrimary),
                     ),
                     const SizedBox(height: 8),
@@ -462,7 +462,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                           selectedColor: MobColors.primary,
                           backgroundColor: MobColors.card,
                           label: Text(
-                            '$count Kişi',
+                            '$count Servings',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
@@ -478,11 +478,11 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
               ),
               const SizedBox(height: 24),
 
-              // 7. Özel Notlar
+              // 7. Chef's Notes
               const _SectionHeader(
                 icon: Icons.edit_note_outlined,
-                title: 'Şefe Özel Notunuz',
-                subtitle: 'Örn: "Tavuk göğsü yerine her zaman kemiksiz but tercih ederim."',
+                title: 'Personal Chef Notes',
+                subtitle: 'e.g., "I prefer boneless chicken thighs instead of breast."',
               ),
               const SizedBox(height: 10),
               TextField(
@@ -490,16 +490,16 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                 maxLines: 2,
                 style: const TextStyle(color: MobColors.textPrimary, fontSize: 13.5),
                 decoration: const InputDecoration(
-                  hintText: 'Kişisel mutfak notunuzu buraya yazın...',
+                  hintText: 'Enter any personal kitchen notes or cooking style...',
                 ),
               ),
               const SizedBox(height: 24),
 
-              // 8. Geliştirici / Özel Gemini API Bağlantısı & Veri Gizliliği (Guideline 5.1.1)
+              // 8. Gemini API & Privacy Notice (Guideline 5.1.1)
               const _SectionHeader(
                 icon: Icons.vpn_key_outlined,
-                title: 'AI Bağlantısı & Veri Gizliliği',
-                subtitle: 'Gemini 2.5 Flash AI motoru yapılandırması ve gizlilik bildirimi.',
+                title: 'AI Connection & Privacy Notice',
+                subtitle: 'Gemini 2.5 Flash AI configuration and data privacy statement.',
               ),
               const SizedBox(height: 10),
               Container(
@@ -523,8 +523,8 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                         Expanded(
                           child: Text(
                             apiKeyRepo.hasValidApiKey
-                                ? 'Aktif Anahtar: ${apiKeyRepo.maskedApiKey}'
-                                : 'Özel Gemini API Anahtarı (Opsiyonel / Geliştirici Modu)',
+                                ? 'Active Key: ${apiKeyRepo.maskedApiKey}'
+                                : 'Custom Gemini API Key (Optional / Developer Mode)',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
@@ -537,7 +537,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                             onPressed: () async {
                               await ref.read(activeApiKeyProvider.notifier).clearCustomKey();
                             },
-                            child: const Text('Sıfırla', style: TextStyle(color: MobColors.red, fontSize: 12)),
+                            child: const Text('Reset', style: TextStyle(color: MobColors.red, fontSize: 12)),
                           ),
                       ],
                     ),
@@ -547,12 +547,12 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                       obscureText: true,
                       style: const TextStyle(color: MobColors.textPrimary, fontSize: 13),
                       decoration: const InputDecoration(
-                        hintText: 'AIzaSy... (Yeni anahtar girmek için yazın)',
+                        hintText: 'AIzaSy... (Type to enter a custom key)',
                       ),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      '🔒 Gizlilik Bildirimi (Apple Guideline 5.1.1): Dolaptan Tarif Üret, AI Remix ve Canlı Sous-Chef özelliklerini kullandığınızda yalnızca girdiğiniz malzeme listesi ve seçtiğiniz yemek fotoğrafı tarif oluşturmak amacıyla Google Gemini AI servisine iletilir; kişisel kimlik verileriniz paylaşılmaz.',
+                      '🔒 Privacy Statement (Apple Guideline 5.1.1): When utilizing Pantry Recipe Generation, AI Remix, or Live Sous-Chef, only input ingredient lists and dish photos are transmitted to Google Gemini AI for recipe synthesis. No personal identity data is shared.',
                       style: TextStyle(
                         fontSize: 11.5,
                         color: MobColors.textMuted,
@@ -571,7 +571,7 @@ class _TasteProfileScreenState extends ConsumerState<TasteProfileScreen> {
                   onPressed: _saveProfile,
                   icon: const Icon(Icons.save_outlined, size: 20),
                   label: const Text(
-                    'Mutfak Profilimi Kaydet',
+                    'Save Kitchen Profile',
                     style: TextStyle(fontSize: 15.5, fontWeight: FontWeight.w900),
                   ),
                 ),

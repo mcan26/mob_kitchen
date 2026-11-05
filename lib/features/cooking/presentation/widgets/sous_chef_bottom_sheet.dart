@@ -45,12 +45,12 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
   String? _errorMessage;
 
   static const _quickQuestions = [
-    'Sos çok sıvı kaldı, nasıl koyulaştırırım?',
-    'Tavuk tavaya yapışıyor, ne yapmalıyım?',
-    'Ateş çok mu yüksek, yandı mı?',
-    'Tuzunu fazla kaçırdım, nasıl dengelerim?',
-    'Makarna suyu soğudu, ne yapmalıyım?',
-    'Kıvamı tutmadı, ne eklemeliyim?',
+    'The sauce is too runny, how do I thicken it?',
+    'The chicken is sticking to the pan, what should I do?',
+    'Is the heat too high, did it burn?',
+    'I added too much salt, how can I balance it?',
+    'The pasta water cooled down, what should I do?',
+    'The consistency is off, what should I add?',
   ];
 
   @override
@@ -67,7 +67,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
     if (!allowed && mounted) {
       final unlocked = await ChefProPaywallSheet.show(
         context,
-        triggerFeatureName: 'Canlı Sous-Chef Asistanı',
+        triggerFeatureName: 'Live Sous-Chef Assistant',
       );
       if (unlocked) {
         allowed = await ref.read(subscriptionProvider.notifier).consumeAiCreditIfNeeded();
@@ -99,7 +99,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Şefle bağlantı kurulurken hata oluştu: $e';
+          _errorMessage = 'Error connecting to Sous-Chef: $e';
         });
       }
     }
@@ -156,7 +156,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'CANLI SOUS-CHEF ASİSTANI',
+                        'LIVE SOUS-CHEF ASSISTANT',
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w900,
@@ -165,7 +165,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                         ),
                       ),
                       Text(
-                        'Adım ${widget.currentStepNumber}: ${currentStep.title}',
+                        'Step ${widget.currentStepNumber}: ${currentStep.title}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -220,7 +220,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                             CircularProgressIndicator(color: MobColors.gold),
                             SizedBox(height: 16),
                             Text(
-                              'Şef ocağınızdaki adımı inceliyor...',
+                              'Chef is reviewing your cooking step...',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -247,7 +247,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                               Icon(Icons.lightbulb, size: 18, color: MobColors.gold),
                               SizedBox(width: 8),
                               Text(
-                                'Şefin Çözümü:',
+                                "Chef's Solution:",
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
@@ -272,9 +272,9 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                     const SizedBox(height: 20),
                   ],
 
-                  // Hızlı Soru Çipleri
+                  // Quick Question Chips
                   const Text(
-                    'Sık Karşılaşılan Sorunlar:',
+                    'Common Kitchen Questions:',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w800,
@@ -307,7 +307,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
 
                   const SizedBox(height: 20),
 
-                  // Soru Sorma Kutusu
+                  // Question Input Box
                   Row(
                     children: [
                       Expanded(
@@ -322,7 +322,7 @@ class _SousChefBottomSheetState extends ConsumerState<SousChefBottomSheet> {
                             style: const TextStyle(color: MobColors.textPrimary, fontSize: 13.5),
                             onSubmitted: _askSousChef,
                             decoration: const InputDecoration(
-                              hintText: 'Şefe soru sor (örn: Sos neden kesildi?)...',
+                              hintText: 'Ask the chef (e.g. Why did the sauce split?)...',
                               hintStyle: TextStyle(color: MobColors.textMuted, fontSize: 12.5),
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),

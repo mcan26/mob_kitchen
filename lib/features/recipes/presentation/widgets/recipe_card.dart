@@ -70,13 +70,13 @@ class RecipeCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         _MetaChip(
                           icon: Icons.timer_outlined,
-                          label: '${recipe.totalTimeMinutes} dk',
+                          label: '${recipe.totalTimeMinutes} min',
                           color: MobColors.gold,
                         ),
                         const SizedBox(width: 8),
                         _MetaChip(
                           icon: Icons.people_outline,
-                          label: '${recipe.baseServings} Porsiyon',
+                          label: '${recipe.baseServings} Servings',
                           color: MobColors.textSecondary,
                         ),
                         const Spacer(),
@@ -262,7 +262,7 @@ class _CardHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    isAi ? 'AI REMIX' : 'MOB KLASİĞİ',
+                    isAi ? 'AI REMIX' : 'SIMMERLINK CLASSIC',
                     style: const TextStyle(
                       fontSize: 10.5,
                       fontWeight: FontWeight.w900,

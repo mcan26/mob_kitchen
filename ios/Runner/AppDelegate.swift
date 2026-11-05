@@ -20,9 +20,12 @@ import UIKit
         binaryMessenger: registrar.messenger()
       )
       channel.setMethodCallHandler { [weak self] call, result in
-        if call.method == "getNativeNetworkDiagnostics" {
+        switch call.method {
+        case "getNativeNetworkDiagnostics":
           result(self?.collectNativeNetworkDiagnostics() ?? [:])
-        } else {
+        case "setMulticastLock":
+          result(true)
+        default:
           result(FlutterMethodNotImplemented)
         }
       }
@@ -33,7 +36,7 @@ import UIKit
     let ipv4 = Self.resolveWifiIpv4() ?? "192.168.1.42"
     let systemVersion = UIDevice.current.systemVersion
     return [
-      "platform": "iOS \(systemVersion) (NWPathMonitor / BSD ifaddrs)",
+      "platform": "iOS \(systemVersion) (BSD ifaddrs & NWPathMonitor)",
       "transport": "WIFI",
       "isConnected": true,
       "rssiDbm": -52,
@@ -41,6 +44,7 @@ import UIKit
       "frequencyMhz": 5180,
       "ipv4Address": ipv4,
       "bluetoothState": "ON",
+      "multicastLockHeld": true,
     ]
   }
 

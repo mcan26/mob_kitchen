@@ -1,12 +1,12 @@
 /// Market reyonları. Alışveriş listesi bu sıraya göre gruplanır
 /// (markette dolaşma sırası: Manav → Kasap → Süt → Fırın → Bakliyat → Baharat).
 enum AisleCategory {
-  produce('produce', 'Manav', 0),
-  butcherDeli('butcher_deli', 'Kasap / Şarküteri', 1),
-  dairy('dairy', 'Süt Ürünleri', 2),
-  bakery('bakery', 'Fırın / Ekmek', 3),
-  pantry('pantry', 'Bakliyat / Makarna / Sos', 4),
-  spices('spices', 'Baharat', 5);
+  produce('produce', 'Produce & Herbs', 0),
+  butcherDeli('butcher_deli', 'Butcher & Deli', 1),
+  dairy('dairy', 'Dairy & Eggs', 2),
+  bakery('bakery', 'Bakery & Bread', 3),
+  pantry('pantry', 'Pantry, Pasta & Tins', 4),
+  spices('spices', 'Spices & Oils', 5);
 
   const AisleCategory(this.jsonValue, this.label, this.shoppingOrder);
 

@@ -7,8 +7,8 @@ import '../domain/entities/smart_kitchen_device.dart';
 import '../providers/wireless_providers.dart';
 
 enum WirelessHubTab {
-  radar('Cihaz Radarı', Icons.bluetooth_searching),
-  telemetry('Canlı Telemetri', Icons.thermostat_outlined),
+  radar('Device Radar', Icons.bluetooth_searching),
+  telemetry('Live Telemetry', Icons.thermostat_outlined),
   coop('Wi-Fi Co-Op', Icons.wifi_tethering);
 
   const WirelessHubTab(this.label, this.icon);
@@ -100,7 +100,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '${hubState.connectedDevicesCount} Aktif',
+                    '${hubState.connectedDevicesCount} Active',
                     style: TextStyle(
                       fontSize: 11.5,
                       fontWeight: FontWeight.w800,
@@ -210,7 +210,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
-                      'Android & iOS Çapraz Platform Kablosuz Köprü',
+                      'Android & iOS Cross-Platform Wireless Bridge',
                       style: TextStyle(
                         fontSize: 14.5,
                         fontWeight: FontWeight.w900,
@@ -234,7 +234,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                           )
                         : const Icon(Icons.refresh, size: 16),
                     label: Text(
-                      state.isScanning ? 'Taranıyor...' : 'BLE & Ağ Tara',
+                      state.isScanning ? 'Scanning...' : 'Scan Devices',
                       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
                     ),
                   ),
@@ -242,7 +242,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 8),
               const Text(
-                'Bluetooth Low Energy (GATT 0x181A / 0x181D) ve yerel Wi-Fi (WebSocket/UDP) protokollerini destekler. Fiziksel sensör bağlı değilken gerçekçi fizik motoruyla canlı telemetri üretir.',
+                'Supports Bluetooth Low Energy (GATT 0x181A / 0x181D) and local Wi-Fi (WebSocket/UDP) protocols. Simulates real kitchen thermodynamics when hardware probes are offline.',
                 style: TextStyle(
                   fontSize: 12.5,
                   color: MobColors.textSecondary,
@@ -255,7 +255,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
         const SizedBox(height: 18),
 
         const Text(
-          'Bulunan Akıllı Mutfak Cihazları & Düğümler',
+          'Discovered Kitchen Sensors & Nodes',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w800,
@@ -309,7 +309,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                 onPressed: notifier.refreshNativeNetworkDiagnostics,
                 icon: const Icon(Icons.sync, size: 15, color: MobColors.primaryLight),
                 label: const Text(
-                  'Sorgula',
+                  'Refresh',
                   style: TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
@@ -330,7 +330,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
             runSpacing: 6,
             children: [
               _SmallSpecBadge(
-                label: 'Taşıyıcı: ${diag.transport}',
+                label: 'Transport: ${diag.transport}',
                 color: diag.isConnected ? MobColors.green : MobColors.red,
               ),
               _SmallSpecBadge(
@@ -346,7 +346,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                 color: MobColors.textPrimary,
               ),
               _SmallSpecBadge(
-                label: 'BT Radyo: ${diag.bluetoothState}',
+                label: 'BT Radio: ${diag.bluetoothState}',
                 color: diag.bluetoothState == 'ON' ? MobColors.green : MobColors.textSecondary,
               ),
             ],
@@ -389,7 +389,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'BLE Akıllı Et & Tava Termometresi',
+                            'BLE Smart Meat & Pan Thermometer',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -410,7 +410,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      state.hasConnectedThermometer ? 'CANLI AKIŞ' : 'SİMÜLASYON HAZIR',
+                      state.hasConnectedThermometer ? 'LIVE STREAM' : 'SIMULATION READY',
                       style: TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.w900,
@@ -422,7 +422,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Büyük Sıcaklık Göstergeleri
+              // Temperature Indicators
               Row(
                 children: [
                   Expanded(
@@ -437,7 +437,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'ÇEKİRDEK (İÇ) SICAKLIK',
+                            'CORE (INTERNAL) TEMP',
                             style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: MobColors.textMuted),
                           ),
                           const SizedBox(height: 4),
@@ -450,7 +450,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                             ),
                           ),
                           Text(
-                            '+${thermo.rateCPerMinute.toStringAsFixed(1)} °C/dk hız',
+                            '+${thermo.rateCPerMinute.toStringAsFixed(1)} °C/min rate',
                             style: const TextStyle(fontSize: 11.5, color: MobColors.textSecondary),
                           ),
                         ],
@@ -470,7 +470,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'HEDEF & TAVA ISISI',
+                            'TARGET & PAN TEMP',
                             style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: MobColors.textMuted),
                           ),
                           const SizedBox(height: 4),
@@ -484,8 +484,8 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                           ),
                           Text(
                             thermo.isTargetReached
-                                ? '🎉 Hedef Sıcaklıkta!'
-                                : 'Tahmini: ${etaMin}dk ${etaSec}sn',
+                                ? '🎉 Target Temp Reached!'
+                                : 'ETA: ${etaMin}m ${etaSec}s',
                             style: TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w700,
@@ -500,7 +500,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Canlı Sıcaklık Eğrisi Grafiği
+              // Live Temperature Curve Graph
               Container(
                 height: 90,
                 width: double.infinity,
@@ -519,7 +519,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Pişirme Derecesi Hazır Seçimler (Presets)
+              // Cooking Degree Presets
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -547,7 +547,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Canlı Simülasyon Kontrolleri (Jüri / Demo için)
+              // Simulation Controls
               Row(
                 children: [
                   Expanded(
@@ -559,14 +559,14 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
                       icon: const Icon(Icons.local_fire_department, size: 17),
-                      label: const Text('Isıyı Artır (+7.5°C)', style: TextStyle(fontSize: 12.5)),
+                      label: const Text('Simulate Heat (+7.5°C)', style: TextStyle(fontSize: 12.5)),
                     ),
                   ),
                   const SizedBox(width: 10),
                   OutlinedButton.icon(
                     onPressed: notifier.resetThermometerToRoomTemp,
                     icon: const Icon(Icons.ac_unit, size: 16, color: MobColors.textSecondary),
-                    label: const Text('Soğut (23.5°C)', style: TextStyle(fontSize: 12)),
+                    label: const Text('Cool Down (23.5°C)', style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),
@@ -600,7 +600,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'BLE Akıllı Mutfak Tartısı (GATT 0x181D)',
+                            'BLE Precision Kitchen Scale (GATT 0x181D)',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -617,7 +617,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                     onPressed: notifier.tareScale,
                     icon: const Icon(Icons.exposure_zero, size: 16, color: MobColors.gold),
                     label: const Text(
-                      'Dara Al (Tare)',
+                      'Tare (0.0g)',
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: MobColors.gold),
                     ),
                   ),
@@ -633,7 +633,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hedef: ${scale.targetIngredientName} (${scale.targetWeightGrams.toInt()} g)',
+                        'Target: ${scale.targetIngredientName} (${scale.targetWeightGrams.toInt()} g)',
                         style: const TextStyle(fontSize: 12.5, color: MobColors.textSecondary),
                       ),
                       const SizedBox(height: 4),
@@ -655,8 +655,8 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                     ),
                     child: Text(
                       scale.isAtTarget
-                          ? '✅ Tam Gramaj!'
-                          : '%${(scale.progress * 100).clamp(0, 120).toInt()} Dolu',
+                          ? '✅ Target Reached!'
+                          : '${(scale.progress * 100).clamp(0, 120).toInt()}% Filled',
                       style: TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.w800,
@@ -681,18 +681,18 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Tartı Demo Kontrolleri
+              // Scale Demo Controls
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
                   OutlinedButton(
                     onPressed: () => notifier.pourIngredientOnScale(50),
-                    child: const Text('+50g Ekle', style: TextStyle(fontSize: 12)),
+                    child: const Text('+50g Add', style: TextStyle(fontSize: 12)),
                   ),
                   OutlinedButton(
                     onPressed: () => notifier.pourIngredientOnScale(100),
-                    child: const Text('+100g Ekle', style: TextStyle(fontSize: 12)),
+                    child: const Text('+100g Add', style: TextStyle(fontSize: 12)),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -704,7 +704,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                       foregroundColor: Colors.black,
                     ),
                     child: const Text(
-                      'Hedefe Tamamla (400g)',
+                      'Complete to Target (400g)',
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
                     ),
                   ),
@@ -748,7 +748,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Wi-Fi LAN Co-Op Sunucusu (Android ↔ iOS ↔ ESP32)',
+                          'Wi-Fi LAN Co-Op Server (Android ↔ iOS ↔ ESP32)',
                           style: TextStyle(
                             fontSize: 14.5,
                             fontWeight: FontWeight.w900,
@@ -757,8 +757,8 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         ),
                         Text(
                           state.isLanHostRunning
-                              ? 'Aktif Adres: http://${state.localIpAddress}:${state.lanPort} · Oda: ${state.roomCode}'
-                              : 'Aynı Wi-Fi veya Hotspot üzerindeki telefonları ve sensörleri bağlayın.',
+                              ? 'Active Endpoint: http://${state.localIpAddress}:${state.lanPort} · Room: ${state.roomCode}'
+                              : 'Connect phones and sensors on the same Wi-Fi or mobile hotspot.',
                           style: const TextStyle(fontSize: 12, color: MobColors.textSecondary),
                         ),
                       ],
@@ -782,7 +782,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                         size: 18,
                       ),
                       label: Text(
-                        state.isLanHostRunning ? 'Kablosuz Odayı Kapat' : 'Kablosuz Co-Op Odası Kur',
+                        state.isLanHostRunning ? 'Close Wireless Room' : 'Start Wireless Co-Op Room',
                         style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
                       ),
                     ),
@@ -796,22 +796,22 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                 children: [
                   _SmallSpecBadge(
                     label: state.isUdpDiscoveryActive
-                        ? 'UDP Broadcast MANET (255.255.255.255:41234): AKTİF'
-                        : 'UDP Broadcast MANET (:41234): HAZIR',
+                        ? 'UDP Broadcast MANET (255.255.255.255:41234): ACTIVE'
+                        : 'UDP Broadcast MANET (:41234): READY',
                     color: state.isUdpDiscoveryActive ? MobColors.green : MobColors.gold,
                   ),
                   _SmallSpecBadge(
-                    label: 'Bağlı Eşler: ${state.connectedPeerCount}',
+                    label: 'Connected Peers: ${state.connectedPeerCount}',
                     color: MobColors.primaryLight,
                   ),
                   for (final peer in state.discoveredPeers)
                     _SmallSpecBadge(
-                      label: 'Keşfedilen Düğüm: $peer',
+                      label: 'Discovered Node: $peer',
                       color: MobColors.green,
                     ),
                   if (state.lastSyncedCookStep != null)
                     _SmallSpecBadge(
-                      label: 'Pişirme Adımı: ${state.lastSyncedCookStep}',
+                      label: 'Cook Step: ${state.lastSyncedCookStep}',
                       color: MobColors.gold,
                     ),
                 ],
@@ -821,7 +821,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
         ),
         const SizedBox(height: 16),
 
-        // 2. Eş Cihaza Bağlan & Canlı Market Senkronu
+        // 2. Connect to Peer & Live Grocery Sync
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -833,7 +833,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Başka Bir Telefona Bağlan veya Co-Op Senkronu Test Et',
+                'Connect to Companion Phone or Test Co-Op Sync',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
@@ -848,14 +848,14 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                       controller: _peerIpController,
                       style: const TextStyle(color: MobColors.textPrimary, fontSize: 13.5),
                       decoration: const InputDecoration(
-                        hintText: 'Örn: 192.168.1.55:8765',
+                        hintText: 'e.g., 192.168.1.55:8765',
                       ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () => notifier.sendSyncPingToPeer(_peerIpController.text),
-                    child: const Text('El Sıkış (Ping)'),
+                    child: const Text('Handshake (Ping)'),
                   ),
                 ],
               ),
@@ -869,7 +869,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            '📲 Kablosuz Co-Op: Eş telefondan gelen paketle Süpermarket listeniz güncellendi!',
+                            '📲 Wireless Co-Op: Supermarket list updated from companion phone!',
                           ),
                           backgroundColor: MobColors.green,
                         ),
@@ -878,7 +878,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                   },
                   icon: const Icon(Icons.sync, size: 18, color: MobColors.gold),
                   label: const Text(
-                    'Eş Telefondan Canlı Market İşaretlemesi Simüle Et',
+                    'Simulate Peer Grocery Check (Live Sync)',
                     style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800, color: MobColors.gold),
                   ),
                 ),
@@ -902,7 +902,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
                   },
                   icon: const Icon(Icons.soup_kitchen_outlined, size: 18, color: MobColors.primaryLight),
                   label: const Text(
-                    'Simulate Peer Cook Mode Step Sync (Co-Op Adım Senkronu)',
+                    'Simulate Peer Cook Mode Step Sync',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: MobColors.primaryLight),
                   ),
                 ),
@@ -912,9 +912,9 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
         ),
         const SizedBox(height: 18),
 
-        // 3. Canlı Protokol & Paket Günlüğü (Packet Inspector)
+        // 3. Live Protocol & Packet Inspector
         const Text(
-          'Canlı Kablosuz Paket & Protokol Günlüğü (Packet Log)',
+          'Live Wireless Packet & Protocol Log (Packet Inspector)',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w800,
@@ -931,7 +931,7 @@ class _SmartKitchenHubScreenState extends ConsumerState<SmartKitchenHubScreen> {
               border: Border.all(color: MobColors.border),
             ),
             child: const Text(
-              'Henüz kablosuz paket trafiği yok. Yukarıdan bir BLE cihazına bağlanın veya Kablosuz Co-Op odasını başlatın.',
+              'No wireless packet traffic yet. Connect to a BLE device above or start a Wireless Co-Op room.',
               style: TextStyle(fontSize: 12.5, color: MobColors.textMuted),
             ),
           )
@@ -1069,7 +1069,7 @@ class _DeviceCard extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
             child: Text(
-              device.isConnected ? 'Bağlı ✓' : 'Bağlan',
+              device.isConnected ? 'Connected ✓' : 'Connect',
               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
             ),
           ),

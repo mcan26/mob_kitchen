@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Mob Kitchen estetiğine uygun sıcak, iştah açıcı ve kontrastlı renk paleti.
+/// Warm, appetizing, and high-contrast editorial color palette.
 abstract final class MobColors {
   // Canlı vurgular
   static const primary = Color(0xFFE84A27); // Vurucu chili turuncusu

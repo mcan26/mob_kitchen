@@ -186,8 +186,8 @@ void main() {
       expect(find.text('Tek Tava Kremalı Tavuk'), findsOneWidget);
       expect(find.text('Klasik Spagetti Carbonara'), findsOneWidget);
 
-      // "Tek Tava" filtre çipine dokun
-      await tester.tap(find.text('Tek Tava').first);
+      // "One-Pan" filtre çipine dokun
+      await tester.tap(find.text('One-Pan').first);
       await tester.pumpAndSettle();
 
       // Sadece Tek Tava kalmalı
@@ -218,7 +218,7 @@ void main() {
       expect(find.text('20 dakikada tek tavada nefis lezzet'), findsOneWidget);
 
       // Altın Kurallar
-      expect(find.text('Şefin Altın Kuralları'), findsOneWidget);
+      expect(find.text("Chef's Golden Rules"), findsOneWidget);
       expect(find.text('Tavuğu çok doldurma.'), findsOneWidget);
 
       // 2 kişilikte 400g Tavuk Göğsü
@@ -240,7 +240,7 @@ void main() {
       expect(fakeShoppingRepo.lastAddedServings, equals(4));
 
       // SnackBar doğrulama
-      expect(find.textContaining('alışveriş listenize eklendi!'), findsOneWidget);
+      expect(find.textContaining('added to your shopping list!'), findsOneWidget);
     });
   });
 }

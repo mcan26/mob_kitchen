@@ -45,7 +45,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              'Tarif yüklenemedi: $err',
+              'Failed to load recipe: $err',
               style: const TextStyle(color: MobColors.red),
             ),
           ),
@@ -54,7 +54,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
           if (recipe == null) {
             return const Center(
               child: Text(
-                'Tarif bulunamadı.',
+                'Recipe not found.',
                 style: TextStyle(color: MobColors.textSecondary),
               ),
             );
@@ -99,7 +99,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                           ),
                           const SizedBox(height: 16),
 
-                          // Alerjen veya İstenmeyen Malzeme Güvenlik Uyarısı
+                          // Allergen or Disliked Ingredient Warning
                           if (allergenWarnings.isNotEmpty) ...[
                             Container(
                               padding: const EdgeInsets.all(14),
@@ -114,7 +114,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(
-                                      '${allergenWarnings.join(" · ")}. AI Remix butonuna basarak bu tarifi alerjinize uygun hale getirebilirsiniz.',
+                                      '${allergenWarnings.join(" · ")}. Tap AI Remix to customize this recipe for your dietary needs.',
                                       style: const TextStyle(
                                         fontSize: 12.5,
                                         fontWeight: FontWeight.w700,
@@ -129,24 +129,24 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                             const SizedBox(height: 16),
                           ],
 
-                          // Makro Rozetleri
+                          // Macro Badges
                           MacroBadgeRow(macros: recipe.macros),
                           const SizedBox(height: 20),
 
-                          // Şefin Altın Kuralları (Chef's Golden Rules)
+                          // Chef's Golden Rules
                           if (recipe.chefGoldenRules.isNotEmpty) ...[
                             GoldenRulesCard(rules: recipe.chefGoldenRules),
                             const SizedBox(height: 20),
                           ],
 
-                          // Porsiyon Seçici Barı
+                          // Portion Selector Bar
                           PortionSelectorBar(
                             currentServings: currentServings,
                             onChanged: (newCount) => setState(() => _servings = newCount),
                           ),
                           const SizedBox(height: 24),
 
-                          // Malzemeler Başlığı & Alışverişe Ekle Butonu
+                          // Ingredients Header & Add to Shopping List
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -159,7 +159,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                                   ),
                                   const SizedBox(width: 8),
                                   const Text(
-                                    'Malzemeler',
+                                    'Ingredients',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,
@@ -193,7 +193,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                                 ),
                                 icon: const Icon(Icons.add_shopping_cart, size: 16),
                                 label: const Text(
-                                  'Listeye Ekle',
+                                  'Add to List',
                                   style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
                                 ),
                               ),
@@ -201,7 +201,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                           ),
                           const SizedBox(height: 12),
 
-                          // Malzeme Satırları (PortionScaler Entegreli)
+                          // Ingredient Rows (PortionScaler Integrated)
                           for (final ingredient in recipe.ingredients)
                             IngredientTile(
                               key: ValueKey(ingredient.name),
@@ -212,7 +212,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
 
                           const SizedBox(height: 28),
 
-                          // Hazırlık Adımları Başlığı
+                          // Preparation & Cooking Steps Header
                           Row(
                             children: [
                               const Icon(
@@ -222,7 +222,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                               ),
                               const SizedBox(width: 8),
                               const Text(
-                                'Hazırlık & Pişirme Adımları',
+                                'Preparation & Cooking Steps',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,
@@ -250,14 +250,14 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                           ),
                           const SizedBox(height: 14),
 
-                          // Adım Kartları
+                          // Step Cards
                           for (final step in recipe.steps)
                             StepTile(
                               key: ValueKey(step.stepNumber),
                               step: step,
                             ),
 
-                          // Saklama ve Yeniden Isıtma İpucu
+                          // Storage & Reheating Tip
                           if (recipe.storageAndReheatingTip.isNotEmpty) ...[
                             const SizedBox(height: 16),
                             Container(
@@ -281,7 +281,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         const Text(
-                                          'Saklama & Yeniden Isıtma Tüyosu',
+                                          'Storage & Reheating Tip',
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w800,
@@ -343,9 +343,9 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                         icon: const Icon(Icons.auto_awesome, color: MobColors.primaryLight, size: 20),
                       ),
                       const SizedBox(width: 8),
-                      // Alışveriş Listesine Ekle Butonu
+                      // Add to Shopping List Button
                       IconButton.filledTonal(
-                        tooltip: '$currentServings Kişilik Listeye Ekle',
+                        tooltip: 'Add $currentServings Servings to List',
                         onPressed: () => _addToShoppingList(recipe, currentServings),
                         style: IconButton.styleFrom(
                           backgroundColor: MobColors.card,
@@ -355,7 +355,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                         icon: const Icon(Icons.shopping_bag_outlined, color: MobColors.textPrimary, size: 20),
                       ),
                       const SizedBox(width: 10),
-                      // Pişirmeye Başla Butonu (Seçilen Porsiyonla Hands-Free Cook Mode)
+                      // Start Cooking Button (Hands-Free Cook Mode)
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () => context.push('/cook/${recipe.id}?servings=$currentServings'),
@@ -369,7 +369,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                           ),
                           icon: const Icon(Icons.local_fire_department, size: 20),
                           label: const Text(
-                            'Pişirmeye Başla',
+                            'Start Cooking',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),
                           ),
                         ),
@@ -494,7 +494,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
                       border: Border.all(color: MobColors.border),
                     ),
                     child: Text(
-                      '${recipe.totalTimeMinutes} dk  ·  ${recipe.difficulty.label}',
+                      '${recipe.totalTimeMinutes} min  ·  ${recipe.difficulty.label}',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -520,7 +520,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '${recipe.title} ($servings kişilik) alışveriş listenize eklendi!',
+              '${recipe.title} ($servings servings) added to your shopping list!',
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             backgroundColor: MobColors.green,
@@ -534,7 +534,7 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Listeye eklenirken hata: $e'),
+            content: Text('Error adding to shopping list: $e'),
             backgroundColor: MobColors.red,
           ),
         );

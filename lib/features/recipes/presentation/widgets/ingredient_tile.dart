@@ -115,7 +115,7 @@ class _IngredientTileState extends State<IngredientTile> {
                       widget.ingredient.buyingTip!.trim().isNotEmpty) ...[
                     _TipRow(
                       icon: Icons.storefront_outlined,
-                      label: 'Market Tüyosu',
+                      label: 'Shopping Tip',
                       text: widget.ingredient.buyingTip!,
                       color: MobColors.gold,
                     ),
@@ -125,7 +125,7 @@ class _IngredientTileState extends State<IngredientTile> {
                     if (widget.ingredient.buyingTip != null) const SizedBox(height: 6),
                     _TipRow(
                       icon: Icons.swap_horiz,
-                      label: 'Alternatif',
+                      label: 'Swap',
                       text: widget.ingredient.substituteOption!,
                       color: MobColors.green,
                     ),
