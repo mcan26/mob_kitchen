@@ -24,7 +24,9 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAi = !recipe.isBuiltIn;
+    final isAi = !recipe.isBuiltIn &&
+        (recipe.id.startsWith('ai_') || recipe.id.startsWith('social_') || recipe.sourceRecipeId != null);
+    final isCustom = !recipe.isBuiltIn && !isAi;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
@@ -32,8 +34,12 @@ class RecipeCard extends StatelessWidget {
         color: MobColors.card,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isAi ? MobColors.primaryLight.withValues(alpha: 0.35) : MobColors.border,
-          width: isAi ? 1.5 : 1.0,
+          color: isAi
+              ? MobColors.primaryLight.withValues(alpha: 0.35)
+              : isCustom
+                  ? MobColors.gold.withValues(alpha: 0.35)
+                  : MobColors.border,
+          width: (!recipe.isBuiltIn) ? 1.5 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
@@ -174,6 +180,7 @@ class _CardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visual = RecipeVisuals.forRecipe(recipe);
+    final isCustom = !recipe.isBuiltIn && !isAi;
 
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -214,7 +221,7 @@ class _CardHeader extends StatelessWidget {
               ),
             ),
 
-            // 3. Top-left: AI / SimmerLink badge
+            // 3. Top-left: AI / Custom / SimmerLink badge
             Positioned(
               left: 14,
               top: 14,
@@ -223,25 +230,37 @@ class _CardHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isAi
                       ? const Color(0xFF8E24AA).withValues(alpha: 0.9)
-                      : Colors.black.withValues(alpha: 0.65),
+                      : isCustom
+                          ? const Color(0xFFE67E22).withValues(alpha: 0.9)
+                          : Colors.black.withValues(alpha: 0.65),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isAi
                         ? Colors.purpleAccent.withValues(alpha: 0.4)
-                        : Colors.white.withValues(alpha: 0.2),
+                        : isCustom
+                            ? Colors.orangeAccent.withValues(alpha: 0.4)
+                            : Colors.white.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      isAi ? Icons.auto_awesome : Icons.local_fire_department,
+                      isAi
+                          ? Icons.auto_awesome
+                          : isCustom
+                              ? Icons.soup_kitchen_rounded
+                              : Icons.local_fire_department,
                       size: 13,
-                      color: isAi ? Colors.white : MobColors.primaryLight,
+                      color: isAi || isCustom ? Colors.white : MobColors.primaryLight,
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      isAi ? 'AI REMIX' : 'SIMMERLINK',
+                      isAi
+                          ? 'AI REMIX'
+                          : isCustom
+                              ? 'MY RECIPE'
+                              : 'SIMMERLINK',
                       style: const TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.w800,

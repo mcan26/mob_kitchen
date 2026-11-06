@@ -11,6 +11,7 @@ import 'widgets/recipe_card.dart';
 
 enum RecipeFilter {
   all('All'),
+  myRecipes('My Recipes'),
   onePot('One-Pan'),
   quick('Quick (≤ 25 min)'),
   highProtein('High Protein'),
@@ -47,6 +48,8 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
     switch (_selectedFilter) {
       case RecipeFilter.all:
         break;
+      case RecipeFilter.myRecipes:
+        list = list.where((r) => !r.isBuiltIn && !r.id.startsWith('ai_') && !r.id.startsWith('social_')).toList();
       case RecipeFilter.onePot:
         list = list.where((r) => r.category == RecipeCategory.onePot).toList();
       case RecipeFilter.quick:
@@ -56,7 +59,7 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
       case RecipeFilter.budget:
         list = list.where((r) => r.category == RecipeCategory.budget).toList();
       case RecipeFilter.aiGenerated:
-        list = list.where((r) => !r.isBuiltIn).toList();
+        list = list.where((r) => !r.isBuiltIn && (r.id.startsWith('ai_') || r.id.startsWith('social_') || r.sourceRecipeId != null)).toList();
       case RecipeFilter.favorites:
         list = list.where((r) => r.isFavorite).toList();
     }
@@ -180,6 +183,25 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                // Create Custom Recipe Button
+                                IconButton(
+                                  visualDensity: VisualDensity.compact,
+                                  tooltip: 'Create Custom Recipe',
+                                  onPressed: () => context.push(AppRoutes.createRecipe),
+                                  icon: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: MobColors.primary.withValues(alpha: 0.15),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: MobColors.primaryLight.withValues(alpha: 0.4)),
+                                    ),
+                                    child: const Icon(
+                                      Icons.add_rounded,
+                                      color: MobColors.primaryLight,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
                                 // Bluetooth (BLE) & Wi-Fi Co-Op Smart Hub Button
                                 IconButton(
                                   visualDensity: VisualDensity.compact,
@@ -417,21 +439,45 @@ class _DiscoveryFeedScreenState extends ConsumerState<DiscoveryFeedScreen> {
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 20),
-                            ElevatedButton.icon(
-                              onPressed: () => context.push(AppRoutes.pantryGenerator),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: MobColors.primary,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                            Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () => context.push(AppRoutes.createRecipe),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: MobColors.card,
+                                    foregroundColor: MobColors.textPrimary,
+                                    side: const BorderSide(color: MobColors.border),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  ),
+                                  icon: const Icon(Icons.add_rounded, size: 18, color: MobColors.primaryLight),
+                                  label: const Text(
+                                    'Create Recipe',
+                                    style: TextStyle(fontWeight: FontWeight.w800),
+                                  ),
                                 ),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                              ),
-                              icon: const Icon(Icons.auto_awesome, size: 18),
-                              label: const Text(
-                                'Generate from Fridge',
-                                style: TextStyle(fontWeight: FontWeight.w800),
-                              ),
+                                ElevatedButton.icon(
+                                  onPressed: () => context.push(AppRoutes.pantryGenerator),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: MobColors.primary,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  ),
+                                  icon: const Icon(Icons.auto_awesome, size: 18),
+                                  label: const Text(
+                                    'Generate from Fridge',
+                                    style: TextStyle(fontWeight: FontWeight.w800),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

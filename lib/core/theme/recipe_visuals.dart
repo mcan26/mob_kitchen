@@ -183,13 +183,23 @@ abstract final class RecipeVisuals {
           imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=85',
         );
       }
+      if (recipe.id.startsWith('ai_') || recipe.sourceRecipeId != null) {
+        return const RecipeVisualSpec(
+          gradientColors: [Color(0xFF3E1E3D), Color(0xFF23182E), Color(0xFF14141C)],
+          accentColor: Color(0xFFFF6F43),
+          dishEmoji: '✨',
+          culinaryBadge: 'AI CHEF CREATION',
+          icon: Icons.auto_awesome,
+          imageUrl: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1000&q=85',
+        );
+      }
       return const RecipeVisualSpec(
-        gradientColors: [Color(0xFF3E1E3D), Color(0xFF23182E), Color(0xFF14141C)],
-        accentColor: Color(0xFFFF6F43),
-        dishEmoji: '✨',
-        culinaryBadge: 'AI CHEF CREATION',
-        icon: Icons.auto_awesome,
-        imageUrl: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1000&q=85',
+        gradientColors: [Color(0xFF422816), Color(0xFF241814), Color(0xFF14141C)],
+        accentColor: Color(0xFFF5A623),
+        dishEmoji: '👨‍🍳',
+        culinaryBadge: 'MY SIGNATURE',
+        icon: Icons.soup_kitchen,
+        imageUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1000&q=85',
       );
     }
 

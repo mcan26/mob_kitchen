@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/router/app_router.dart';
+
 import '../../../core/theme/mob_colors.dart';
 import '../../../core/theme/recipe_visuals.dart';
 import '../../ai/presentation/ai_remix_bottom_sheet.dart';
@@ -408,6 +410,34 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
         onPressed: () => context.pop(),
       ),
       actions: [
+        if (!recipe.isBuiltIn) ...[
+          IconButton(
+            tooltip: 'Edit Recipe',
+            icon: Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.6),
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+              ),
+              child: const Icon(Icons.edit_outlined, color: Colors.white, size: 18),
+            ),
+            onPressed: () => context.push('${AppRoutes.createRecipe}?editId=${recipe.id}'),
+          ),
+          IconButton(
+            tooltip: 'Delete Recipe',
+            icon: Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.6),
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+              ),
+              child: const Icon(Icons.delete_outline_rounded, color: MobColors.red, size: 18),
+            ),
+            onPressed: () => _confirmDeleteRecipe(recipe),
+          ),
+        ],
         IconButton(
           icon: Container(
             padding: const EdgeInsets.all(7),
@@ -604,5 +634,45 @@ class _RecipeDetailScreenState extends ConsumerState<RecipeDetailScreen> {
     if (updated.id != recipe.id) {
       context.push('/recipe/${updated.id}');
     }
+  }
+
+  Future<void> _confirmDeleteRecipe(Recipe recipe) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: MobColors.card,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        title: const Text('Delete Recipe?', style: TextStyle(color: MobColors.textPrimary, fontWeight: FontWeight.w800)),
+        content: Text('Are you sure you want to delete "${recipe.title}"? This cannot be undone.',
+            style: const TextStyle(color: MobColors.textSecondary, fontSize: 13.5)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel', style: TextStyle(color: MobColors.textSecondary)),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: MobColors.red,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            child: const Text('Delete', style: TextStyle(fontWeight: FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+    await ref.read(recipeRepositoryProvider).delete(recipe.id);
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('"${recipe.title}" deleted.'),
+        backgroundColor: MobColors.surface,
+      ),
+    );
+    context.pop();
   }
 }
